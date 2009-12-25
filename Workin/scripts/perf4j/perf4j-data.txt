@@ -1,0 +1,224 @@
+Performance Statistics   19:29:30 - 19:30:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                                   9.8           0         141        16.4         100
+
+Performance Statistics   19:32:00 - 19:32:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                                  10.9           0         141        16.2         100
+
+Performance Statistics   10:14:30 - 10:15:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                31.0          31          31         0.0           1
+getAll                                                  10.8           0          47        10.1         100
+
+Performance Statistics   10:18:00 - 10:18:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                32.0          32          32         0.0           1
+getAll                                                  16.8           0          47        10.1          12
+
+Performance Statistics   10:18:30 - 10:19:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                                  10.1           0          47         9.1          88
+
+Performance Statistics   10:21:00 - 10:21:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                              1609.0        1609        1609         0.0           1
+getAll                                               26218.0       26218       26218         0.0           1
+
+Performance Statistics   10:21:30 - 10:22:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                               38500.0       38500       38500         0.0           1
+
+Performance Statistics   10:22:00 - 10:22:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                               13484.0       13484       13484         0.0           1
+
+Performance Statistics   10:22:30 - 10:23:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                                  11.3           0          31         8.9          97
+
+Performance Statistics   10:24:30 - 10:25:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                15.0          15          15         0.0           1
+getAll                                                   3.1           0          46         7.3         100
+
+Performance Statistics   10:25:30 - 10:26:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                16.0          16          16         0.0           1
+getAll                                                  13.2           0          47         8.8         100
+
+Performance Statistics   10:28:00 - 10:28:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                47.0          47          47         0.0           1
+getAll                                                  54.5          31          78        23.5           2
+
+Performance Statistics   10:30:30 - 10:31:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                31.0          31          31         0.0           1
+getAll                                                  39.5          16          63        23.5           2
+
+Performance Statistics   10:31:30 - 10:32:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                15.0          15          15         0.0           1
+getAll                                                  15.5           0          31        15.5           2
+
+Performance Statistics   10:32:00 - 10:32:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                32.0          32          32         0.0           1
+getAll                                                  23.5          16          31         7.5           2
+
+Performance Statistics   10:32:30 - 10:33:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                31.0          31          31         0.0           1
+getAll                                                  39.5          16          63        23.5           2
+
+Performance Statistics   11:19:00 - 11:19:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                             23.3           0         140        46.0          12
+findById                                                 0.0           0           0         0.0           1
+getAll                                                  15.6           0         156        42.7          12
+save                                                    47.0          47          47         0.0           1
+
+Performance Statistics   11:20:30 - 11:21:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                             78.0           0         156        78.0           2
+getAll                                                  70.5           0         141        70.5           2
+
+Performance Statistics   11:23:30 - 11:24:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                             70.5           0         141        70.5           2
+getAll                                                  70.5           0         141        70.5           2
+
+Performance Statistics   11:27:00 - 11:27:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                            563.0         563         563         0.0           1
+getAll                                                 104.3           0         313       147.5           3
+
+Performance Statistics   11:28:30 - 11:29:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+getAll                                                   8.0           0          16         8.0           2
+
+Performance Statistics   11:29:00 - 11:29:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                            101.5           0         203       101.5           2
+getAll                                                  70.5           0         141        70.5           2
+
+Performance Statistics   11:30:00 - 11:30:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                            141.0         141         141         0.0           1
+getAll                                                 125.0         125         125         0.0           1
+
+Performance Statistics   11:30:30 - 11:31:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+save                                                   140.0         140         140         0.0           1
+
+Performance Statistics   11:31:00 - 11:31:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                               0.0           0           0         0.0           1
+batchRemove                                             46.0          46          46         0.0           1
+findById                                                 8.0           0          16         8.0           2
+getAll                                                  41.7           0         125        58.9           3
+save                                                    47.0          47          47         0.0           1
+
+Performance Statistics   11:31:30 - 11:32:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                             63.0          63          63         0.0           1
+getAll                                                  86.0           0         172        86.0           2
+save                                                    78.0          78          78         0.0           1
+
+Performance Statistics   11:32:00 - 11:32:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                               0.0           0           0         0.0           1
+findById                                                15.5           0          31        15.5           2
+getAll                                                   0.0           0           0         0.0           2
+
+Performance Statistics   11:33:00 - 11:33:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                             62.0          62          62         0.0           1
+getAll                                                  43.0           0         172        74.5           4
+
+Performance Statistics   11:34:00 - 11:34:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                              0.0           0           0         0.0           1
+getAll                                                  54.5           0         109        54.5           2
+save                                                   109.0         109         109         0.0           1
+
+Performance Statistics   11:34:30 - 11:35:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                               0.0           0           0         0.0           1
+findById                                                 8.0           0          16         8.0           2
+getAll                                                   7.5           0          15         7.5           2
+
+Performance Statistics   11:36:00 - 11:36:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                              47.0          47          47         0.0           1
+batchRemove                                             62.0          62          62         0.0           1
+findById                                                 8.0           0          16         8.0           2
+getAll                                                  57.3           0         172        81.1           3
+merge                                                   15.0          15          15         0.0           1
+save                                                    62.0          62          62         0.0           1
+
+Performance Statistics   11:37:30 - 11:38:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                              16.0          16          16         0.0           1
+batchRemove                                             63.0          63          63         0.0           1
+findById                                                 8.0           0          16         8.0           2
+getAll                                                  67.7           0         187        84.6           3
+merge                                                   15.0          15          15         0.0           1
+save                                                    62.0          62          62         0.0           1
+
+Performance Statistics   11:39:00 - 11:39:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchRemove                                              7.9           0          78        18.2          20
+getAll                                                  12.5           0         156        34.4          20
+save                                                    63.0          63          63         0.0           1
+
+Performance Statistics   11:40:30 - 11:41:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                              15.0          15          15         0.0           1
+batchRemove                                             23.5          16          31         7.5           2
+findById                                                15.5           0          31        15.5           2
+getAll                                                  35.3           0         125        52.2           4
+merge                                                   16.0          16          16         0.0           1
+save                                                   125.0         125         125         0.0           1
+
+Performance Statistics   11:41:30 - 11:42:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                              16.0          16          16         0.0           1
+batchRemove                                             31.0          31          31         0.0           1
+findById                                                 8.0           0          16         8.0           2
+getAll                                                  31.4           0         110        39.8           5
+merge                                                   16.0          16          16         0.0           1
+save                                                   109.0         109         109         0.0           1
+
+Performance Statistics   11:47:00 - 11:47:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                               0.0           0           0         0.0           1
+batchRemove                                             70.5           0         141        70.5           2
+findById                                                 0.0           0           0         0.0           2
+getAll                                                  28.5           0         125        44.6           6
+merge                                                    0.0           0           0         0.0           1
+save                                                    46.0          46          46         0.0           1
+
+Performance Statistics   11:54:00 - 11:54:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                               0.0           0           0         0.0           1
+batchRemove                                             78.0          16         140        62.0           2
+findById                                                 7.5           0          15         7.5           2
+getAll                                                  39.3           0         172        60.3           6
+merge                                                    0.0           0           0         0.0           1
+save                                                    31.0          31          31         0.0           1
+
+Performance Statistics   17:01:30 - 17:02:00
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+batchMerge                                               0.0           0           0         0.0           1
+batchRemove                                             16.0          16          16         0.0           1
+findById                                                 7.5           0          15         7.5           2
+getAll                                                  22.0           0          94        36.5           5
+merge                                                    0.0           0           0         0.0           1
+save                                                    94.0          94          94         0.0           1
+
+Performance Statistics   17:33:00 - 17:33:30
+Tag                                                  Avg(ms)         Min         Max     Std Dev       Count
+findById                                                31.0          31          31         0.0           1
+

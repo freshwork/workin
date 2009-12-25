@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+
+	<description>Email</description>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Simple Mail -->
+	<bean id="mailService" class="org.workin.mail.support.SimpleMailService">
+		<property name="mailSender" ref="mailSender" />
+		<property name="mailFrom" value="${mail.mailFrom}" />
+		<property name="mailTo" value="${mail.mailTo}" />
+		<property name="mailSubject" value="${mail.mailSubject}" />
+		<property name="textTemplate">
+			<value>
+			<![CDATA[
+				User was modified by %1$s  at %2$tF.
+			]]>
+			</value>
+		</property>
+	</bean>
+	
+	
+	<!-- MIME Mail -->
+	<bean id="mimeMailService" class="org.workin.mail.support.MimeMailService">
+		<property name="mailFrom" value="${mail.mailFrom}" />
+		<property name="mailTo" value="${mail.mailTo}" />
+		<property name="mailSubject" value="${mail.mimeMailSubject}" />
+		
+		<property name="templateName" value="${mail.templateName}" />
+		<property name="attachmentName" value="${mail.attachmentName}" />
+		<property name="attachmentPath" value="${mail.attachmentPath}" />
+		<property name="encoding" value="${mail.encoding}" />
+		
+		<property name="mailSender" ref="mailSender" />
+		<property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
+	</bean>
+
+	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="classpath:/email" />
+	</bean>
+</beans>

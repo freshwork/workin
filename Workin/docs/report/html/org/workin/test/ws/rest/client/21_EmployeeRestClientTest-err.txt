@@ -1,0 +1,157 @@
+2009-12-7 18:04:52 org.apache.cxf.bus.spring.BusApplicationContext getConfigResources
+信息: No cxf.xml configuration file detected, relying on defaults.
+2009-12-7 18:04:54 org.apache.cxf.endpoint.ServerImpl initDestination
+信息: Setting the server's publish address to be http://localhost:8080/workin/rest
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 1
+Address: /workin/rest/employeeService/2/retrieve
+Encoding: 
+Content-Type: */*
+Headers: {content-type=[*/*], connection=[keep-alive], Host=[localhost:8080], User-Agent=[Apache CXF 2.2.4], Content-Type=[*/*], Accept=[application/xml], Pragma=[no-cache], Cache-Control=[no-cache]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 1
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:55 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee>
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 2
+Address: /workin/rest/employeeService/2/retrieve
+Encoding: 
+Content-Type: 
+Headers: {connection=[Keep-Alive], Host=[localhost:8080], User-Agent=[Apache-HttpClient/4.0 (java 1.5)], Content-Type=[null]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 2
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:55 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee>
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 3
+Address: /workin/rest/employeeService/2/retrieve
+Encoding: 
+Content-Type: */*
+Headers: {content-type=[*/*], connection=[keep-alive], Host=[localhost:8080], User-Agent=[Apache CXF 2.2.4], Content-Type=[*/*], Accept=[application/xml], Pragma=[no-cache], Cache-Control=[no-cache]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 3
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:55 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee>
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 4
+Address: /workin/rest/employeeService/2/retrieve
+Encoding: 
+Content-Type: 
+Headers: {connection=[Keep-Alive], Host=[localhost:8080], User-Agent=[Apache-HttpClient/4.0 (java 1.5)], Content-Type=[null]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 4
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:55 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee>
+--------------------------------------
+2009-12-7 18:04:55 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 5
+Address: /workin/rest/employeeService/retrievies
+Encoding: 
+Content-Type: */*
+Headers: {content-type=[*/*], connection=[keep-alive], Host=[localhost:8080], User-Agent=[Apache CXF 2.2.4], Content-Type=[*/*], Accept=[application/xml], Pragma=[no-cache], Cache-Control=[no-cache]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 5
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:55 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><AllEmployeeResult><code>0</code><employeeList><Employee><birthday>1986-01-02T00:00:00+08:00</birthday><id>1</id><name>tom</name></Employee><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee><Employee><birthday>1986-01-03T00:00:00+08:00</birthday><id>3</id><name>itaxta</name></Employee></employeeList></AllEmployeeResult>
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 6
+Address: /workin/rest/employeeService/retrievies
+Encoding: 
+Content-Type: 
+Headers: {connection=[Keep-Alive], Host=[localhost:8080], User-Agent=[Apache-HttpClient/4.0 (java 1.5)], Content-Type=[null]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 6
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:56 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><AllEmployeeResult><code>0</code><employeeList><Employee><birthday>1986-01-02T00:00:00+08:00</birthday><id>1</id><name>tom</name></Employee><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee><Employee><birthday>1986-01-03T00:00:00+08:00</birthday><id>3</id><name>itaxta</name></Employee></employeeList></AllEmployeeResult>
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 7
+Address: /workin/rest/employeeService/retrievies
+Encoding: 
+Content-Type: */*
+Headers: {content-type=[*/*], connection=[keep-alive], Host=[localhost:8080], User-Agent=[Apache CXF 2.2.4], Content-Type=[*/*], Accept=[application/xml], Pragma=[no-cache], Cache-Control=[no-cache]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 7
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:56 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><AllEmployeeResult><code>0</code><employeeList><Employee><birthday>1986-01-02T00:00:00+08:00</birthday><id>1</id><name>tom</name></Employee><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee><Employee><birthday>1986-01-03T00:00:00+08:00</birthday><id>3</id><name>itaxta</name></Employee></employeeList></AllEmployeeResult>
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingInInterceptor logging
+信息: Inbound Message
+----------------------------
+ID: 8
+Address: /workin/rest/employeeService/retrievies
+Encoding: 
+Content-Type: 
+Headers: {connection=[Keep-Alive], Host=[localhost:8080], User-Agent=[Apache-HttpClient/4.0 (java 1.5)], Content-Type=[null]}
+Payload: 
+--------------------------------------
+2009-12-7 18:04:56 org.apache.cxf.interceptor.LoggingOutInterceptor$LoggingCallback onClose
+信息: Outbound Message
+---------------------------
+ID: 8
+Encoding: 
+Content-Type: application/xml
+Headers: {Date=[Mon, 07 Dec 2009 10:04:56 GMT]}
+Payload: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><AllEmployeeResult><code>0</code><employeeList><Employee><birthday>1986-01-02T00:00:00+08:00</birthday><id>1</id><name>tom</name></Employee><Employee><birthday>1986-01-01T00:00:00+08:00</birthday><id>2</id><name>bily</name></Employee><Employee><birthday>1986-01-03T00:00:00+08:00</birthday><id>3</id><name>itaxta</name></Employee></employeeList></AllEmployeeResult>
+--------------------------------------
+

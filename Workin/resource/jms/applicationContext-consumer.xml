@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<description>JMS Consumer Config</description>
+
+	<bean id="notifyQueueConsumer" class="org.workin.notify.queue.NotifyQueueConsumer">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="notifyQueue" ref="notifyQueue" />
+		<property name="notification" ref="notification" />
+		
+		<property name="executeTimeRate" value="2000" />
+		<property name="awaitTermination" value="20000" />
+	</bean>
+
+
+	<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false">
+		<property name="connectionFactory" ref="jmsFactory" />
+		<property name="destination" ref="notifyTopic" />
+		<property name="messageListener" ref="notifyTopicListener" />
+	</bean>
+
+	<bean id="notifyTopicListener" class="org.workin.notify.topic.NotifyTopicListener">
+		<property name="notification" ref="notification" />
+	</bean>
+</beans>

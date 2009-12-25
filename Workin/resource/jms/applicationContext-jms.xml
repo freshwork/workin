@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
+		<property name="config" value="classpath:jms/activemq.xml" />
+	</bean>
+
+	
+	<bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory" depends-on="broker">
+		<property name="brokerURL" value="${jms.broker_url}" />
+	</bean>
+
+	<!-- Spring JMS Template -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate" depends-on="broker">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.pool.PooledConnectionFactoryBean">
+				<property name="connectionFactory">
+					<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+						<property name="brokerURL" value="${jms.broker_url}" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Queue defined -->
+	<bean id="notifyQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="notifyQueue" />
+	</bean>
+
+	<!-- Topic defined -->
+	<bean id="notifyTopic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="notifyTopic" />
+	</bean>
+	
+	<!-- MailNotificationHolder defined -->
+	<bean id="notification" class="org.workin.notify.MailNotificationHolder">
+		<property name="mailService" ref="mailService" />
+	</bean>
+	
+	<import resource="applicationContext-producer.xml"/>
+	<import resource="applicationContext-consumer.xml"/>
+</beans>

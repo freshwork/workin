@@ -1,0 +1,29 @@
+/* Document Defaults */
+body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; color: #000000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+a:active { color: #0000CC}
+a:hover { color: #CC0033}
+a:link { color: #3366CC}
+a:visited { color: #9999CC}
+
+/* Paragraph Styles */
+H1 { font-size: 18pt; color: #003366 ; font-weight: bold; margin-top: 20px}
+H2 { font-size: 15pt; font-weight: normal; color: #003366}
+H3 { font-size: 12pt; font-weight: bold; color: #003366}
+H4 { font-size: 10pt; font-weight: bold; font-style: italic; color: #003366}
+
+TH {
+	font-size: 10pt;
+	font-weight: bold;
+	color: #000000;
+	background-color : #008DFF;
+}
+TD { font-size: 10pt; font-weight: normal; color: #000000}
+
+.fineprint { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; font-style: normal; font-weight: normal; color: #000000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+
+.code {font-family: Courier; font-size: 10pt; font-style: normal; font-weight: normal; color: #000000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+
+.comment { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; font-style: normal; font-weight: bold; color: #ff0000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+
+/* Character Styles */
+.WebJump { }

@@ -1,0 +1,24 @@
+[org.workin.test.xml.JaxbBinderTest] - < bind with binderObject2Xml: <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<user id="123">
+    <name>G.Lee</name>
+    <email>goingmm@gmail.com</email>
+    <roles>
+        <role name="Admin" id="1"/>
+        <role name="User" id="2"/>
+    </roles>
+    <interests>
+        <interest>girl</interest>
+        <interest>football</interest>
+    </interests>
+    <houses>
+        <item key="CD">
+            <value>Hourse-CD</value>
+        </item>
+        <item key="NC">
+            <value>Hourse-NC</value>
+        </item>
+    </houses>
+</user>
+>
+[org.workin.test.xml.JaxbBinderTest] - < bind with binderXml2Object: org.workin.test.xml.jaxb.User@ccc588[id=123,name=G.Lee,password=<null>,email=goingmm@gmail.com,roles=[org.workin.test.xml.jaxb.Role@1362012[id=1,name=Admin], org.workin.test.xml.jaxb.Role@73a34b[id=1,name=User]],interests=[girl, football],houses={CD=Hourse-CD, NC=Hourse-NC}]>
+
