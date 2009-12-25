@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Person">
+
+  <resultMap id="result" class="org.workin.test.application.entity.Person">
+   	<result property="id" column="id" columnIndex="20"/>
+    <result property="name" column="name" columnIndex="20"/>
+    <result property="sex" column="sex" columnIndex="10"/>
+    <result property="birthday" column="birthday" columnIndex="30"/>
+  </resultMap>
+  	
+  <select id="getPersons_count" resultClass="java.lang.Integer">
+    SELECT
+    	count(1)
+    FROM person 
+    WHERE person.name= #name#
+  </select>	
+  <select id="getPersons" resultMap="result">
+    SELECT
+    	*
+    FROM person 
+    WHERE person.name= #name#
+  </select>
+
+</sqlMap>

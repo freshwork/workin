@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+
+<!--  @author <a href="mailto:goingmm@gmail.com">G.Lee</a> -->
+
+<project name="workin" default="executer" basedir=".">
+
+	<!-- Define global variable for all target -->
+	<property name="build.dir" value="${basedir}/bin" />
+	<property name="lib.dir" value="${basedir}/lib" />
+
+	<property name="target.jars.dir" value="${basedir}/dist" />
+	<property name="target.codes.work" value="${basedir}/workin" />
+	<property name="target.codes.test" value="${basedir}/workin-test" />
+	<property name="target.checkstyle.dir" value="${basedir}/docs/checkstyle" />
+	<property name="target.report.dir" value="${basedir}/docs/report" />
+	<property name="target.javadoc.dir" value="${basedir}/docs/javadoc" />
+
+	<!-- Define global path rule with pattern -->
+	<patternset id="java.files.pattern" includes="**/*.java" />
+
+	<path id="classpath">
+		<pathelement location="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Init System build entironment -->
+	<target name="init">
+		<echo message="Begin init the project: ${ant.project.name}" />
+		<tstamp />
+	</target>
+
+
+	<!-- compile for all work source codes -->
+	<target name="compile.work">
+		<javac verbose="on" listfiles="true" srcdir="${target.codes.work}" excludes="*" classpathref="classpath" destdir="${build.dir}" />
+		<echo message="Project: ${ant.project.name}, compiling... work codes tasks done." />
+	</target>
+
+	<!-- compile for all test source codes -->
+	<target name="complie.test" depends="compile.work">
+		<javac verbose="on" listfiles="true" srcdir="${target.codes.test}" excludes="*" classpathref="classpath" destdir="${build.dir}" />
+		<echo message="Project: ${ant.project.name}, compiling... test codes tasks done." />
+	</target>
+
+	<!-- compile for all source codes -->
+	<target name="complie" depends="compile.work, complie.test">
+		<echo message="Project: ${ant.project.name}, compiling... all tasks done." />
+	</target>
+
+	<!-- test for... -->
+	<target name="test" depends="complie">
+		<echo message="Project: ${ant.project.name}, testing... all case." />
+		<junit printsummary="yes" haltonerror="yes" haltonfailure="yes" fork="yes">
+			<formatter type="plain" usefile="flase" />
+			<formatter type="xml" />
+
+			<batchtest todir="${target.report.dir}">
+				<fileset dir="${target.codes.test}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+
+			<classpath refid="classpath" />
+		</junit>
+		<echo message="Project: ${ant.project.name}, testing... all case done." />
+	</target>
+
+	<target name="test.report" depends="test">
+		<echo message="Project: ${ant.project.name}, reporting all testcase results." />
+		<mkdir dir="${target.report.dir}/html" />
+		<junitreport todir="${target.report.dir}">
+			<fileset dir="${target.report.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report todir="${target.report.dir}/html" />
+		</junitreport>
+	</target>
+
+
+	<!-- for Jar workin commons -->
+	<target name="commonsJar" depends="complie">
+		<mkdir dir="${target.jars.dir}" />
+		<jar jarfile="${target.jars.dir}\org.workin.commons.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/util/**" />
+				<include name="org/workin/exception/**" />
+				<include name="org/workin/log/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.commons.jar... OK!" />
+	</target>
+
+	<!-- for Jar workin core -->
+	<target name="coreJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.core.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/core/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.core.jar OK!" />
+	</target>
+
+
+	<!-- for Jar workin fortest -->
+	<target name="fortestJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.fortest.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/fortest/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.fortest.jar OK!" />
+	</target>
+
+
+	<!-- for Jar workin mail -->
+	<target name="mailJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.mail.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/mail/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.mail.jar OK!" />
+	</target>
+
+	<!-- for Jar workin rss -->
+	<target name="rssJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.rss.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/rss/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.rss.jar OK!" />
+	</target>
+
+	<!-- for Jar workin xml -->
+	<target name="xmlJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.xml.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/xml/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.xml.jar OK!" />
+	</target>
+
+	<!-- for Jar workin spring -->
+	<target name="springJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.spring.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/spring/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.spring.jar OK!" />
+	</target>
+
+	<!-- for Jar workin web -->
+	<target name="webJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.web.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/web/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.web.jar OK!" />
+	</target>
+
+
+	<!-- for Jar workin jms -->
+	<target name="jmsJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.jms.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/jms/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.jms.jar OK!" />
+	</target>
+
+
+	<!-- for Jar workin notify -->
+	<target name="notifyJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.notify.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/mail/**" />
+				<include name="org/workin/jms/**" />
+				<include name="org/workin/notify/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.notify.jar OK!" />
+	</target>
+
+	<!-- for Jar workin ws -->
+	<target name="wsJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.ws.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/ws/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.ws.jar OK!" />
+	</target>
+	
+	<!-- for Jar workin doc -->
+	<target name="docJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.doc.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/doc/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.doc.jar OK!" />
+	</target>
+			
+	<!-- for workin style check -->
+	<target name="checkstyle">
+		<property name="checkstyle.data.dir" location="${target.checkstyle.dir}" />
+		<property name="checkstyle.data.file" location="${checkstyle.data.dir}/checkstyle-report.xml" />
+		<property name="checkstyle.report.file" location="${checkstyle.data.dir}/checkstyle-report.html" />
+		<property name="checkstyle.xsl.file" location="${basedir}/tools/checkstyle/checkstyle-noframes.xsl" />
+
+		<mkdir dir="${checkstyle.data.dir}" />
+
+		<taskdef resource="checkstyletask.properties" classpath="${basedir}/tools/checkstyle/checkstyle-all-5.0.jar" />
+
+		<checkstyle config="${basedir}/tools/checkstyle/workin_checks.xml" failOnViolation="false" failureProperty="checkstyle.failure">
+
+			<fileset dir="workin">
+				<patternset refid="java.files.pattern" />
+			</fileset>
+			<fileset dir="workin-test">
+				<patternset refid="java.files.pattern" />
+			</fileset>
+
+			<formatter type="xml" toFile="${checkstyle.data.file}" />
+		</checkstyle>
+
+		<xslt in="${checkstyle.data.file}" out="${checkstyle.report.file}" style="${checkstyle.xsl.file}" />
+		<echo>checkstyle tasks done.</echo>
+	</target>
+
+
+	<!-- For build java docs -->
+	<target name="javadoc">
+		<deltree dir="${target.javadoc.dir}" />
+		<mkdir dir="${target.javadoc.dir}" />
+		<javadoc destdir="${target.javadoc.dir}" windowtitle="Work Grok API Docs">
+			<fileset dir="${basedir}\workin\org">
+				<include name="**/*.java" />
+			</fileset>
+		</javadoc>
+	</target>
+	
+	<target name="releaseJarsToE3Team">
+		<copy todir="${target.jars.dir}\release" preservelastmodified="true">
+			<fileset dir="${target.jars.dir}\">
+				<include name="org.workin.commons.jar" />
+				<include name="org.workin.core.jar" />
+				<include name="org.workin.fortest.jar" />
+			</fileset>
+		</copy>
+		<echo message="Project: ${ant.project.name}, copied[commons,core,fortest].jar to E3 release... OK!" />
+	</target>
+	
+	<!-- executer for all tasks -->
+	<!--
+	<target name="executer" depends="init, complie, test, checkstyle, test.report, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, docJar, releaseJarsToE3Team">
+		<echo message="Project: ${ant.project.name}, Executer all tasks done." />
+	</target>
+	-->
+	
+	<target name="releaseJarsToWorkinExport">
+		<copy todir="E:\works\WorkinExport\lib" preservelastmodified="true">
+			<fileset dir="${target.jars.dir}\">
+				<include name="org.workin.commons.jar" />
+				<include name="org.workin.core.jar" />
+				<include name="org.workin.doc.jar" />
+				<include name="org.workin.fortest.jar" />
+				<include name="org.workin.mail.jar" />
+				<include name="org.workin.spring.jar" />
+			</fileset>
+		</copy>
+		<echo message="Project: ${ant.project.name}, copied[commons,core,fortest].jar to E3 release... OK!" />
+	</target>
+	<target name="executer" depends="init, complie, commonsJar, coreJar, fortestJar, mailJar, springJar, docJar, releaseJarsToWorkinExport">
+			<echo message="Project: ${ant.project.name}, Executer all tasks done." />
+	</target>
+</project>

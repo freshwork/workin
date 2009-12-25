@@ -1,0 +1,11 @@
+2009-12-7 18:04:39 net.sf.ehcache.CacheManager detectAndFixDiskStorePathConflict
+少御: Creating a new instance of CacheManager using the diskStorePath "C:\DOCUME~1\Goingmm\LOCALS~1\Temp\/ehcache/workin" which is already used by an existing CacheManager.
+The source of the configuration was URL of file:/E:/works/Workin/bin/ehcache/ehcache-hibernate-local.xml.
+The diskStore path for this CacheManager will be set to C:\DOCUME~1\Goingmm\LOCALS~1\Temp\/ehcache/workin\ehcache_auto_created_1260180279421.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+2009-12-7 18:04:40 net.sf.ehcache.CacheManager detectAndFixDiskStorePathConflict
+少御: Creating a new instance of CacheManager using the diskStorePath "C:\DOCUME~1\Goingmm\LOCALS~1\Temp\/ehcache/workin" which is already used by an existing CacheManager.
+The source of the configuration was URL of file:/E:/works/Workin/bin/ehcache/ehcache-hibernate-local.xml.
+The diskStore path for this CacheManager will be set to C:\DOCUME~1\Goingmm\LOCALS~1\Temp\/ehcache/workin\ehcache_auto_created_1260180280437.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+

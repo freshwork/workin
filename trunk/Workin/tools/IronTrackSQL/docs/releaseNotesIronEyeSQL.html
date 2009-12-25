@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+
+  <title>Release Notes for IronEye SQL, Version 1.0</title>
+  
+<style>
+
+body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; color: #000000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+a:active { color: #0000CC}
+a:hover { color: #CC0033}
+a:link { color: #3366CC}
+a:visited { color: #9999CC}
+
+H1 { font-size: 18pt; color: #003366 ; font-weight: bold; margin-top: 20px}
+H2 { font-size: 15pt; font-weight: normal; color: #003366}
+H3 { font-size: 12pt; font-weight: bold; color: #003366}
+H4 { font-size: 10pt; font-weight: bold; font-style: italic; color: #003366}
+
+TH { font-size: 10pt; font-weight: bold; color: #000000}
+TD { font-size: 10pt; font-weight: normal; color: #000000}
+
+.fineprint { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; font-style: normal; font-weight: normal; color: #000000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+
+.code {font-family: Courier; font-size: 10pt; font-style: normal; font-weight: normal; color: #000000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}
+
+.comment { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; font-style: normal; font-weight: bold; color: #ff0000; background-color: #FFFFFF; letter-spacing: normal; text-align: left; word-spacing: normal}</style>
+
+</head>
+
+<body  background="images/backgrnd.gif">
+
+
+
+<!-- Begin Content -->
+
+<h1>Release Notes for IronEye SQL, Version 1.2</h1>
+
+<p>August 8, 2003</p>
+
+<p>This document describes the following aspects of IronEye SQL, Version 1.2:</p>
+
+<ul>
+  <li><a href="#release_notes_features">New IronEye SQL Features</a></li>
+  <li><a href="#release_notes_system_requirements">System Requirements</a></li>
+  <li><a href="#release_notes_dir_structure">Directory Sructure</a></li>
+  <li><a href="#release_notes_installing">Installing IronEye SQL</a></li>
+  <!--li><a href="#release_notes_known_issues">Known Issues</a></li-->
+</ul>
+
+<a name="release_notes_features"></a>
+
+<h2>New IronEye SQL Features</h2>
+
+<p>IronEye SQL can track all the SQL that flows between an application and a database through a GUI console, log files, or both.
+ IronEye SQL provides the following new features in this release:</p>
+
+<ul>
+  <li>Enhanced user interface features that provide easier access to the IronEye SQL functionality.</li>
+  <li>Improved functionality for the Show Bound Variables feature, which provides a way for you to dynamically show SQL bound variable statements in the user interface without having to restart the system</li>
+  <li>Enhanced Ant integration.</li>
+</ul>
+
+<a name="release_notes_system_requirements"></a>
+
+<h2>System Requirements</h2>
+
+<p>IronEye SQL requires the following minimum disk space and memory:</p>
+
+<ul>
+  <li>Disk Space — 5MB</li>
+  <li>Memory — 120MB</li>
+</ul>
+ 
+<p><b>Note</b>: Logging is enabled by default, and the IronEye SQL log file, <b>spy.log</b>, can get very large. To accommodate the growth of <b>spy.log</b>, it is recommended that you reserve significant disk space beyond these minimum requirements. </p>
+
+<a name="release_notes_dir_structure"></a>
+
+<h2>Directory Structure</h2>
+
+<p>Following is the directory structure of IronEye SQL:</p>
+
+<blockquote> 
+  <p class="code"> IronEye SQL<br>
+    &nbsp;&nbsp;docs<br>
+    &nbsp;&nbsp;ico<br>
+    &nbsp;&nbsp;license<br>
+    &nbsp;&nbsp;lib<br>
+    &nbsp;&nbsp;Uninstaller<br>
+    irongrid.properties<br>
+    irontracksql.jar<br>
+    log4j-1.2.8.jar<br>
+    p6spy.jar<br>
+    spy.properties<br>
+  </p>
+</blockquote>
+
+<p>The <b>/docs</b> directory contains 	<b>releaseNotesIronTrack SQL.html</b> and the HTML help files for IronEye SQL. You can open <b>index.html</b> or click <a href="index.html" target="_new">here</a> to view all of the files in the IronEye SQL help system. The default view of the IronEye SQL help system displays installation instructions for all of the application servers IronEye SQL supports.</p>
+
+<p>The <b>/ico</b> directory contains the following files:</p>
+
+<blockquote> 
+  <p class="code"> irongrid.ico<br>
+    uninstall.ico<br>
+  </p>
+</blockquote>
+
+<p>The <b>/lib</b> directory contains the following files:</p>
+
+<blockquote> 
+  <p class="code"> alloy.jar<br>
+    commons-pool.jar<br>
+    jakarta-regexp-&lt;version&gt.jar<br>
+    janino.jar<br>
+    jce-jdk&lt;version&gt;.jar<br>
+    jcommon&lt;version&gt;.jar<br>
+    jdom.jar<br>
+    jfreechart&lt;version&gt;.jar<br>
+    layout.jar<br>
+    nanoxml.jar<br>
+    nanoxml-sax.jar<br>
+    sax2.jar<br>
+    sax2-ext.jar<br>
+  </p>
+</blockquote>
+
+<p>The <b>/license</b> dicrectory contains the following files:</p>
+
+<blockquote>
+  <p class="code">apache-license-1.1.txt<br>
+  GNU-LGPL-2.1.txt<br>
+  izpack-license.txt<br>
+  janino.txt<br>
+  jdom-license.txt<br>
+  nanoxml-license.txt<br>
+  p6spy-license.txt<br>
+  </p>
+</blockquote>
+
+<p>The <b>/Uninstaller</b> directory contains the following files:</p>
+
+<blockquote> 
+  <p class="code"> uninstaller.jar </p>
+</blockquote>
+
+<a name="release_notes_installing"></a>
+
+<h2>Installing IronEye SQL</h2>
+
+<p>For detailed instructions on how to install and configure IronEye SQL on your application server, go to <b>C:\IronGrid\IronEyeSQL\docs</b> and open <b>index.html</b>.</p>
+
+<!--a name="release_notes_known_issues"></a>
+
+<h2>Known Issues</h2>
+
+<p>Open bug reports go here . . .</p-->
+
+<!-- End Content -->
+
+
+</body>
+
+</html>
