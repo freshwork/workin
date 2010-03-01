@@ -240,10 +240,18 @@
 	<target name="javadoc">
 		<deltree dir="${target.javadoc.dir}" />
 		<mkdir dir="${target.javadoc.dir}" />
-		<javadoc destdir="${target.javadoc.dir}" windowtitle="Work Grok API Docs">
-			<fileset dir="${basedir}\workin\org">
+		<javadoc destdir="${target.javadoc.dir}" 
+				windowtitle="Workin API Docs"
+				use="yes" 
+				linksource="no" 
+				splitindex="yes" >
+			
+            <classpath refid="classpath">  
+            </classpath> 
+                 	
+			<fileset dir="${basedir}\workin\org" defaultexcludes="yes">
 				<include name="**/*.java" />
-			</fileset>
+			</fileset> 
 		</javadoc>
 	</target>
 	
@@ -259,26 +267,7 @@
 	</target>
 	
 	<!-- executer for all tasks -->
-	<!--
-	<target name="executer" depends="init, complie, test, checkstyle, test.report, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, docJar, releaseJarsToE3Team">
+	<target name="executer" depends="init, complie, test, checkstyle, test.report, javadoc, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, docJar, releaseJarsToE3Team">
 		<echo message="Project: ${ant.project.name}, Executer all tasks done." />
-	</target>
-	-->
-	
-	<target name="releaseJarsToWorkinExport">
-		<copy todir="E:\works\WorkinExport\lib" preservelastmodified="true">
-			<fileset dir="${target.jars.dir}\">
-				<include name="org.workin.commons.jar" />
-				<include name="org.workin.core.jar" />
-				<include name="org.workin.doc.jar" />
-				<include name="org.workin.fortest.jar" />
-				<include name="org.workin.mail.jar" />
-				<include name="org.workin.spring.jar" />
-			</fileset>
-		</copy>
-		<echo message="Project: ${ant.project.name}, copied[commons,core,fortest].jar to E3 release... OK!" />
-	</target>
-	<target name="executer" depends="init, complie, commonsJar, coreJar, fortestJar, mailJar, springJar, docJar, releaseJarsToWorkinExport">
-			<echo message="Project: ${ant.project.name}, Executer all tasks done." />
 	</target>
 </project>
