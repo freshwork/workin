@@ -198,16 +198,6 @@
 		<echo message="Project: ${ant.project.name}, Jar org.workin.ws.jar OK!" />
 	</target>
 	
-	<!-- for Jar workin doc -->
-	<target name="docJar" depends="complie">
-		<jar jarfile="${target.jars.dir}\org.workin.doc.jar">
-			<fileset dir="${build.dir}">
-				<include name="org/workin/doc/**" />
-			</fileset>
-		</jar>
-		<echo message="Project: ${ant.project.name}, Jar org.workin.doc.jar OK!" />
-	</target>
-			
 	<!-- for workin style check -->
 	<target name="checkstyle">
 		<property name="checkstyle.data.dir" location="${target.checkstyle.dir}" />
@@ -267,7 +257,7 @@
 	</target>
 	
 	<!-- executer for all tasks -->
-	<target name="executer" depends="init, complie, test, checkstyle, test.report, javadoc, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, docJar, releaseJarsToE3Team">
+	<target name="executer" depends="init, complie, test, checkstyle, test.report, javadoc, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToE3Team">
 		<echo message="Project: ${ant.project.name}, Executer all tasks done." />
 	</target>
 </project>
