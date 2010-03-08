@@ -39,4 +39,13 @@ public class PersonServiceImpl extends AbstractBeanService implements PersonServ
 	public int executeNamedOfQuery(String queryName, Object... values) {
 		return this.getPersistenceService().executeNamedOfQuery(queryName, values);
 	}
+
+	@Override
+	public int persistByNativeQuery(String queryString) {
+		return this.getPersistenceService().persistByNativeQuery(queryString);
+	}
+	
+	public int persistByNativeQuery(final String queryString, final Object... values) {
+		return this.getPersistenceService().persistByNativeQuery(queryString, values);
+	}
 }

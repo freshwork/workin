@@ -1622,6 +1622,123 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		});
 	}
 	
+	/**
+	 * 
+	 * Execute an update or delete statement.
+	 * 
+	 * Throws:
+	 *	IllegalStateException 
+	 *		- if called for a Java Persistence query language SELECT statement or for a criteria query
+	 *	TransactionRequiredException 
+	 *		- if there is no transaction
+	 *	QueryTimeoutException 
+	 *		- if the statement execution exceeds the query timeout value set and only the statement is rolled back
+	 *	PersistenceException 
+	 *		- if the query execution exceeds the query timeout value set and the transaction is rolled back
+	 * 
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param queryString
+	 * @return
+	 * 		The number of entities updated or deleted.
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int persistByNativeQuery(final String queryString) {
+		
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				return em.createNativeQuery(queryString).executeUpdate();
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * Execute an update or delete statement.
+	 * 
+	 * Throws:
+	 *	IllegalStateException 
+	 *		- if called for a Java Persistence query language SELECT statement or for a criteria query
+	 *	TransactionRequiredException 
+	 *		- if there is no transaction
+	 *	QueryTimeoutException 
+	 *		- if the statement execution exceeds the query timeout value set and only the statement is rolled back
+	 *	PersistenceException 
+	 *		- if the query execution exceeds the query timeout value set and the transaction is rolled back
+	 * 
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param queryString
+	 * @param params
+	 * @return
+	 * 		The number of entities updated or deleted.
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int persistByNativeQuery(final String queryString, final Map<String, ?> params) {
+		
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				Query query = em.createNativeQuery(queryString);
+				
+				for (Map.Entry<String, ?> entry : params.entrySet()) {
+					query.setParameter(entry.getKey(), entry.getValue());
+				}
+				return query.executeUpdate();
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * Execute an update or delete statement.
+	 * 
+	 * Throws:
+	 *	IllegalStateException 
+	 *		- if called for a Java Persistence query language SELECT statement or for a criteria query
+	 *	TransactionRequiredException 
+	 *		- if there is no transaction
+	 *	QueryTimeoutException 
+	 *		- if the statement execution exceeds the query timeout value set and only the statement is rolled back
+	 *	PersistenceException 
+	 *		- if the query execution exceeds the query timeout value set and the transaction is rolled back
+	 * 
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param queryString
+	 * @param values
+	 * @return
+	 * 		The number of entities updated or deleted.
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int persistByNativeQuery(final String queryString, final Object... values) {
+		
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				Query query = em.createNativeQuery(queryString);
+
+				for (int i = 0,len = values.length; i < len; i++) {
+					query.setParameter(i + 1, values[i]);
+				}
+
+				return query.executeUpdate();
+			}
+		});
+	}
 	
 	/**
 	 * ===Private================================================= Some private

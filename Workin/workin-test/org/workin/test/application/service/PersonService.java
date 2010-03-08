@@ -24,4 +24,8 @@ public interface PersonService extends CrudService {
 	public List findPersonsByPropertys(Map nameAndValue);
 	
 	public int executeNamedOfQuery(String queryName, Object... values);
+	
+	public int persistByNativeQuery(final String queryString);
+	
+	public int persistByNativeQuery(final String queryString, final Object... values);
 }	

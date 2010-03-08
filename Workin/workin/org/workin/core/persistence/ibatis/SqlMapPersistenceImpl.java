@@ -176,7 +176,6 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 		List<?> resultList = getSqlMapClientTemplate().queryForList(sqlMapId, parameterObject, tmpOffset, tmpMaxRows);
 		return new PaginationSupport(resultList, count.intValue(), tmpMaxRows, tmpOffset);
 	}
-	
-	
+
 	public static final String SQLID_COUNT = "_count"; 
 }
