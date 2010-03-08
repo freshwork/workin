@@ -1092,4 +1092,90 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 */
 	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, 
 			final Map<String, ?> params);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement.
+	 * 
+	 * Throws:
+	 *	IllegalStateException 
+	 *		- if called for a Java Persistence query language SELECT statement or for a criteria query
+	 *	TransactionRequiredException 
+	 *		- if there is no transaction
+	 *	QueryTimeoutException 
+	 *		- if the statement execution exceeds the query timeout value set and only the statement is rolled back
+	 *	PersistenceException 
+	 *		- if the query execution exceeds the query timeout value set and the transaction is rolled back
+	 * 
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param queryString
+	 * @return
+	 * 		The number of entities updated or deleted.
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int persistByNativeQuery(final String queryString);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement.
+	 * 
+	 * Throws:
+	 *	IllegalStateException 
+	 *		- if called for a Java Persistence query language SELECT statement or for a criteria query
+	 *	TransactionRequiredException 
+	 *		- if there is no transaction
+	 *	QueryTimeoutException 
+	 *		- if the statement execution exceeds the query timeout value set and only the statement is rolled back
+	 *	PersistenceException 
+	 *		- if the query execution exceeds the query timeout value set and the transaction is rolled back
+	 * 
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param queryString
+	 * @param params
+	 * @return
+	 * 		The number of entities updated or deleted.
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int persistByNativeQuery(final String queryString, final Map<String, ?> params);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement.
+	 * 
+	 * Throws:
+	 *	IllegalStateException 
+	 *		- if called for a Java Persistence query language SELECT statement or for a criteria query
+	 *	TransactionRequiredException 
+	 *		- if there is no transaction
+	 *	QueryTimeoutException 
+	 *		- if the statement execution exceeds the query timeout value set and only the statement is rolled back
+	 *	PersistenceException 
+	 *		- if the query execution exceeds the query timeout value set and the transaction is rolled back
+	 * 
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param queryString
+	 * @param values
+	 * @return
+	 * 		The number of entities updated or deleted.
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int persistByNativeQuery(final String queryString, final Object... values);
 }

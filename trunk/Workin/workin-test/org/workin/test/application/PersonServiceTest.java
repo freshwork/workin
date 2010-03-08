@@ -34,6 +34,16 @@ public class PersonServiceTest extends SpringTxTestCase {
 	@Autowired
     private PersonService personService;
 	
+//	@Test
+//	@Rollback(false)
+//	public void persistByNativeQuery() {
+//		personService.persistByNativeQuery("call AddPerson()");
+//		personService.persistByNativeQuery("call UpdatePerson()");
+//		personService.persistByNativeQuery("call RemovePerson()");
+//		
+//		personService.persistByNativeQuery("call AddPersonWithParam(?,?)", "abc", "123");
+//	}
+	
 	// first init db data
 	@Test
 	@Rollback(false)

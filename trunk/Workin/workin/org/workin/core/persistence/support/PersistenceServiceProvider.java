@@ -283,6 +283,21 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	}
 	
 	@Override
+	public int persistByNativeQuery(String queryString) {
+		return this.jpaPersistence.persistByNativeQuery(queryString);
+	}
+
+	@Override
+	public int persistByNativeQuery(String queryString, Map<String, ?> params) {
+		return this.jpaPersistence.persistByNativeQuery(queryString, params);
+	}
+
+	@Override
+	public int persistByNativeQuery(String queryString, Object... values) {
+		return this.jpaPersistence.persistByNativeQuery(queryString, values);
+	}
+	
+	@Override
 	public List findListBySqlMap(String sqlMapId, Object parameterObject) {
 		return this.sqlMapPersistence.findListBySqlMap(sqlMapId, parameterObject);
 	}
