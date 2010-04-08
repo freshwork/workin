@@ -2,8 +2,10 @@ package org.workin.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -169,7 +171,19 @@ public class WebUtils {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * 
+	 * @param userName
+	 * @param password
+	 * @return
+	 * 
+	 */
+	public static String encodeHttpBasic(String userName, String password) {
+		String encode = userName + ":" + password;
+		return "Basic " + EncodeUtils.base64Encode(encode.getBytes());
+	}
+	
 	/**
 	 * 
 	 * get the same prefix Request Parameters.
@@ -178,8 +192,28 @@ public class WebUtils {
 	 * @param prefix
 	 * @return
 	 */
-	public static Map<String, Object> getParametersStartingWith(HttpServletRequest request, String prefix) {
-		return org.springframework.web.util.WebUtils.getParametersStartingWith(request, prefix);
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> getParametersStartingWith(HttpServletRequest request, String prefix) {
+		Assert.notNull(request, "Request must not be null");
+		Enumeration paramNames = request.getParameterNames();
+		Map params = new TreeMap();
+		if (prefix == null) {
+			prefix = "";
+		}
+		while (paramNames != null && paramNames.hasMoreElements()) {
+			String paramName = (String) paramNames.nextElement();
+			if ("".equals(prefix) || paramName.startsWith(prefix)) {
+				String unprefixed = paramName.substring(prefix.length());
+				String[] values = request.getParameterValues(paramName);
+				if (values == null || values.length == 0) {//NOSONAR
+				} else if (values.length > 1) {
+					params.put(unprefixed, values);
+				} else {
+					params.put(unprefixed, values[0]);
+				}
+			}
+		}
+		return params;
 	}
 	
 	
