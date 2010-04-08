@@ -321,4 +321,9 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows) {
 		return this.sqlMapPersistence.findPaginatedBySqlMap(sqlMapId, parameterObject, offset, maxRows);
 	}
+	
+	@Override
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
+		return this.jpaPersistence.findByCriteriaQuery(targetClass, filters);
+	}
 }

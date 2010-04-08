@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.workin.core.persistence.support.PaginationSupport;
+import org.workin.core.persistence.support.PropertyFilter;
 
 
 /**
@@ -1178,4 +1179,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString, final Object... values);
+	
+	
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
 }

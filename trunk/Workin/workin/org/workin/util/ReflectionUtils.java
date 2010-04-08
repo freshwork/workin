@@ -271,7 +271,22 @@ public class ReflectionUtils {
 			throw convertReflectionExceptionToUnchecked(e);
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param value
+	 * @param toType
+	 * @return
+	 * 
+	 */
+	public static Object convertStringToObject(String value, Class<?> toType) {
+		try {
+			return ConvertUtils.convert(value, toType);
+		} catch (Exception e) {
+			throw convertReflectionExceptionToUnchecked(e);
+		}
+	}
+	
 	/**
 	 * 
 	 * transform checked exception to unchecked exception, when reflection.
@@ -290,7 +305,7 @@ public class ReflectionUtils {
 		}
 		return new RuntimeException("Unexpected Checked Exception.", e);
 	}
-	
+
 	private static final String CANNOT_THROW_EXCEPTION = "Can not throw exception{}";
 	private static final String OBJECT_CANNOT_BE_NULL = "Object can not be null.";
 	
