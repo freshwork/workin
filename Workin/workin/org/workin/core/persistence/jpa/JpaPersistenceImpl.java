@@ -10,7 +10,15 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaCallback;
@@ -18,8 +26,11 @@ import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.workin.core.constant.Constants;
 import org.workin.core.persistence.support.PaginationSupport;
+import org.workin.core.persistence.support.PropertyFilter;
+import org.workin.core.persistence.support.PropertyFilter.MatchType;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
+import org.workin.util.ReflectionUtils;
 
 /**
  * 
@@ -31,8 +42,7 @@ import org.workin.util.CollectionUtils;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSupport implements
-		JpaPersistence<T, PK> {
+public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSupport implements JpaPersistence<T, PK> {
 
 	/**
 	 * ===Public methods================================================= 
@@ -48,17 +58,17 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Make an objectToSave instance managed and persistent.
 	 * 
 	 * Throws:
-     *		EntityExistsException 		 
-     *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
-     *		IllegalStateException 		 
-     *			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 	 
-     *			- if not an entity 
-     *		TransactionRequiredException 
-     *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
+	 *		EntityExistsException 		 
+	 *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
+	 *		IllegalStateException 		 
+	 *			- if this EntityManager has been closed. 
+	 *		IllegalArgumentException 	 
+	 *			- if not an entity 
+	 *		TransactionRequiredException 
+	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param  objectToSave
 	 * @return objectToSave
@@ -77,17 +87,17 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Make an objectsToSave(batch) instance managed and persistent.
 	 * 
 	 * Throws:
-     *		EntityExistsException 		 
-     *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
-     *		IllegalStateException 		 
-     *			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 	 
-     *			- if not an entity 
-     *		TransactionRequiredException 
-     *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
+	 *		EntityExistsException 		 
+	 *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
+	 *		IllegalStateException 		 
+	 *			- if this EntityManager has been closed. 
+	 *		IllegalArgumentException 	 
+	 *			- if not an entity 
+	 *		TransactionRequiredException 
+	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param  objectsToSave
 	 * @return void
@@ -97,8 +107,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public void batchPersist(final List objectsToSave) {
-		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave),
-				"List objectToSave canot null, when batchPersist...");
+		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave), "List objectToSave canot be null, when batchPersist...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -128,7 +137,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.	
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 *  
 	 * @param  objectToMerge
 	 * @return objectToMerge
@@ -155,7 +164,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.	
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 *  
 	 * @param  objectsToMerge
 	 * @return void
@@ -165,8 +174,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public void batchMerge(final List objectsToMerge) {
-		Assert.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
-				"List objectsToMerge canot null, when batchMerge...");
+		Assert
+				.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
+						"List objectsToMerge canot be null, when batchMerge...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -183,30 +193,30 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		});
 	}
 
-   /**
-    * 
-    * Refresh the state of the instance from the database, overwriting changes made to the entity, if any.
-    * 
-    * Throws:
-    * 	   	IllegalStateException 
-    * 			- if this EntityManager has been closed. 
-    * 		IllegalArgumentException 
-    * 			- if not an entity or entity is not managed. 
-    * 		TransactionRequiredException 
-    * 			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction. 
-    * 		EntityNotFoundException 
-    * 			- if the entity no longer exists in the database.
-    * 
-    * Note:
-	* 		All exceptions Will be converted to DataAccessException's subclass and thow
+	/**
+	 * 
+	 * Refresh the state of the instance from the database, overwriting changes made to the entity, if any.
+	 * 
+	 * Throws:
+	 * 	   	IllegalStateException 
+	 * 			- if this EntityManager has been closed. 
+	 * 		IllegalArgumentException 
+	 * 			- if not an entity or entity is not managed. 
+	 * 		TransactionRequiredException 
+	 * 			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction. 
+	 * 		EntityNotFoundException 
+	 * 			- if the entity no longer exists in the database.
+	 * 
+	 * Note:
+	* 		All exceptions Will be converted to DataAccessException's subclass and throw
 	* 
-    * @param   objectToRefresh
-    * @return  void
-    * 
-    * @throws org.springframework.dao.DataAccessException
+	 * @param   objectToRefresh
+	 * @return  void
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
 	* 		   - If an error occurs.but usually throws DataAccessException's subclass
 	* 
-    */
+	 */
 	public void refresh(final T objectToRefresh) {
 		this.getJpaTemplate().refresh(objectToRefresh);
 	}
@@ -224,7 +234,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param objectToRemove
 	 * 
@@ -251,7 +261,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param id
@@ -277,7 +287,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 *  
 	 * @param objectsToRemove
 	 * 
@@ -286,7 +296,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public void batchRemove(final List objectsToRemove) {
 		Assert.isTrue(!CollectionUtils.isEmpty(objectsToRemove),
-				"List ObjectsToRemove canot null, when batchRemove...");
+				"List ObjectsToRemove canot be null, when batchRemove...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -308,15 +318,15 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Synchronize the persistence context to the underlying database.
 	 * 
 	 * Throws:
-     *  	IllegalStateException 
-     *  		- if this EntityManager has been closed. 
-     *   	TransactionRequiredException 
-     *   		- if there is no transaction 
-     *   	PersistenceException 
-     *   		- if the flush fails
-     *
+	 *  	IllegalStateException 
+	 *  		- if this EntityManager has been closed. 
+	 *   	TransactionRequiredException 
+	 *   		- if there is no transaction 
+	 *   	PersistenceException 
+	 *   		- if the flush fails
+	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
@@ -324,19 +334,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public void flush() {
 		this.getJpaTemplate().flush();
 	}
-	
+
 	/**
 	 * 
 	 * Clear the persistence context, causing all managed entities to become detached. 
 	 * Changes made to entities that have not been flushed to the database will not be persisted.
 	 * 
 	 * Throws:
-     *  	IllegalStateException 
-     *  		- if this EntityManager has been closed.
-     *
-     *
+	 *  	IllegalStateException 
+	 *  		- if this EntityManager has been closed.
+	 *
+	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
@@ -349,7 +359,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Check if the instance belongs to the current persistence context.
@@ -357,11 +367,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Throws:
 	 * 		IllegalStateException 
 	 * 			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 
-     *			- if not an entity		
+	 *		IllegalArgumentException 
+	 *			- if not an entity		
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entity
 	 * @return 	boolean
@@ -382,11 +392,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Throws:
 	 * 		IllegalStateException 
 	 * 			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 
-     *			- if not an entity	
+	 *		IllegalArgumentException 
+	 *			- if not an entity	
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
-     *
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
+	 *
 	 * @param 	entityClass
 	 * @param 	id
 	 * @return 	boolean
@@ -411,7 +421,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if the first argument does not denote an entity type or the second argument is not a valid type for that entity's primary key
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param id
@@ -435,15 +445,15 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 			- if a query has not been defined with the given name
 	 *		NoResultException 		 
 	 *			- if there is no result 
-     *		NonUniqueResultException 
-     *			- if more than one result 
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *		NonUniqueResultException 
+	 *			- if more than one result 
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -458,11 +468,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public T findUniqueByNamedOfQuery(final String queryName, final Object... values) {
 
 		return (T) this.getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (values != null) {
-					for (int i = 0,len = values.length; i < len; i++) {
+					for (int i = 0, len = values.length; i < len; i++) {
 						queryObject.setParameter(i + 1, values[i]);
 					}
 				}
@@ -480,14 +490,14 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 			- if a query has not been defined with the given name
 	 *		NoResultException 		 
 	 *			- if there is no result 
-     *		NonUniqueResultException 
-     *			- if more than one result 
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *		NonUniqueResultException 
+	 *			- if more than one result 
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param params
@@ -502,7 +512,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public T findUniqueByNamedOfQuery(final String queryName, final Map<String, ?> params) {
 
 		return (T) this.getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (!CollectionUtils.isEmpty(params)) {
@@ -519,8 +529,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query that returns a single result.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -535,7 +545,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public T findUniqueByProperty(final Class<T> entityClass, final String propertyName, final Object value) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createQuery(buildQueryString(false, entityClass, propertyName));
 
@@ -551,8 +561,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query that returns a single result.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param params
@@ -566,7 +576,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public T findUniqueByPropertys(final Class<T> entityClass, final Map<String, ?> params) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createQuery(buildQueryStringWithNamedParams(false, entityClass, params));
 
@@ -587,13 +597,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Throws:
 	 * 		IllegalArgumentException 
 	 * 			- if a query has not been defined with the given name
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -616,13 +626,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Throws:
 	 * 		IllegalArgumentException 
 	 * 			- if a query has not been defined with the given name
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * 
@@ -644,13 +654,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Throws:
 	 * 		IllegalArgumentException 
 	 * 			- if a query has not been defined with the given name
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param nameAndValue
@@ -665,13 +675,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List findByNamedOfQuery(final String queryName, final Map params) {
 		return this.getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a save,update,delete query and return the query results as a int.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	queryName
 	 * @param 	values
@@ -683,28 +693,28 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public int executeNamedOfQuery(final String queryName, final Object... values) {
-		return (Integer)getJpaTemplate().execute(new JpaCallback() {
-			
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
-				
+
 				if (values != null) {
-					for (int i = 0,len = values.length; i < len; i++) {
+					for (int i = 0, len = values.length; i < len; i++) {
 						queryObject.setParameter(i + 1, values[i]);
 					}
 				}
-				
+
 				return queryObject.executeUpdate();
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a save,update,delete query and return the query results as a int.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	queryName
 	 * @param 	nameAndValue
@@ -716,8 +726,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public int executeNamedOfQuery(final String queryName, final Map<String, ?> nameAndValue) {
-		return (Integer)getJpaTemplate().execute(new JpaCallback() {
-			
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (!CollectionUtils.isEmpty(nameAndValue)) {
@@ -725,19 +735,18 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 						queryObject.setParameter(entry.getKey(), entry.getValue());
 					}
 				}
-				
+
 				return queryObject.executeUpdate();
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -757,8 +766,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -775,9 +784,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value,
 			final int start, final int maxRows) {
-		
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findByProperty()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -803,8 +812,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -819,15 +828,15 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport<T> findPaginatedByProperty(final Class<T> entityClass,
-			final String propertyName, final Object value, final int start, final int maxRows) {
-		
+	public PaginationSupport<T> findPaginatedByProperty(final Class<T> entityClass, final String propertyName,
+			final Object value, final int start, final int maxRows) {
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findPaginatedByProperty()");
 		int tmpMaxRows = maxRows > 0 ? maxRows : 1;
 		int tmpStart = start > 0 ? start : 0;
 
 		Integer count = countByProperty(entityClass, propertyName, value);
-		
+
 		if (count == null || count <= 0) {
 			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpMaxRows, tmpStart);
 		}
@@ -841,8 +850,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @param 	params
@@ -856,7 +865,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createQuery(buildQueryStringWithNamedParams(false, entityClass, params));
 
@@ -874,8 +883,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @param 	params
@@ -891,11 +900,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params, final int start,
 			final int maxRows) {
-		
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findByPropertys()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				String queryString = buildQueryStringWithNamedParams(false, entityClass, params).toString();
 				Query query = em.createQuery(queryString);
@@ -916,14 +925,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
 
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @param 	params
@@ -937,11 +945,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport<T> findPaginatedByPropertys(final Class<T> entityClass,
-			final Map<String, ?> params, final int start, final int maxRows) {
-		
+	public PaginationSupport<T> findPaginatedByPropertys(final Class<T> entityClass, final Map<String, ?> params,
+			final int start, final int maxRows) {
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findPaginatedByPropertys()");
-		
+
 		int tmpMaxRows = maxRows > 0 ? maxRows : 1;
 		int tmpStart = start > 0 ? start : 0;
 
@@ -954,14 +962,14 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return new PaginationSupport<T>(result, count, tmpMaxRows, tmpStart);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     *
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 *
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @return 	List<T>
@@ -979,9 +987,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     *
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 *
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @return 	List<T>
@@ -1009,8 +1017,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *		TransactionRequiredException 
 	 *			- if there is no transaction
 	 *
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -1022,7 +1030,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public void updateOrDelByNamedOfQuery(final String queryName, final Object... values) {
 
 		this.getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (values != null) {
@@ -1049,7 +1057,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 *			- if there is no transaction
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param params
@@ -1061,7 +1069,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public void updateOrDelByNamedOfQuery(final String queryName, final Map<String, ?> params) {
 
 		this.getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (!CollectionUtils.isEmpty(params)) {
@@ -1078,8 +1086,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * Execute a SELECT query and return the count.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -1092,28 +1100,27 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public int countByProperty(final Class<?> entityClass, final String propertyName, final Object value) {
-		
+
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				
+
 				String queryString = buildQueryString(true, entityClass, propertyName).toString();
-				
+
 				Query query = em.createQuery(queryString);
 				query.setParameter(1, value);
-				
+
 				return Integer.valueOf(String.valueOf(query.getSingleResult()));
 			}
 		});
 	}
 
-	
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
 	 * 
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param params
@@ -1127,7 +1134,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int countByPropertys(final Class<?> entityClass, final Map<String, ?> params) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				String queryString = buildQueryStringWithNamedParams(true, entityClass, params).toString();
 				Query query = em.createQuery(queryString);
@@ -1141,19 +1148,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * 
@@ -1165,7 +1172,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public List<?> findByNativeQuery(final String queryString) {
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -1174,19 +1181,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param values
@@ -1201,7 +1208,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List<?> findByNativeQuery(final String queryString, final Object... values) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1213,19 +1220,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param start
@@ -1241,11 +1248,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows,
 			final Object... values) {
-		
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findByNativeQuery()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1265,19 +1272,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param returnClass
@@ -1290,11 +1297,10 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
-	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString,
-			final Object... values) {
+	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1307,19 +1313,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param returnClass
@@ -1336,11 +1342,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final int start,
 			final int maxRows, final Object... values) {
-		
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findByNativeQuery()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1353,19 +1359,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a Entity.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1378,15 +1384,14 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
-	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString,
-			final Object... values) {
+	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
-				for (int i = 0,len=values.length; i < len; i++) {
+				for (int i = 0, len = values.length; i < len; i++) {
 					query.setParameter(i + 1, values[i]);
 				}
 
@@ -1395,19 +1400,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param params
@@ -1422,7 +1427,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List<?> findByNativeQuery(final String queryString, final Map<String, ?> params) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1435,19 +1440,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param start
@@ -1463,18 +1468,18 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows,
 			final Map<String, ?> params) {
-		
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findByNativeQuery()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
-				
+
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
 				}
-				
+
 				if (maxRows >= 0) {
 					query.setMaxResults(maxRows);
 				}
@@ -1483,7 +1488,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				}
 				return query.getResultList();
 			}
-			
+
 		});
 	}
 
@@ -1492,13 +1497,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1511,35 +1516,34 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
-	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString,
-			final Map<String, ?> params) {
-		
+	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params) {
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
-				
+
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
 				}
 				return query.getResultList();
 			}
-			
+
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1556,18 +1560,18 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final int start,
 			final int maxRows, final Map<String, ?> params) {
-		
+
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.findByNativeQuery()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
-			
+
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
-				
+
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
 				}
-				
+
 				if (maxRows >= 0) {
 					query.setMaxResults(maxRows);
 				}
@@ -1576,22 +1580,22 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				}
 				return query.getResultList();
 			}
-			
+
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a Entity.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1604,24 +1608,23 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
-	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString,
-			final Map<String, ?> params) {
-		
-		return (T)getJpaTemplate().execute(new JpaCallback() {
+	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params) {
+
+		return (T) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
-				
+
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
 				}
-			
+
 				return query.getSingleResult();
 			}
-			
+
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement.
@@ -1638,7 +1641,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @return
@@ -1649,14 +1652,14 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString) {
-		
+
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				return em.createNativeQuery(queryString).executeUpdate();
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement.
@@ -1673,7 +1676,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param params
@@ -1685,11 +1688,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString, final Map<String, ?> params) {
-		
+
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
-				
+
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
 				}
@@ -1697,7 +1700,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement.
@@ -1714,7 +1717,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param values
@@ -1726,12 +1729,12 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString, final Object... values) {
-		
+
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
-				for (int i = 0,len = values.length; i < len; i++) {
+				for (int i = 0, len = values.length; i < len; i++) {
 					query.setParameter(i + 1, values[i]);
 				}
 
@@ -1740,12 +1743,137 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		});
 	}
 	
+	
 	/**
-	 * ===Private================================================= Some private
-	 * method for: -support public method
+	 * 
+	 * findByCriteriaQuery
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @return
+	 * 
+	 */
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
+		return this.findByCriteriaQuery(targetClass, filters, false);
+	}
+	
+	/**
+	 * 
+	 * findByCriteriaQuery
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @param isDistinct
+	 * @return
+	 * 
+	 */
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters,
+			final boolean isDistinct) {
+	
+		return (List<T>) getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+				CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(targetClass);
+
+				Root<T> entity = criteriaQuery.from(targetClass);
+				EntityType<T> entityType = entity.getModel();
+
+				criteriaQuery.select(entity);
+				criteriaQuery.distinct(isDistinct);
+
+				Predicate predicate[] = buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
+						entity, entityType, isDistinct, filters);
+
+				criteriaQuery.where(criteriaBuilder.and(predicate));
+				TypedQuery<T> finalCriteriaQuery = em.createQuery(criteriaQuery);
+
+				return (List<T>) finalCriteriaQuery.getResultList();
+			}
+		});
+	}
+	
+	
+
+	/**
+	 * ===Private================================================= 
+	 * Some private method for: -support public method
 	 * ================================================================
 	 */
+	
 
+	/**
+	 * 
+	 * @param targetClass
+	 * @param criteriaBuilder
+	 * @param criteriaQuery
+	 * @param entity
+	 * @param entityType
+	 * @param isDistinct
+	 * @param filters
+	 * @return
+	 * 
+	 */
+	private Predicate[] buildPropertyFilterPredicates(final Class<T> targetClass,
+			final CriteriaBuilder criteriaBuilder, final CriteriaQuery<T> criteriaQuery, final Root<T> entity,
+			EntityType<T> entityType, final boolean isDistinct, final List<PropertyFilter> filters) {
+
+		List<Predicate> predicateList = new ArrayList<Predicate>();
+		for (PropertyFilter filter : filters) {
+			for (String param : filter.getPropertyNames()) {
+				Predicate predicate = buildPropertyFilterPredicate(targetClass, criteriaBuilder, criteriaQuery, entity,
+						entityType, isDistinct, param, filter.getPropertyValue(), filter.getMatchType());
+				predicateList.add(predicate);
+			}
+		}
+
+		return predicateList.toArray(new Predicate[predicateList.size()]);
+	}
+	
+	/**
+	 * 
+	 * @param targetClass
+	 * @param criteriaBuilder
+	 * @param criteriaQuery
+	 * @param entity
+	 * @param entityType
+	 * @param isDistinct
+	 * @param propertyName
+	 * @param propertyValue
+	 * @param matchType
+	 * @return
+	 * 
+	 */
+	private Predicate buildPropertyFilterPredicate(final Class<T> targetClass, final CriteriaBuilder criteriaBuilder,
+			final CriteriaQuery<T> criteriaQuery, final Root<T> entity, EntityType<T> entityType,
+			final boolean isDistinct, final String propertyName, final Object propertyValue, final MatchType matchType) {
+
+		Assert.hasText(propertyName, "propertyName canot be null!");
+		
+		Expression expression = (Expression) entity.get(entityType.getSingularAttribute(propertyName));
+
+		Predicate predicate = null;
+		try {
+			if (MatchType.EQ.equals(matchType)) {
+				predicate = criteriaBuilder.equal(expression, propertyValue);
+			} else if (MatchType.LIKE.equals(matchType)) {
+				predicate = criteriaBuilder.like(expression, String.valueOf(propertyValue)); //TODO
+			} else if (MatchType.LE.equals(matchType)) {
+				predicate = criteriaBuilder.le(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
+			} else if (MatchType.LT.equals(matchType)) {
+				predicate = criteriaBuilder.lt(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
+			} else if (MatchType.GE.equals(matchType)) {
+				predicate = criteriaBuilder.ge(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
+			} else if (MatchType.GT.equals(matchType)) {
+				predicate = criteriaBuilder.gt(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
+			}
+		} catch (Exception e) {
+			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+		}
+
+		return predicate;
+	}
+	
+	
 	/**
 	 * 
 	 * Build Query String by class only.
@@ -1757,12 +1885,12 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	private StringBuilder buildQueryString(final Class<?> clazz, final boolean isCount) {
 		StringBuilder queryBuilder = new StringBuilder();
-		
-		if(isCount)
+
+		if (isCount)
 			queryBuilder.append("SELECT COUNT(*) as totalCount FROM ");
 		else
 			queryBuilder.append("SELECT obj FROM ");
-		
+
 		queryBuilder.append(clazz.getName());
 		queryBuilder.append(" obj");
 
@@ -1806,7 +1934,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * @return string
 	 * 
 	 */
-	private String buildQueryStringWithNamedParams(final boolean isCount, final Class<?> clazz, final Map<String, ?> params) {
+	private String buildQueryStringWithNamedParams(final boolean isCount, final Class<?> clazz,
+			final Map<String, ?> params) {
 		StringBuilder queryBuilder = buildQueryString(clazz, isCount);
 
 		if (!CollectionUtils.isEmpty(params)) {
@@ -1820,14 +1949,14 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				queryBuilder.delete(queryBuilder.length() - 5, queryBuilder.length());
 			}
 		}
-		
+
 		logger.info(" Build Query String With NamedParams: {}", queryBuilder.toString());
 		return queryBuilder.toString();
 	}
-	
+
 	// JpaPersistenceImpl logger
 	private static final transient Logger logger = LoggerFactory.getLogger(JpaPersistenceImpl.class);
-	
+
 	// Allowed batch objects record size
 	protected static final int DEFAULT_BATCH_SIZE = Constants.DEFAULT_BATCH_SIZE;
 }

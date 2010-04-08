@@ -1,6 +1,7 @@
 package org.workin.test.application;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Repeat;
 import org.springframework.test.annotation.Rollback;
 import org.workin.core.entity.Idable;
+import org.workin.core.persistence.support.PropertyFilter;
 import org.workin.fortest.spring.SpringTxTestCase;
 import org.workin.test.application.entity.Person;
 import org.workin.test.application.service.PersonService;
@@ -32,17 +34,7 @@ import org.workin.util.CollectionUtils;
 public class PersonServiceTest extends SpringTxTestCase {
 	
 	@Autowired
-    private PersonService personService;
-	
-//	@Test
-//	@Rollback(false)
-//	public void persistByNativeQuery() {
-//		personService.persistByNativeQuery("call AddPerson()");
-//		personService.persistByNativeQuery("call UpdatePerson()");
-//		personService.persistByNativeQuery("call RemovePerson()");
-//		
-//		personService.persistByNativeQuery("call AddPersonWithParam(?,?)", "abc", "123");
-//	}
+    private PersonService personService;	
 	
 	// first init db data
 	@Test
@@ -86,6 +78,27 @@ public class PersonServiceTest extends SpringTxTestCase {
 		assertEquals(NEW_USER_NAME, person.getName());
 		assertEquals(NEW_USER_SEX, person.getSex());
 	}
+	
+	// test for find By CriteriaQuery successful
+	@Test
+	public void findByCriteriaQuery() {
+		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		PropertyFilter filter_name = new PropertyFilter("EQS_name", "goingmm");
+		filters.add(filter_name);
+		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
+		filters.add(filter_sex);
+		PropertyFilter filter_version = new PropertyFilter("GEL_version", "0");
+		filters.add(filter_version);
+		
+		List<Person> personList = personService.findByCriteriaQuery(filters);
+		assertTrue(personList.size() == 1);
+		
+		for(Person person : personList) {
+			assertEquals(NEW_USER_NAME, person.getName());
+			assertEquals(NEW_USER_SEX, person.getSex());
+		}
+	}
+	
 	
 	// test for get all person successful
 	@Test

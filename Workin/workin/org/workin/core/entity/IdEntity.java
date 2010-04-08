@@ -67,8 +67,8 @@ public abstract class IdEntity implements Serializable, Idable {
 	// For all subClass use same logic descComparator
 	public static final DESCComparator descComparator = DESCComparator.getInstance();
 	
-	//	@Override
-	//	public String toString() {
-	//		return ToStringBuilder.reflectionToString(this);
-	//	}
+//	@Override
+//	public String toString() {
+//		return ToStringBuilder.reflectionToString(this);
+//	}
 }

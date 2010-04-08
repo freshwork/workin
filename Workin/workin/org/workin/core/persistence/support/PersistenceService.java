@@ -31,7 +31,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param  objectToSave
 	 * @return objectToSave
@@ -57,7 +57,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param  objectsToSave
 	 * @return void
@@ -81,7 +81,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.	
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 *  
 	 * @param  objectToMerge
 	 * @return objectToMerge
@@ -106,7 +106,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.	
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 *  
 	 * @param  objectsToMerge
 	 * @return void
@@ -132,7 +132,7 @@ public interface PersistenceService<T, PK extends Serializable> {
     * 			- if the entity no longer exists in the database.
     * 
     * Note:
-	* 		All exceptions Will be converted to DataAccessException's subclass and thow
+	* 		All exceptions Will be converted to DataAccessException's subclass and throw
 	* 
     * @param   objectToRefresh
     * @return  void
@@ -156,7 +156,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param objectToRemove
 	 * 
@@ -181,7 +181,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param id
@@ -205,7 +205,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 *  
 	 * @param objectsToRemove
 	 * 
@@ -227,7 +227,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *   		- if the flush fails
      *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
@@ -245,7 +245,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *
      *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
@@ -263,7 +263,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			- if not an entity		
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entity
 	 * @return 	boolean
@@ -285,7 +285,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *		IllegalArgumentException 
      *			- if not an entity	
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
      *
 	 * @param 	entityClass
 	 * @param 	id
@@ -308,7 +308,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if the first argument does not denote an entity type or the second argument is not a valid type for that entity's primary key
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param id
@@ -338,7 +338,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -368,7 +368,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			- if called for a Java Persistence query language UPDATE or DELETE statement
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param params
@@ -388,7 +388,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query that returns a single result.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -408,7 +408,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query that returns a single result.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param params
@@ -435,7 +435,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -462,7 +462,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * 
@@ -488,7 +488,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param nameAndValue
@@ -507,7 +507,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a save,update,delete query and return the query results as a int.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	queryName
 	 * @param 	values
@@ -525,7 +525,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a save,update,delete query and return the query results as a int.
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	queryName
 	 * @param 	nameAndValue
@@ -543,7 +543,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -562,7 +562,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -585,7 +585,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -608,7 +608,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @param 	params
@@ -626,7 +626,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @param 	params
@@ -648,7 +648,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @param 	params
@@ -671,7 +671,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
      *
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @return 	List<T>
@@ -689,7 +689,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
      *
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
 	 * @return 	List<T>
@@ -715,7 +715,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if there is no transaction
 	 *
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -740,7 +740,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *			- if there is no transaction
 	 *
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param params
@@ -757,7 +757,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the count.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param propertyName
@@ -776,7 +776,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Execute a SELECT query and return the count.
 	 * 
      * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
 	 * @param params
@@ -800,7 +800,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * 
@@ -825,7 +825,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param values
@@ -851,7 +851,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param start
@@ -880,7 +880,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param returnClass
@@ -908,7 +908,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param returnClass
@@ -938,7 +938,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -966,7 +966,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param params
@@ -992,7 +992,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param start
@@ -1020,7 +1020,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1047,7 +1047,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1076,7 +1076,7 @@ public interface PersistenceService<T, PK extends Serializable> {
      *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param returnClass
 	 * @param queryString
@@ -1108,7 +1108,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @return
@@ -1136,7 +1136,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param params
@@ -1165,7 +1165,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryString
 	 * @param values
@@ -1300,4 +1300,6 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows);
+	
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
 }

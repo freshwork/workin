@@ -178,8 +178,7 @@ public class WebUtils {
 	 * @param prefix
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static Map<String, String> getParametersStartingWith(HttpServletRequest request, String prefix) {
+	public static Map<String, Object> getParametersStartingWith(HttpServletRequest request, String prefix) {
 		return org.springframework.web.util.WebUtils.getParametersStartingWith(request, prefix);
 	}
 	
