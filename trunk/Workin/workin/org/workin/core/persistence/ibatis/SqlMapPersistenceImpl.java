@@ -4,10 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.workin.core.persistence.support.PaginationSupport;
-import org.workin.exception.WorkinDataAccessException;
+import org.workin.exception.ThrowableHandle;
 import org.workin.util.Assert;
 
 /**
@@ -156,17 +158,16 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForList()");
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in SqlMapPersistenceImpl.queryForList()");
 		
-		Integer count = null;
+		Number count = null;
 		try {
-			count = (Integer) this.findObjectBySqlMap(sqlMapId + SQLID_COUNT, parameterObject);
+			count = (Number) this.findObjectBySqlMap(sqlMapId + SQLID_COUNT, parameterObject);
 		} catch (Exception e) {
-			String msg = String.valueOf("Config file cannot be COUNT:") + sqlMapId; 
-			logger.warn(msg, e);
-			throw new WorkinDataAccessException(msg, e);
+			String msg = String.valueOf("Config file cannot be count:") + sqlMapId; 
+			ThrowableHandle.handleThrow(msg, e, logger);
 		}
 		
 		if (count == null || count.intValue() <= 0) {
-			logger.debug(" Excute later count is 0, no data in this search.");
+			logger.info(" Excute later count is 0, no data in this search.");
 			return new PaginationSupport(new LinkedList(), count.intValue(), maxRows, offset);
 		}
 		
@@ -178,4 +179,6 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	}
 
 	public static final String SQLID_COUNT = "_count"; 
+	
+	private static final transient Logger logger = LoggerFactory.getLogger(SqlMapPersistenceImpl.class);
 }

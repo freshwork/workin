@@ -107,7 +107,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public void batchPersist(final List objectsToSave) {
-		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave), "List objectToSave canot be null, when batchPersist...");
+		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave), "List objectToSave cannot be null, when batchPersist...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -176,7 +176,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public void batchMerge(final List objectsToMerge) {
 		Assert
 				.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
-						"List objectsToMerge canot be null, when batchMerge...");
+						"List objectsToMerge cannot be null, when batchMerge...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -296,7 +296,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	public void batchRemove(final List objectsToRemove) {
 		Assert.isTrue(!CollectionUtils.isEmpty(objectsToRemove),
-				"List ObjectsToRemove canot be null, when batchRemove...");
+				"List ObjectsToRemove cannot be null, when batchRemove...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -1847,7 +1847,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			final CriteriaQuery<T> criteriaQuery, final Root<T> entity, EntityType<T> entityType,
 			final boolean isDistinct, final String propertyName, final Object propertyValue, final MatchType matchType) {
 
-		Assert.hasText(propertyName, "propertyName canot be null!");
+		Assert.hasText(propertyName, "propertyName cannot be null!");
 		
 		Expression expression = (Expression) entity.get(entityType.getSingularAttribute(propertyName));
 
