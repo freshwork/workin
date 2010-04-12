@@ -33,7 +33,7 @@ import org.workin.util.CollectionUtils;
 public class PersonServiceTest extends SpringTxTestCase {
 
 	@Autowired
-	private PersonService personService;
+	private PersonService personService; 
 
 	// first init db data
 	@Test

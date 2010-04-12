@@ -22,6 +22,7 @@
 		<pathelement location="${build.dir}" />
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
+			<include name="**/*.jar" />
 		</fileset>
 	</path>
 
