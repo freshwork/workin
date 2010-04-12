@@ -15,4 +15,6 @@ public interface Constants {
 	// app event audit executor name
 	public static final String AUDIT_EVENT_EXECUTOR = "auditEventExecutor";
 	
+	
+	public static final String SQLMAP_KEYWORDS_FORUPDATE = "FOR UPDATE";
 }

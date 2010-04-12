@@ -9,13 +9,7 @@
     <result property="sex" column="sex" columnIndex="10"/>
     <result property="birthday" column="birthday" columnIndex="30"/>
   </resultMap>
-  	
-  <select id="getPersons_count" resultClass="java.lang.Integer">
-    SELECT
-    	count(1)
-    FROM person 
-    WHERE person.name= #name#
-  </select>	
+ 
   <select id="getPersons" resultMap="result">
     SELECT
     	*

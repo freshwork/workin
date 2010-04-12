@@ -38,7 +38,7 @@ public class PaginationSupport<T> implements Serializable {
 		setStartIndex(startIndex);
 	}
 
-	public PaginationSupport(Object data, int totalCount, int pageSize,	int startIndex) {
+	public PaginationSupport(Object data, int totalCount, int pageSize, int startIndex) {
 		setPageSize(pageSize);
 		setTotalCount(totalCount);
 		setData(data);
@@ -64,12 +64,12 @@ public class PaginationSupport<T> implements Serializable {
 	public int getTotalCount() {
 		return totalCount;
 	}
-	
+
 	public int getPageCount() {
-		
-		int totalPage=totalCount/pageSize;
-		totalPage += totalCount%pageSize == 0 ? 0 : 1;
-		
+
+		int totalPage = totalCount / pageSize;
+		totalPage += totalCount % pageSize == 0 ? 0 : 1;
+
 		return totalPage;
 	}
 
@@ -77,12 +77,12 @@ public class PaginationSupport<T> implements Serializable {
 		if (totalCount > 0) {
 			this.totalCount = totalCount;
 			int count = totalCount / pageSize;
-			
+
 			if (totalCount % pageSize > 0) {
 				count++;
 			}
 			indexes = new int[count];
-			
+
 			for (int i = 0; i < count; i++) {
 				indexes[i] = pageSize * i;
 			}
@@ -90,7 +90,7 @@ public class PaginationSupport<T> implements Serializable {
 			this.totalCount = 0;
 		}
 	}
-	
+
 	public int[] getIndexes() {
 		return indexes;
 	}
@@ -117,7 +117,7 @@ public class PaginationSupport<T> implements Serializable {
 
 	public int getNextIndex() {
 		int nextIndex = getStartIndex() + pageSize;
-		
+
 		if (nextIndex >= totalCount)
 			return getStartIndex();
 		else
@@ -126,21 +126,19 @@ public class PaginationSupport<T> implements Serializable {
 
 	public int getPreviousIndex() {
 		int previousIndex = getStartIndex() - pageSize;
-		
+
 		if (previousIndex <= 1)
 			return -1;
 		else
 			return previousIndex;
 	}
-	
 
 	public int getLastPageIndex() {
 		return (getPageCount() - 1) * pageSize;
 	}
-	
 
 	public int getCurrentPageIndex() {
-		return getStartIndex()/pageSize + 1;
+		return getStartIndex() / pageSize + 1;
 	}
-	
+
 }

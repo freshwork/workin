@@ -3,6 +3,7 @@ package org.workin.core.persistence.ibatis;
 import java.util.List;
 import java.util.Map;
 
+import org.workin.core.persistence.ibatis.plugin.SqlMapCounter;
 import org.workin.core.persistence.support.PaginationSupport;
 
 
@@ -12,7 +13,7 @@ import org.workin.core.persistence.support.PaginationSupport;
  *
  */
 @SuppressWarnings("unchecked")
-public interface SqlMapPersistence {
+public interface SqlMapPersistence extends SqlMapCounter {
 
 	/**
 	 * 
