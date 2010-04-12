@@ -1,3 +1,0 @@
-[org.workin.util.ReflectionUtils] - <TestBean2's superclass not ParameterizedType>
-[org.workin.util.ReflectionUtils] - <TestBean3's superclass not ParameterizedType>
-
