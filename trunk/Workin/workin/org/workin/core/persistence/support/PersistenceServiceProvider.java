@@ -323,6 +323,15 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	}
 	
 	@Override
+	public long getTotalCountBySqlMap(String selectStatementId) {
+		return this.sqlMapPersistence.getObjectTotal(selectStatementId);
+	}
+	
+	@Override
+	public long getTotalCountBySqlMap(String selectStatementId, Object parameterObject) {
+		return this.sqlMapPersistence.getObjectTotal(selectStatementId, parameterObject);
+	}
+	@Override
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.jpaPersistence.findByCriteriaQuery(targetClass, filters);
 	}

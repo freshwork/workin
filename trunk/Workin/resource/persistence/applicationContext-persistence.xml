@@ -50,6 +50,12 @@
 		<property name="configLocation" value="classpath:sqlmap/sql-map-config.xml"/>
 	</bean>
 	
+	<bean id="sqlExecutor" class="org.workin.core.persistence.ibatis.plugin.LimitSqlExecutor"> 
+		<property name="dialect"> 
+			<bean class="org.workin.core.persistence.dialect.MySQLDialect" /> 
+		</property> 
+	</bean> 
+	
 	<bean id="jpaPersistence" class="org.workin.core.persistence.jpa.JpaPersistenceImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
@@ -57,6 +63,7 @@
 	<bean id="sqlMapPersistence" class="org.workin.core.persistence.ibatis.SqlMapPersistenceImpl">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="sqlMapClient" ref="sqlMapClient"/>
+		<property name="sqlExecutor" ref="sqlExecutor"/>
 	</bean>
 	
 	<bean id="persistenceService" class="org.workin.core.persistence.support.PersistenceServiceProvider">

@@ -8,9 +8,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.workin.core.persistence.ibatis.plugin.CountStatementHelper;
+import org.workin.core.persistence.ibatis.plugin.LimitSqlExecutor;
 import org.workin.core.persistence.support.PaginationSupport;
-import org.workin.exception.ThrowableHandle;
 import org.workin.util.Assert;
+import org.workin.util.ReflectionUtils;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapException;
+import com.ibatis.sqlmap.engine.execution.SqlExecutor;
+import com.ibatis.sqlmap.engine.impl.ExtendedSqlMapClient;
+import com.ibatis.sqlmap.engine.impl.SqlMapExecutorDelegate;
 
 /**
  * 
@@ -19,9 +27,35 @@ import org.workin.util.Assert;
  */
 
 @Repository
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings( { "unchecked", "deprecation" })
 public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements SqlMapPersistence {
-	
+
+	private SqlExecutor sqlExecutor;
+
+	public SqlExecutor getSqlExecutor() {
+		return sqlExecutor;
+	}
+
+	public void setSqlExecutor(SqlExecutor sqlExecutor) {
+		this.sqlExecutor = sqlExecutor;
+	}
+
+	public void setEnableLimit(boolean enableLimit) {
+		if (sqlExecutor instanceof LimitSqlExecutor) {
+			((LimitSqlExecutor) sqlExecutor).setEnableLimit(enableLimit);
+		}
+	}
+
+	public void initialize() throws Exception {
+		if (sqlExecutor != null) {
+			SqlMapClient sqlMapClient = getSqlMapClientTemplate().getSqlMapClient();
+			if (sqlMapClient instanceof ExtendedSqlMapClient) {
+				ReflectionUtils.setFieldValue(((ExtendedSqlMapClient) sqlMapClient).getDelegate(), "sqlExecutor",
+						sqlExecutor);
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -157,28 +191,61 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows) {
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForList()");
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in SqlMapPersistenceImpl.queryForList()");
-		
-		Number count = null;
-		try {
-			count = (Number) this.findObjectBySqlMap(sqlMapId + SQLID_COUNT, parameterObject);
-		} catch (Exception e) {
-			String msg = String.valueOf("Config file cannot be count:") + sqlMapId; 
-			ThrowableHandle.handleThrow(msg, e, logger);
-		}
-		
+
+		Number count = this.getObjectTotal(sqlMapId, parameterObject);
+
 		if (count == null || count.intValue() <= 0) {
-			logger.info(" Excute later count is 0, no data in this search.");
+			logger.info("After the query execution Count the number of records is zero.");
 			return new PaginationSupport(new LinkedList(), count.intValue(), maxRows, offset);
 		}
 		
 		int tmpOffset = (offset < 0 ? 0 : offset);
 		int tmpMaxRows = (maxRows <= 0 ? 1 : maxRows);
-		
+
 		List<?> resultList = getSqlMapClientTemplate().queryForList(sqlMapId, parameterObject, tmpOffset, tmpMaxRows);
 		return new PaginationSupport(resultList, count.intValue(), tmpMaxRows, tmpOffset);
 	}
 
-	public static final String SQLID_COUNT = "_count"; 
-	
+	@Override
+	public long getObjectTotal(String selectStatementId) {
+		prepareCountSql(selectStatementId);
+		return (Long) getSqlMapClientTemplate().queryForObject(
+				CountStatementHelper.getCountStatementId(selectStatementId));
+	}
+
+	@Override
+	public long getObjectTotal(String selectStatementId, Object parameterObject) {
+		prepareCountSql(selectStatementId);
+		return (Long) getSqlMapClientTemplate().queryForObject(
+				CountStatementHelper.getCountStatementId(selectStatementId), parameterObject);
+	}
+
+	/**
+	 * 
+	 * @param selectSql
+	 * 
+	 */
+	protected void prepareCountSql(String selectStatementId) {
+		String countQuery = CountStatementHelper.getCountStatementId(selectStatementId);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("In prepareCountSql Convert {} to {} ", selectStatementId, countQuery);
+		}
+
+		SqlMapClient sqlMapClient = getSqlMapClientTemplate().getSqlMapClient();
+		if (sqlMapClient instanceof ExtendedSqlMapClient) {
+			SqlMapExecutorDelegate delegate = ((ExtendedSqlMapClient) sqlMapClient).getDelegate();
+
+			try {
+				delegate.getMappedStatement(countQuery);
+			} catch (SqlMapException e) {
+				delegate.addMappedStatement(CountStatementHelper.createCountStatement(delegate
+						.getMappedStatement(selectStatementId)));
+			}
+		}
+	}
+
+	public static final String SQLID_COUNT = "_count";
+
 	private static final transient Logger logger = LoggerFactory.getLogger(SqlMapPersistenceImpl.class);
 }

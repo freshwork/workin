@@ -1302,5 +1302,47 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 */
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows);
 	
+	/**
+	 * 
+	 * Executes a mapped SQL SELECT statement that returns data a
+	 * number of result.
+	 * <p/>
+	 * The parameter object is generally used to supply the input data for the
+	 * WHERE clause parameter(s) of the SELECT statement.
+	 * 
+	 * @param selectStatementId
+	 * @return
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 *            -If an error occurs.but usually throws DataAccessException's subclass
+	 */
+	public long getTotalCountBySqlMap(String selectStatementId); 
+	
+	/**
+	 * 
+	 * Executes a mapped SQL SELECT statement that returns data a
+	 * number of result.
+	 * <p/>
+	 * The parameter object is generally used to supply the input data for the
+	 * WHERE clause parameter(s) of the SELECT statement.
+	 * 
+	 * @param selectStatementId
+	 * @param parameterObject
+	 * @return
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 *            -If an error occurs.but usually throws DataAccessException's subclass
+	 */
+	public long getTotalCountBySqlMap(String selectStatementId, Object parameterObject); 
+	
+	/**
+	 * 
+	 * Use JPA2.0 Criteria(BETA, Not recommended)
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @return
+	 * 
+	 */
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
 }

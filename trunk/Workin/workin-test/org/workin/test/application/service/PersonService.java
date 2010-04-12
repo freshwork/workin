@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.workin.core.persistence.support.CrudService;
+import org.workin.core.persistence.support.PaginationSupport;
 import org.workin.core.persistence.support.PropertyFilter;
 import org.workin.test.application.entity.Person;
 
@@ -17,6 +18,8 @@ import org.workin.test.application.entity.Person;
 public interface PersonService extends CrudService {
 	
 	public List findPersonsBySqlMap(String sqlMapId, Person person);
+	
+	public PaginationSupport findPersonsBySqlMap(String sqlMapId, Person person, int offset, int maxRows);
 	
 	public List findPersonsByNamedQuery(String namedOfQuery, Map nameAndValue);
 	

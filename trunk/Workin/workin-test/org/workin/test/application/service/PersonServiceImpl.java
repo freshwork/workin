@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.workin.core.persistence.support.AbstractBeanService;
+import org.workin.core.persistence.support.PaginationSupport;
 import org.workin.core.persistence.support.PropertyFilter;
 import org.workin.test.application.entity.Person;
 
@@ -51,7 +52,13 @@ public class PersonServiceImpl extends AbstractBeanService implements PersonServ
 		return this.getPersistenceService().persistByNativeQuery(queryString, values);
 	}
 	
+	@Override
 	public List<Person> findByCriteriaQuery(List<PropertyFilter> filters) {
 		return this.getPersistenceService().findByCriteriaQuery(Person.class, filters);
+	}
+	
+	@Override
+	public PaginationSupport findPersonsBySqlMap(String sqlMapId, Person person, int offset, int maxRows) {
+		return this.getPersistenceService().findPaginatedBySqlMap(sqlMapId, person, offset, maxRows);
 	}
 }
