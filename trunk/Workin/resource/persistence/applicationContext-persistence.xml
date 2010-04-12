@@ -47,7 +47,7 @@
 		p:databasePlatform="${jpa.databasePlatform}"/>
 					
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-		<property name="configLocation" value="classpath:sqlmap/sql-map-config.xml"/>
+		<property name="configLocation" value="classpath:iBatis/iBatisConfig.xml"/>
 	</bean>
 	
 	<bean id="sqlExecutor" class="org.workin.core.persistence.ibatis.plugin.LimitSqlExecutor"> 

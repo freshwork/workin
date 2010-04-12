@@ -258,7 +258,7 @@
 	</target>
 	
 	<!-- executer for all tasks -->
-	<target name="executer" depends="init, complie, test, checkstyle, test.report, javadoc, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
+	<target name="executer" depends="init, complie, test, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
 		<echo message="Project: ${ant.project.name}, Executer all tasks done." />
 	</target>
 </project>
