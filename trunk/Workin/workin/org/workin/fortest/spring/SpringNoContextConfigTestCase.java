@@ -15,7 +15,7 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
 public class SpringNoContextConfigTestCase extends AbstractJUnit4SpringContextTests {
 	
 	@SuppressWarnings("unused")
-	private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private transient Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	protected void assertReflectionEquals(Object expected, Object actual) {
 		ReflectionAssert.assertReflectionEquals(expected, actual, ReflectionComparatorMode.IGNORE_DEFAULTS,

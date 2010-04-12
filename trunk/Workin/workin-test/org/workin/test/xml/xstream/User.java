@@ -20,16 +20,19 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.mapper.Mapper;
 
+/**
+ * 
+ * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
+ *
+ */
 @XStreamAlias("user")
 public class User {
 
-	//设置转换为xml节点属性
 	@XStreamAsAttribute
 	private Long id;
 
 	private String name;
 
-	//设置不转换为xml
 	@XStreamOmitField
 	private String password;
 
@@ -37,11 +40,9 @@ public class User {
 
 	private List<Role> roles = new ArrayList<Role>();
 
-	//设置xml为<interest/><interest/>
 	@XStreamImplicit(itemFieldName = "interest")
 	private List<String> interests = new ArrayList<String>();
 
-	//设置对Map的转换
 	@XStreamConverter(HouseMapConverter.class)
 	private Map<String, String> houses = new HashMap<String, String>();
 
@@ -106,9 +107,6 @@ public class User {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	/**
-	 * 将key转换为entry节点属性的Converter.
-	 */
 	public static class HouseMapConverter extends MapConverter {
 
 		private static final String ENTRY_NAME = "house";

@@ -12,7 +12,7 @@ public class PaginationSupport<T> implements Serializable {
 
 	private static final long serialVersionUID = -7315205992759496506L;
 
-	public static final int PAGESIZE = 10;
+	private static final int PAGESIZE = 10;
 
 	private int pageSize = PAGESIZE;
 

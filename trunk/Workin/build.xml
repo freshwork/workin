@@ -215,9 +215,9 @@
 			<fileset dir="workin">
 				<patternset refid="java.files.pattern" />
 			</fileset>
-			<fileset dir="workin-test">
+			<!--fileset dir="workin-test">
 				<patternset refid="java.files.pattern" />
-			</fileset>
+			</fileset-->
 
 			<formatter type="xml" toFile="${checkstyle.data.file}" />
 		</checkstyle>
