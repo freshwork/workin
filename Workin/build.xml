@@ -245,7 +245,7 @@
 		</javadoc>
 	</target>
 	
-	<target name="releaseJarsToE3Team">
+	<target name="releaseJarsToDevTeam">
 		<copy todir="${target.jars.dir}\release" preservelastmodified="true">
 			<fileset dir="${target.jars.dir}\">
 				<include name="org.workin.commons.jar" />
@@ -257,7 +257,7 @@
 	</target>
 	
 	<!-- executer for all tasks -->
-	<target name="executer" depends="init, complie, test, checkstyle, test.report, javadoc, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToE3Team">
+	<target name="executer" depends="init, complie, test, checkstyle, test.report, javadoc, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
 		<echo message="Project: ${ant.project.name}, Executer all tasks done." />
 	</target>
 </project>
