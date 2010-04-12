@@ -24,10 +24,10 @@ public class HouseMap {
 	
 	static class HouseEntry {
 		@XmlAttribute
-		public String key;
+		private String key;
 
 		@XmlValue
-		public String value;
+		private String value;
 
 		public HouseEntry() {
 		}
@@ -38,6 +38,11 @@ public class HouseMap {
 		}
 	}
 	
+	/**
+	 * 
+	 * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
+	 *
+	 */
 	public static class HouseMapAdapter extends XmlAdapter<HouseMap, Map<String, String>> {
 
 		@Override

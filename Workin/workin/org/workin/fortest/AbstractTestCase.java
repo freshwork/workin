@@ -13,6 +13,6 @@ import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTest
 @ContextConfiguration(locations={"/applicationContext.xml"})
 public class AbstractTestCase extends AbstractJUnit38SpringContextTests {
 	
-	protected transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
 }
