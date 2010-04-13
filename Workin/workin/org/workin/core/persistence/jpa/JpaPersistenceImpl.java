@@ -827,6 +827,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		});
 	}
 	
+	
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
@@ -863,16 +864,44 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	}
 	
 	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * 
+	 * @return 	int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	@Override
+	public int executeNamedOfQuery(final String queryName) {
+		return this.executeNamedOfQuery(queryName, (Object[])null);
+	}
+	
 	
 	/**
 	 * 
-	 * Execute a save,update,delete query and return the query results as a int.
+	 * Execute an update or delete statement and return a int value.
 	 * 
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
 	 * 
-	 * @param 	queryName
+	 * @param 	queryString
 	 * @param 	values
+	 * 
 	 * @return 	int
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
@@ -897,16 +926,20 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-
+	
 	/**
 	 * 
-	 * Execute a save,update,delete query and return the query results as a int.
+	 * Execute an update or delete statement and return a int value.
 	 * 
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
 	 * 
-	 * @param 	queryName
+	 * @param 	queryString
 	 * @param 	nameAndValue
+	 * 
 	 * @return 	int
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
@@ -930,7 +963,104 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	@Override
+	public int execute(final String queryString) {
+		return execute(queryString, (Object[])null);
+	}
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * @param 	values
+	 * 
+	 * @return 	int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	@Override
+	public int execute(final String queryString, final Object... values) {
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				Query queryObject = em.createQuery(queryString);
+
+				if (values != null) {
+					for (int i = 0, len = values.length; i < len; i++) {
+						queryObject.setParameter(i + 1, values[i]);
+					}
+				}
+
+				return queryObject.executeUpdate();
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * @param 	nameAndValue
+	 * 
+	 * @return 	int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	@Override
+	public int execute(final String queryString, final Map<String, ?> nameAndValue) {
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				Query queryObject = em.createQuery(queryString);
+				if (!CollectionUtils.isEmpty(nameAndValue)) {
+					for (Map.Entry<String, ?> entry : nameAndValue.entrySet()) {
+						queryObject.setParameter(entry.getKey(), entry.getValue());
+					}
+				}
+
+				return queryObject.executeUpdate();
+			}
+		});
+	}
+	
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -1202,85 +1332,6 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return new ArrayList(result);
 	}
 
-	/**
-	 * 
-	 * Execute an update or delete statement.
-	 * 
-	 * Throws:
-	 * 		IllegalArgumentException 
-	 * 			- if a query has not been defined with the given name
-	 *		IllegalStateException 
-	 *			- if this EntityManager has been closed.
-	 *			- if called for a Java Persistence query language SELECT statement 
-	 *		TransactionRequiredException 
-	 *			- if there is no transaction
-	 *
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
-	 * 
-	 * @param queryName
-	 * @param values
-	 * 
-	 * @throws org.springframework.dao.DataAccessException
-	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
-	 * 
-	 */
-	@Override
-	public void updateOrDelByNamedOfQuery(final String queryName, final Object... values) {
-
-		this.getJpaTemplate().execute(new JpaCallback() {
-
-			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query queryObject = em.createNamedQuery(queryName);
-				if (values != null) {
-					for (int i = 0; i < values.length; i++) {
-						queryObject.setParameter(i + 1, values[i]);
-					}
-				}
-				return queryObject.executeUpdate();
-			}
-		});
-	}
-
-	/**
-	 * 
-	 * Execute an update or delete statement.
-	 * 
-	 * Throws:
-	 * 		IllegalArgumentException 
-	 * 			- if a query has not been defined with the given name
-	 *		IllegalStateException 
-	 *			- if this EntityManager has been closed.
-	 *			- if called for a Java Persistence query language SELECT statement 
-	 *		TransactionRequiredException 
-	 *			- if there is no transaction
-	 *
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
-	 * 
-	 * @param queryName
-	 * @param params
-	 * 
-	 * @throws org.springframework.dao.DataAccessException
-	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
-	 * 
-	 */
-	@Override
-	public void updateOrDelByNamedOfQuery(final String queryName, final Map<String, ?> params) {
-
-		this.getJpaTemplate().execute(new JpaCallback() {
-
-			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query queryObject = em.createNamedQuery(queryName);
-				if (!CollectionUtils.isEmpty(params)) {
-					for (Map.Entry<String, ?> entry : params.entrySet()) {
-						queryObject.setParameter(entry.getKey(), entry.getValue());
-					}
-				}
-				return queryObject.executeUpdate();
-			}
-		});
-	}
 
 	/**
 	 * 

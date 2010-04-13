@@ -670,13 +670,38 @@ public interface PersistenceService<T, PK extends Serializable> {
 	
 	/**
 	 * 
-	 * Execute a save,update,delete query and return the query results as a int.
+	 * Execute an update or delete statement and return a int value.
 	 * 
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
 	 * 
-	 * @param 	queryName
+	 * @param 	queryString
+	 * 
+	 * @return 	int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	public int executeNamedOfQuery(final String queryName);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
 	 * @param 	values
+	 * 
 	 * @return 	int
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
@@ -686,15 +711,20 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 */
 	public int executeNamedOfQuery(final String queryName, final Object... values);
 	
+	
 	/**
 	 * 
-	 * Execute a save,update,delete query and return the query results as a int.
+	 * Execute an update or delete statement and return a int value.
 	 * 
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
 	 * 
-	 * @param 	queryName
+	 * @param 	queryString
 	 * @param 	nameAndValue
+	 * 
 	 * @return 	int
 	 * 
 	 * @throws org.springframework.dao.DataAccessException
@@ -703,6 +733,69 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int executeNamedOfQuery(final String queryName, final Map<String, ?> nameAndValue);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	public int execute(final String queryString);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * @param 	values
+	 * 
+	 * @return 	int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	public int execute(final String queryString, final Object... values);
+	
+	/**
+	 * 
+	 * Execute an update or delete statement and return a int value.
+	 * 
+	 *	Throws:
+	 *			IllegalStateException 
+	 *				- if called for a Java Persistence query language SELECT statement
+	 *			TransactionRequiredException 
+	 *				- if there is no transaction
+	 * 
+	 * @param 	queryString
+	 * @param 	nameAndValue
+	 * 
+	 * @return 	int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 * 
+	 */
+	public int execute(final String queryString, final Map<String, ?> nameAndValue);
 	
 	/**
 	 * 
@@ -866,56 +959,6 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> getAllDistinct(final Class<T> entityClass);
-  
-	/**
-	 * 
-	 * Execute an update or delete statement.
-	 * 
-	 * Throws:
-	 * 		IllegalArgumentException 
-	 * 			- if a query has not been defined with the given name
-	 *		IllegalStateException 
-	 *			- if this EntityManager has been closed.
-	 *			- if called for a Java Persistence query language SELECT statement 
-	 *		TransactionRequiredException 
-	 *			- if there is no transaction
-	 *
-     * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
-	 * 
-	 * @param queryName
-	 * @param values
-	 * 
-	 * @throws org.springframework.dao.DataAccessException
-	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
-	 * 
-	 */
-	public void updateOrDelByNamedOfQuery(final String queryName, final Object... values);
-	
-	/**
-	 * 
-	 * Execute an update or delete statement.
-	 * 
-	 * Throws:
-	 * 		IllegalArgumentException 
-	 * 			- if a query has not been defined with the given name
-	 *		IllegalStateException 
-	 *			- if this EntityManager has been closed.
-	 *			- if called for a Java Persistence query language SELECT statement 
-	 *		TransactionRequiredException 
-	 *			- if there is no transaction
-	 *
-	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
-	 * 
-	 * @param queryName
-	 * @param params
-	 * 
-	 * @throws org.springframework.dao.DataAccessException
-	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
-	 * 
-	 */
-	public void updateOrDelByNamedOfQuery(final String queryName, final Map<String, ?> params);
 	
 
 	/**
