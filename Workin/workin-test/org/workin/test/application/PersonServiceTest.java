@@ -203,29 +203,50 @@ public class PersonServiceTest extends SpringTxTestCase {
 		Person person = new Person();
 		person.setName(NEW_USER_NAME);
 		List<Person> personList = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person);
-		assertNotNull(personList);
-		assertTrue(personList.size() == 30);
+		assertPersonList(personList);
 	}
-
+	
+	@Test
+	public void findPersonsByQueryString() {
+		List personList = this.personService.find(QUERY_STRING_GET_PERONS_BY_NAME_SEX, NEW_USER_NAME, NEW_USER_SEX);
+		assertPersonList(personList);
+	}
+	
+	@Test
+	public void findPaginationSupportPersonsByQueryString() {
+		int dynamicSize = 3;
+		PaginationSupport personList = this.personService.findPaginationSupport(dynamicSize, PAGINATIONSUPPORT_SIZE, QUERY_STRING_GET_PERONS_BY_NAME_SEX, NEW_USER_NAME, NEW_USER_SEX);
+		assertPersonList(personList, PAGINATIONSUPPORT_SIZE);
+	}
+	
 	@Test
 	public void findPaginationSupportPersonsBySqlMap() {
 		Person person = new Person();
 		person.setName(NEW_USER_NAME);
 
 		int dynamicSize = 3;
-		PaginationSupport personList = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person, 0,
-				dynamicSize);
+		PaginationSupport personList = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person, 0, dynamicSize);
 		assertPersonList(personList, dynamicSize);
 		
-		PaginationSupport personList2 = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person,
-				dynamicSize, dynamicSize + 10);
-		assertPersonList(personList2, dynamicSize + 10);
+		PaginationSupport personList2 = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person, dynamicSize, PAGINATIONSUPPORT_SIZE);
+		assertPersonList(personList2, PAGINATIONSUPPORT_SIZE);
 	}
 
 	@Test
 	@Rollback(false)
 	public void finalInitDb() {
 		clearDBPersons();
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param personList
+	 */
+	private void assertPersonList(List personList) {
+		assertNotNull(personList);
+		assertTrue(personList.size() == 30);
 	}
 	
 	
@@ -265,5 +286,7 @@ public class PersonServiceTest extends SpringTxTestCase {
 	private static final String NEW_USER_NAME = "goingmm";
 	private static final String NEW_USER_NAME_CHANGE = "change";
 	private static final String NEW_USER_NAME_CHANGE_AGAIN = "change again";
+	private static final int PAGINATIONSUPPORT_SIZE = 10;
 	private static final String SQLMAP_ID_GET_PERONS = "getPersons";
+	private static final String QUERY_STRING_GET_PERONS_BY_NAME_SEX = "SELECT p FROM Person p WHERE p.name = ? AND p.sex = ?";
 }

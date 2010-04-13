@@ -505,6 +505,171 @@ public interface PersistenceService<T, PK extends Serializable> {
 	
 	/**
 	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public List find(final String queryString);
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public List find(final String queryString, final int start, final int maxRows);
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a PaginationSupport.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return PaginationSupport
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public PaginationSupport findPaginationSupport(final String queryString, final int start, final int maxRows);
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public List find(final String queryString, final Object... values);
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public List find(final int start, final int maxRows, final String queryString, final Object... values);
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a PaginationSupport.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return PaginationSupport
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values);
+	
+	
+	/**
+	 * 
+	 * Execute a SELECT query that returns a single result.
+	 * 
+	 * Throws:
+	 * 		NoResultException 
+	 * 			- if there is no result
+	 *		NonUniqueResultException 
+	 *			- if more than one result
+	 *		IllegalStateException 
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * 
+	 * @return int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int countByQueryString(final String queryString);
+	
+	/**
+	 * 
+	 * Execute a SELECT query that returns a single result.
+	 * 
+	 * Throws:
+	 * 		NoResultException 
+	 * 			- if there is no result
+	 *		NonUniqueResultException 
+	 *			- if more than one result
+	 *		IllegalStateException 
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * 
+	 * @return int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int countByQueryString(final String queryString, final Object... values);
+	
+	/**
+	 * 
 	 * Execute a save,update,delete query and return the query results as a int.
 	 * 
 	 * Note:
@@ -1304,8 +1469,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	
 	/**
 	 * 
-	 * Executes a mapped SQL SELECT statement that returns data a
-	 * number of result.
+	 * Executes a mapped SQL SELECT statement that returns data a number of result.
 	 * <p/>
 	 * The parameter object is generally used to supply the input data for the
 	 * WHERE clause parameter(s) of the SELECT statement.
@@ -1320,8 +1484,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	
 	/**
 	 * 
-	 * Executes a mapped SQL SELECT statement that returns data a
-	 * number of result.
+	 * Executes a mapped SQL SELECT statement that returns data a number of result.
 	 * <p/>
 	 * The parameter object is generally used to supply the input data for the
 	 * WHERE clause parameter(s) of the SELECT statement.
@@ -1337,7 +1500,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	
 	/**
 	 * 
-	 * Use JPA2.0 Criteria(BETA, Not recommended)
+	 * Use JPA2.0 Criteria(BETA, Not recommended).
+	 * Find all results by CriteriaQuery and PropertyFilter.
 	 * 
 	 * @param targetClass
 	 * @param filters
@@ -1345,4 +1509,17 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
+	
+	/**
+	 * Use JPA2.0 Criteria(BETA, Not recommended).
+	 * 
+	 * Find distinct or all results by CriteriaQuery and PropertyFilter.
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @param isDistinct
+	 * @return
+	 * 
+	 */
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters, final boolean isDistinct);
 }

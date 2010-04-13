@@ -331,8 +331,54 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	public long getTotalCountBySqlMap(String selectStatementId, Object parameterObject) {
 		return this.sqlMapPersistence.getObjectTotal(selectStatementId, parameterObject);
 	}
+
+	@Override
+	public int countByQueryString(String queryString) {
+		return this.jpaPersistence.countByQueryString(queryString);
+	}
+
+	@Override
+	public int countByQueryString(String queryString, Object... values) {
+		return this.jpaPersistence.countByQueryString(queryString, values);
+	}
+
+	@Override
+	public List find(String queryString) {
+		return this.jpaPersistence.find(queryString);
+	}
+
+	@Override
+	public List find(String queryString, int start, int maxRows) {
+		return this.jpaPersistence.find(queryString, start, maxRows);
+	}
+
+	@Override
+	public List find(String queryString, Object... values) {
+		return this.jpaPersistence.find(queryString, values);
+	}
+
+	@Override
+	public List find(int start, int maxRows, String queryString, Object... values) {
+		return this.jpaPersistence.find(start, maxRows, queryString, values);
+	}
+
+	@Override
+	public PaginationSupport findPaginationSupport(String queryString, int start, int maxRows) {
+		return this.jpaPersistence.findPaginationSupport(queryString, start, maxRows);
+	}
+
+	@Override
+	public PaginationSupport findPaginationSupport(int start, int maxRows, String queryString, Object... values) {
+		return this.jpaPersistence.findPaginationSupport(start, maxRows, queryString, values);
+	}
+
 	@Override
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.jpaPersistence.findByCriteriaQuery(targetClass, filters);
+	}
+	
+	@Override
+	public List<T> findByCriteriaQuery(Class<T> targetClass, List<PropertyFilter> filters, boolean isDistinct) {
+		return this.jpaPersistence.findByCriteriaQuery(targetClass, filters, isDistinct);
 	}
 }

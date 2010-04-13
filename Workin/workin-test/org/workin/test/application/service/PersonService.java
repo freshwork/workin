@@ -34,4 +34,8 @@ public interface PersonService extends CrudService {
 	public int persistByNativeQuery(final String queryString, final Object... values);
 	
 	public List<Person> findByCriteriaQuery(List<PropertyFilter> filters);
+	
+	public List find(final String queryString, final Object... values);
+	
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values);
 }	

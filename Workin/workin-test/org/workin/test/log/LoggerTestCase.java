@@ -15,4 +15,5 @@ public class LoggerTestCase {
 	public static void main(String[] args) {
 		logger.info(" Hello,{}{}", "G.Lee", "!");
 	}
+
 }
