@@ -61,4 +61,14 @@ public class PersonServiceImpl extends AbstractBeanService implements PersonServ
 	public PaginationSupport findPersonsBySqlMap(String sqlMapId, Person person, int offset, int maxRows) {
 		return this.getPersistenceService().findPaginatedBySqlMap(sqlMapId, person, offset, maxRows);
 	}
+	
+	@Override
+	public List find(final String queryString, final Object... values) {
+		return this.getPersistenceService().find(queryString, values);
+	}
+	
+	@Override
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values) {
+		return this.getPersistenceService().findPaginationSupport(start, maxRows, queryString, values);
+	}
 }

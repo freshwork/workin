@@ -77,6 +77,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public T persist(final T objectToSave) {
 		this.getJpaTemplate().persist(objectToSave);
 		return objectToSave;
@@ -106,6 +107,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public void batchPersist(final List objectsToSave) {
 		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave), "List objectToSave cannot be null, when batchPersist...");
 
@@ -147,6 +149,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public T merge(final T objectToMerge) {
 		return this.getJpaTemplate().merge(objectToMerge);
 	}
@@ -173,6 +176,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public void batchMerge(final List objectsToMerge) {
 		Assert
 				.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
@@ -217,6 +221,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	* 		   - If an error occurs.but usually throws DataAccessException's subclass
 	* 
 	 */
+	@Override
 	public void refresh(final T objectToRefresh) {
 		this.getJpaTemplate().refresh(objectToRefresh);
 	}
@@ -242,6 +247,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public void remove(final T objectToRemove) {
 		this.getJpaTemplate().remove(objectToRemove);
 	}
@@ -270,6 +276,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 *  
 	 */
+	@Override
 	public void remove(final Class<T> entityClass, final PK id) {
 		this.remove(this.findById(entityClass, id));
 	}
@@ -294,6 +301,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
+	@Override
 	public void batchRemove(final List objectsToRemove) {
 		Assert.isTrue(!CollectionUtils.isEmpty(objectsToRemove),
 				"List ObjectsToRemove cannot be null, when batchRemove...");
@@ -331,6 +339,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
+	@Override
 	public void flush() {
 		this.getJpaTemplate().flush();
 	}
@@ -351,6 +360,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
+	@Override
 	public void clear() {
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -380,6 +390,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 *  
 	 */
+	@Override
 	public boolean contains(final T entity) {
 		return this.getJpaTemplate().contains(entity);
 	}
@@ -405,6 +416,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public boolean contains(final Class<T> entityClass, final PK id) {
 		T entity = this.findById(entityClass, id);
 		return this.contains(entity);
@@ -432,6 +444,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public T findById(final Class<T> entityClass, final PK id) {
 		return getJpaTemplate().find(entityClass, id);
 	}
@@ -465,6 +478,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public T findUniqueByNamedOfQuery(final String queryName, final Object... values) {
 
 		return (T) this.getJpaTemplate().execute(new JpaCallback() {
@@ -509,6 +523,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public T findUniqueByNamedOfQuery(final String queryName, final Map<String, ?> params) {
 
 		return (T) this.getJpaTemplate().execute(new JpaCallback() {
@@ -542,6 +557,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public T findUniqueByProperty(final Class<T> entityClass, final String propertyName, final Object value) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
@@ -573,6 +589,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public T findUniqueByPropertys(final Class<T> entityClass, final Map<String, ?> params) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
@@ -615,6 +632,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List findByNamedOfQuery(final String queryName, final Object... values) {
 		return this.getJpaTemplate().findByNamedQuery(queryName, values);
 	}
@@ -643,6 +661,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List findByNamedOfQuery(final String queryName) {
 		return this.getJpaTemplate().findByNamedQuery(queryName, (Object[]) null);
 	}
@@ -672,10 +691,179 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List findByNamedOfQuery(final String queryName, final Map params) {
 		return this.getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
 	}
-
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public List find(final String queryString) {
+		return this.getJpaTemplate().find(queryString);
+	}
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public List find(final String queryString, final int start, final int maxRows) {
+		return this.find(start, maxRows, queryString, (Object[])null);
+	}
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a PaginationSupport.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return PaginationSupport
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public PaginationSupport findPaginationSupport(final String queryString, final int start, final int maxRows) {
+		return this.findPaginationSupport(start, maxRows, queryString, (Object[])null);
+	}
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public List find(final String queryString, final Object... values) {
+		return this.getJpaTemplate().find(queryString, values);
+	}
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a List.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return List
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public List find(final int start, final int maxRows, final String queryString, final Object... values) {
+		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.find()");
+		
+		return getJpaTemplate().executeFind(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				Query query = em.createQuery(queryString);
+				if (values != null) {
+					for (int i = 0; i < values.length; i++) {
+						query.setParameter(i + 1, values[i]);
+					}
+				}
+				
+				if (maxRows >= 0) {
+					query.setMaxResults(maxRows);
+				}
+				if (start >= 0) {
+					query.setFirstResult(start);
+				}
+				return query.getResultList();
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * Execute a SELECT query and return the query results as a PaginationSupport.
+	 * 
+	 * Throws:
+	 * 		IllegalStateException 
+	 * 			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * @param start
+	 * @param maxRows
+	 * 
+	 * @return PaginationSupport
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values){
+		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.find()");
+		
+		int tmpMaxRows = maxRows > 0 ? maxRows : 1;
+		int tmpStart = start > 0 ? start : 0;
+		
+		Integer count = this.countByQueryString(queryString, values);
+		if (count == null || count <= 0) {
+			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpMaxRows, tmpStart);
+		}
+		
+		List<T> result = this.find(tmpStart, tmpMaxRows, queryString, values);
+		return new PaginationSupport<T>(result, count, tmpMaxRows, tmpStart);
+	}
+	
+	
+	
 	/**
 	 * 
 	 * Execute a save,update,delete query and return the query results as a int.
@@ -692,6 +880,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public int executeNamedOfQuery(final String queryName, final Object... values) {
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
@@ -725,6 +914,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public int executeNamedOfQuery(final String queryName, final Map<String, ?> nameAndValue) {
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
@@ -758,6 +948,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value) {
 		return (List<T>) getJpaTemplate().find(buildQueryString(false, entityClass, propertyName), value);
 	}
@@ -782,6 +973,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value,
 			final int start, final int maxRows) {
 
@@ -828,6 +1020,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public PaginationSupport<T> findPaginatedByProperty(final Class<T> entityClass, final String propertyName,
 			final Object value, final int start, final int maxRows) {
 
@@ -862,6 +1055,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
@@ -898,6 +1092,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params, final int start,
 			final int maxRows) {
 
@@ -945,6 +1140,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public PaginationSupport<T> findPaginatedByPropertys(final Class<T> entityClass, final Map<String, ?> params,
 			final int start, final int maxRows) {
 
@@ -979,6 +1175,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<T> getAll(final Class<T> entityClass) {
 		return this.getJpaTemplate().find(buildQueryString(false, entityClass).toString());
 	}
@@ -999,6 +1196,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<T> getAllDistinct(final Class<T> entityClass) {
 		Collection result = new LinkedHashSet(getAll(entityClass));
 		return new ArrayList(result);
@@ -1027,6 +1225,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public void updateOrDelByNamedOfQuery(final String queryName, final Object... values) {
 
 		this.getJpaTemplate().execute(new JpaCallback() {
@@ -1066,6 +1265,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public void updateOrDelByNamedOfQuery(final String queryName, final Map<String, ?> params) {
 
 		this.getJpaTemplate().execute(new JpaCallback() {
@@ -1099,6 +1299,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public int countByProperty(final Class<?> entityClass, final String propertyName, final Object value) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
@@ -1131,6 +1332,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public int countByPropertys(final Class<?> entityClass, final Map<String, ?> params) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
@@ -1148,7 +1350,78 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-
+	
+	/**
+	 * 
+	 * Execute a SELECT query that returns a single result.
+	 * 
+	 * Throws:
+	 * 		NoResultException 
+	 * 			- if there is no result
+	 *		NonUniqueResultException 
+	 *			- if more than one result
+	 *		IllegalStateException 
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * 
+	 * @return int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public int countByQueryString(final String queryString) {
+		return countByQueryString(queryString, (Object[])null);
+	}
+	
+	/**
+	 * 
+	 * Execute a SELECT query that returns a single result.
+	 * 
+	 * Throws:
+	 * 		NoResultException 
+	 * 			- if there is no result
+	 *		NonUniqueResultException 
+	 *			- if more than one result
+	 *		IllegalStateException 
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 * 
+	 * @param queryString
+	 * @param values
+	 * 
+	 * @return int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	@Override
+	public int countByQueryString(final String queryString, final Object... values) {
+		
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				
+				StringBuffer prefixCountOfQuery = new StringBuffer("SELECT COUNT(*) ");
+				String suffixCountOfQuery = queryString.substring(queryString.toUpperCase().indexOf("FROM"), queryString.length());
+				String countOfQuery = prefixCountOfQuery.append(suffixCountOfQuery).toString();
+				
+				logger.debug("Persistence automatic build count of Query: {}", countOfQuery);
+				
+				Query query = em.createQuery(countOfQuery);
+				
+				if (values != null) {
+					for (int i = 0; i < values.length; i++) {
+						query.setParameter(i + 1, values[i]);
+					}
+				}
+				return Integer.valueOf(String.valueOf(query.getSingleResult()));
+			}
+		});
+	}
+	
+	
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -1171,6 +1444,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<?> findByNativeQuery(final String queryString) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
@@ -1205,6 +1479,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<?> findByNativeQuery(final String queryString, final Object... values) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
@@ -1246,6 +1521,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows,
 			final Object... values) {
 
@@ -1297,6 +1573,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
@@ -1340,6 +1617,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final int start,
 			final int maxRows, final Object... values) {
 
@@ -1384,6 +1662,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
@@ -1424,6 +1703,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<?> findByNativeQuery(final String queryString, final Map<String, ?> params) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
@@ -1466,6 +1746,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows,
 			final Map<String, ?> params) {
 
@@ -1516,6 +1797,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params) {
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
@@ -1558,6 +1840,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final int start,
 			final int maxRows, final Map<String, ?> params) {
 
@@ -1608,6 +1891,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 * 
 	 */
+	@Override
 	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params) {
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
@@ -1651,6 +1935,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public int persistByNativeQuery(final String queryString) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
@@ -1687,6 +1972,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public int persistByNativeQuery(final String queryString, final Map<String, ?> params) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
@@ -1728,6 +2014,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public int persistByNativeQuery(final String queryString, final Object... values) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
@@ -1746,20 +2033,21 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	
 	/**
 	 * 
-	 * findByCriteriaQuery
+	 * Find all results by CriteriaQuery and PropertyFilter.
 	 * 
 	 * @param targetClass
 	 * @param filters
 	 * @return
 	 * 
 	 */
+	@Override
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.findByCriteriaQuery(targetClass, filters, false);
 	}
 	
 	/**
 	 * 
-	 * findByCriteriaQuery
+	 * Find distinct or all results by CriteriaQuery and PropertyFilter.
 	 * 
 	 * @param targetClass
 	 * @param filters
@@ -1767,8 +2055,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * @return
 	 * 
 	 */
-	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters,
-			final boolean isDistinct) {
+	@Override
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters, final boolean isDistinct) {
 	
 		return (List<T>) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
