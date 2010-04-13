@@ -106,6 +106,36 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	}
 	
 	@Override
+	public int execute(final String queryString) {
+		return this.jpaPersistence.execute(queryString);
+	}
+
+	@Override
+	public int execute(final String queryString, final Object... values) {
+		return this.jpaPersistence.execute(queryString, values);
+	}
+
+	@Override
+	public int execute(final String queryString, final Map<String, ?> nameAndValue) {
+		return this.jpaPersistence.execute(queryString, nameAndValue);
+	}
+
+	@Override
+	public int executeNamedOfQuery(final String queryName) {
+		return this.jpaPersistence.executeNamedOfQuery(queryName);
+	}
+
+	@Override
+	public int executeNamedOfQuery(final String queryName, final Object... values) {
+		return this.jpaPersistence.executeNamedOfQuery(queryName, values);
+	}
+
+	@Override
+	public int executeNamedOfQuery(final String queryName, final Map<String, ?> nameAndValue) {
+		return this.jpaPersistence.executeNamedOfQuery(queryName, nameAndValue);
+	}
+	
+	@Override
 	public T findById(final Class<T> entityClass, final PK id) {
 		return (T) this.jpaPersistence.findById(entityClass, id);
 	}
@@ -143,16 +173,6 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	@Override
 	public List findByNamedOfQuery(final String queryName, final Map nameAndValue) {
 		return this.jpaPersistence.findByNamedOfQuery(queryName, nameAndValue);
-	}
-	
-	@Override
-	public int executeNamedOfQuery(String queryName, Object... values) {
-		return this.jpaPersistence.executeNamedOfQuery(queryName, values);
-	}
-
-	@Override
-	public int executeNamedOfQuery(String queryName, Map<String, ?> nameAndValue) {
-		return this.jpaPersistence.executeNamedOfQuery(queryName, nameAndValue);
 	}
 	
 	@Override
@@ -197,16 +217,6 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	@Override
 	public List<T> getAllDistinct(final Class<T> entityClass) {
 		return this.jpaPersistence.getAllDistinct(entityClass);
-	}
-	
-	@Override
-	public void updateOrDelByNamedOfQuery(final String queryName, final Object... values) {
-		this.jpaPersistence.updateOrDelByNamedOfQuery(queryName, values);
-	}
-	
-	@Override
-	public void updateOrDelByNamedOfQuery(final String queryName, final Map<String, ?> params) {
-		this.jpaPersistence.updateOrDelByNamedOfQuery(queryName, params);
 	}
 	
 	@Override
