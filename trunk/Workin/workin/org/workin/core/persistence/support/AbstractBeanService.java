@@ -17,7 +17,7 @@ import org.workin.util.Assert;
  *
  */
 @SuppressWarnings({"unchecked","unused"})
-public abstract class AbstractBeanService implements BeanService {
+public abstract class AbstractBeanService<T, PK extends Serializable> implements BeanService, CrudService<T, PK> {
 	
 	public PersistenceService getPersistenceService() {
 		Assert.notNull(persistenceService, " Persistence Service cannot be null!");
@@ -31,23 +31,23 @@ public abstract class AbstractBeanService implements BeanService {
 	@Override
 	@Transactional
 	@Profiled
-	public Idable save(final Idable entity) {
-		return (Idable) this.persistenceService.persist(entity);
+	public T save(final T objectToSave) {
+		return (T) this.persistenceService.persist(objectToSave);
 	}
 	
 	@Override
 	@Transactional
 	@Profiled
-	public void batchPersist(final List objectsToSave) {
-		this.persistenceService.batchPersist(objectsToSave);
+	public void batchPersist(final List objectsToPersist) {
+		this.persistenceService.batchPersist(objectsToPersist);
 	}
 	
 	
 	@Override
 	@Transactional
 	@Profiled
-	public Idable merge(final Idable entity) {
-		return (Idable) this.persistenceService.merge(entity);
+	public T merge(final T objectToMerge) {
+		return (T) this.persistenceService.merge(objectToMerge);
 	}
 	
 	@Override
@@ -60,8 +60,8 @@ public abstract class AbstractBeanService implements BeanService {
 	@Override
 	@Transactional
 	@Profiled
-	public void remove(final Idable entity) {
-		this.persistenceService.remove(entity);
+	public void remove(final T objectToRemove) {
+		this.persistenceService.remove(objectToRemove);
 	}
 	
 	@Override
@@ -73,20 +73,33 @@ public abstract class AbstractBeanService implements BeanService {
 	
 	@Override
 	@Profiled
-	public Idable findById(Class<?> entityClass, final Serializable entityId) {
-		return (Idable) this.persistenceService.findById(entityClass, entityId);
+	public T findById(Class<T> entityClass, final PK entityId) {
+		return (T) this.persistenceService.findById(entityClass, entityId);
 	}
 	
 	@Override
 	@Profiled
-	public  List<?> getAll(final Class<?> entityClass) {
+	public  List<T> getAll(final Class<T> entityClass) {
 		return this.persistenceService.getAll(entityClass);
 	}
 	
 	@Override
 	@Profiled
-	public  List<?> getAllDistinct(final Class<?> entityClass) {
+	public  List<T> getAllDistinct(final Class<T> entityClass) {
 		return this.persistenceService.getAllDistinct(entityClass);
+	}
+	
+	@Override
+	@Profiled
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
+		return this.persistenceService.findByCriteriaQuery(targetClass, filters);
+	}
+	
+	
+	@Override
+	@Profiled
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters, final boolean isDistinct) {
+		return this.persistenceService.findByCriteriaQuery(targetClass, filters, isDistinct);
 	}
 	
 	@Autowired

@@ -1,12 +1,13 @@
 package org.workin.core.persistence.support;
 
+
 /**
  * 
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
 @SuppressWarnings("unchecked")
-public interface BeanService extends CrudService {
+public interface BeanService {
 	
 	public abstract PersistenceService getPersistenceService();
 	

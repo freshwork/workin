@@ -3,47 +3,45 @@ package org.workin.core.persistence.support;
 import java.io.Serializable;
 import java.util.List;
 
-import org.workin.core.entity.Idable;
-
 /**
  * 
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
 @SuppressWarnings("unchecked")
-public interface CrudService {
+public interface CrudService<T, PK extends Serializable> {
 	
 	/**
 	 * 
 	 * save entity to database.
 	 * 
-	 * @param  entity
+	 * @param  objectToSave
 	 * 
-	 * @return Idable
+	 * @return objectToSave
 	 * 
 	 */
-	Idable save(final Idable entity);
+	public T save(final T objectToSave);
 	
 	/**
 	 * 
-	 * make an objectsToSave(batch) instance managed and persistent.
+	 * make an objectsToPersist(batch) instance managed and persistent.
 	 * 
-	 * @param objectsToSave
+	 * @param objectsToPersist
 	 * 
 	 */
-	void batchPersist(final List objectsToSave);
+	public void batchPersist(final List objectsToPersist);
 	
 	
 	/**
 	 * 
 	 * merge(save or update) entity to database.
 	 * 
-	 * @param  entity
+	 * @param  objectToMerge
 	 * 
-	 * @return Idable
+	 * @return objectToMerge
 	 * 
 	 */
-	Idable merge(final Idable entity);
+	public T merge(final T objectToMerge);
 	
 	/**
 	 * 
@@ -51,19 +49,19 @@ public interface CrudService {
 	 * 
 	 * @param objectsToMerge
 	 */
-	void batchMerge(final List objectsToMerge);
+	public void batchMerge(final List objectsToMerge);
 	
 	
 	/**
 	 * 
 	 * remove entity to database.
 	 * 
-	 * @param   entity
+	 * @param   objectToRemove
 	 * 
 	 * @return  void
 	 * 
 	 */
-	void remove(final Idable entity);
+	public void remove(final T objectToRemove);
 	
 	/**
 	 * 
@@ -71,7 +69,7 @@ public interface CrudService {
 	 * 
 	 * @param objectsToRemove
 	 */
-	void batchRemove(final List objectsToRemove);
+	public void batchRemove(final List objectsToRemove);
 	
 	/**
 	 * 
@@ -80,10 +78,10 @@ public interface CrudService {
 	 * @param   entityClass
 	 * @param   entityId
 	 * 
-	 * @return  Idable
+	 * @return  entity
 	 * 
 	 */
-	Idable findById(Class<?> entityClass, final Serializable entityId);
+	public T findById(final Class<T> entityClass, final PK entityId);
 	
 	
 	/**
@@ -92,10 +90,10 @@ public interface CrudService {
 	 * 
 	 * @param   entityClass
 	 * 
-	 * @return  List<?>
+	 * @return  List<T>
 	 * 
 	 */
-	List<?> getAll(final Class<?> entityClass);
+	public List<T> getAll(final Class<T> entityClass);
 	
 	/**
 	 * 
@@ -103,8 +101,29 @@ public interface CrudService {
 	 * 
 	 * @param   entityClass
 	 * 
-	 * @return  List<?>
+	 * @return  Class<T>
 	 * 
 	 */
-	List<?> getAllDistinct(final Class<?> entityClass);
+	public List<T> getAllDistinct(final Class<T> entityClass);
+	
+	
+	/**
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @return
+	 * 
+	 */
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
+	
+	/**
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @param isDistinct
+	 * @return
+	 * 
+	 */
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters, final boolean isDistinct);
+
 }

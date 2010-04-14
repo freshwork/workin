@@ -18,7 +18,12 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	public static Date getNow() {
 		return new Date();
 	}
-
+	
+	// Refactor method name, but can not remove old method(getNow)
+	public static Date currentDateTime() {
+		return getNow();
+	}
+	
 	/**
 	 * 
 	 * @param date
