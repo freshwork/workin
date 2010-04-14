@@ -199,6 +199,16 @@
 		<echo message="Project: ${ant.project.name}, Jar org.workin.ws.jar OK!" />
 	</target>
 	
+	<!-- for Jar workin trace -->
+	<target name="traceJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.trace.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/trace/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${ant.project.name}, Jar org.workin.trace.jar OK!" />
+	</target>
+	
 	<!-- for workin style check -->
 	<target name="checkstyle">
 		<property name="checkstyle.data.dir" location="${target.checkstyle.dir}" />
@@ -251,6 +261,9 @@
 			<fileset dir="${target.jars.dir}\">
 				<include name="org.workin.commons.jar" />
 				<include name="org.workin.core.jar" />
+				<include name="org.workin.spring.jar" />
+				<include name="org.workin.web.jar" />
+				<include name="org.workin.trace.jar" />
 				<include name="org.workin.fortest.jar" />
 			</fileset>
 		</copy>
@@ -258,7 +271,7 @@
 	</target>
 	
 	<!-- executer for all tasks -->
-	<target name="executer" depends="init, complie, test, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
+	<target name="executer" depends="init, complie, test, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, traceJar, releaseJarsToDevTeam">
 		<echo message="Project: ${ant.project.name}, Executer all tasks done." />
 	</target>
 </project>

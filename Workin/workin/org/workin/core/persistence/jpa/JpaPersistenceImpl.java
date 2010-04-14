@@ -178,8 +178,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public void batchMerge(final List objectsToMerge) {
-		Assert
-				.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
+		Assert.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
 						"List objectsToMerge cannot be null, when batchMerge...");
 
 		getJpaTemplate().execute(new JpaCallback() {
