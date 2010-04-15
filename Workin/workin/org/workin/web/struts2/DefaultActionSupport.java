@@ -12,6 +12,8 @@ import org.displaytag.tags.TableTagParameters;
 import org.displaytag.util.ParamEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.workin.trace.service.StoredLogService;
 import org.workin.util.StringUtils;
 import org.workin.web.constant.WebConstants;
 
@@ -24,6 +26,13 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @SuppressWarnings({"serial","unchecked"})
 public abstract class DefaultActionSupport extends ActionSupport {
+	
+	@Autowired
+	protected StoredLogService storedLogService;
+	
+	public void setStoredLogService(StoredLogService storedLogService) {
+		this.storedLogService = storedLogService;
+	}
 	
 	/**
 	 * 
