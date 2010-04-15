@@ -19,7 +19,11 @@ public class PropertyFilter {
 	public enum MatchType {
 		EQ, LIKE, LT, GT, LE, GE;
 	}
-
+	
+	public enum LikeMatchPatten {
+		P, S, ALL;
+	}
+	
 	public enum PropertyType {
 		S(String.class), I(Integer.class), L(Long.class), N(Double.class), D(Date.class), B(Boolean.class);
 
@@ -41,7 +45,9 @@ public class PropertyFilter {
 	private Object propertyValue = null;
 
 	private MatchType matchType = null;
-
+	
+	private LikeMatchPatten likeMatchPatten = null;
+	
 	public PropertyFilter() {
 	}
 
@@ -53,12 +59,26 @@ public class PropertyFilter {
 	 */
 	public PropertyFilter(final String filterName, final String value) {
 
-		String matchTypeStr = StringUtils.substringBefore(filterName, "_");
-		String matchTypeCode = StringUtils.substring(matchTypeStr, 0, matchTypeStr.length() - 1);
-		String propertyTypeCode = StringUtils.substring(matchTypeStr, matchTypeStr.length() - 1, matchTypeStr.length());
-
+		String matchTypeStr;
+		String matchPattenCode = LikeMatchPatten.ALL.toString();
+		String matchTypeCode;
+		String propertyTypeCode;
+		
+		if(filterName.contains("LIKE") && filterName.charAt(0) != 'L') {
+			matchTypeStr = StringUtils.substringBefore(filterName, "_");
+			matchPattenCode = StringUtils.substring(matchTypeStr, 0, 1);
+			matchTypeCode = StringUtils.substring(matchTypeStr, 1, matchTypeStr.length() - 1);
+			propertyTypeCode = StringUtils.substring(matchTypeStr, matchTypeStr.length() - 1, matchTypeStr.length());
+			
+		} else {
+			matchTypeStr = StringUtils.substringBefore(filterName, "_");
+			matchTypeCode = StringUtils.substring(matchTypeStr, 0, matchTypeStr.length() - 1);
+			propertyTypeCode = StringUtils.substring(matchTypeStr, matchTypeStr.length() - 1, matchTypeStr.length());
+		}
+		
 		try {
 			matchType = Enum.valueOf(MatchType.class, matchTypeCode);
+			likeMatchPatten = Enum.valueOf(LikeMatchPatten.class, matchPattenCode);
 		} catch (RuntimeException e) {
 			throw new IllegalArgumentException("filter name: " + filterName
 					+ "Not prepared in accordance with rules, not get more types of property.", e);
@@ -79,7 +99,7 @@ public class PropertyFilter {
 
 		this.propertyValue = ReflectionUtils.convertStringToObject(value, propertyType);
 	}
-
+	
 	public boolean isMultiProperty() {
 		return (propertyNames.length > 1);
 	}
@@ -105,5 +125,9 @@ public class PropertyFilter {
 
 	public MatchType getMatchType() {
 		return matchType;
+	}
+
+	public LikeMatchPatten getLikeMatchPatten() {
+		return likeMatchPatten;
 	}
 }

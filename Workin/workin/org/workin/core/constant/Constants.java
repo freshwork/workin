@@ -10,11 +10,10 @@ public interface Constants {
 	
 	// batch objects record size 
 	public static final int DEFAULT_BATCH_SIZE = 1000;
-
 	
 	// app event audit executor name
 	public static final String AUDIT_EVENT_EXECUTOR = "auditEventExecutor";
 	
-	
+	// for select query
 	public static final String SQLMAP_KEYWORDS_FORUPDATE = "FOR UPDATE";
 }

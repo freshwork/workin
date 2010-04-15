@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.workin.core.constant.Constants;
 import org.workin.core.persistence.support.PaginationSupport;
 import org.workin.core.persistence.support.PropertyFilter;
+import org.workin.core.persistence.support.PropertyFilter.LikeMatchPatten;
 import org.workin.core.persistence.support.PropertyFilter.MatchType;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
@@ -109,7 +110,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public void batchPersist(final List objectsToSave) {
-		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave), "List objectToSave cannot be null, when batchPersist...");
+		Assert
+				.isTrue(!CollectionUtils.isEmpty(objectsToSave),
+						"List objectToSave cannot be null, when batchPersist...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -179,7 +182,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	@Override
 	public void batchMerge(final List objectsToMerge) {
 		Assert.isTrue(!CollectionUtils.isEmpty(objectsToMerge),
-						"List objectsToMerge cannot be null, when batchMerge...");
+				"List objectsToMerge cannot be null, when batchMerge...");
 
 		getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -694,7 +697,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List findByNamedOfQuery(final String queryName, final Map params) {
 		return this.getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -715,7 +718,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List find(final String queryString) {
 		return this.getJpaTemplate().find(queryString);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -735,9 +738,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	public List find(final String queryString, final int start, final int maxRows) {
-		return this.find(start, maxRows, queryString, (Object[])null);
+		return this.find(start, maxRows, queryString, (Object[]) null);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
@@ -758,9 +761,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public PaginationSupport findPaginationSupport(final String queryString, final int start, final int maxRows) {
-		return this.findPaginationSupport(start, maxRows, queryString, (Object[])null);
+		return this.findPaginationSupport(start, maxRows, queryString, (Object[]) null);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -782,7 +785,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List find(final String queryString, final Object... values) {
 		return this.getJpaTemplate().find(queryString, values);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -805,7 +808,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	@Override
 	public List find(final int start, final int maxRows, final String queryString, final Object... values) {
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.find()");
-		
+
 		return getJpaTemplate().executeFind(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createQuery(queryString);
@@ -814,7 +817,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 						query.setParameter(i + 1, values[i]);
 					}
 				}
-				
+
 				if (maxRows >= 0) {
 					query.setMaxResults(maxRows);
 				}
@@ -825,8 +828,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
@@ -847,22 +849,22 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	@Override
-	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values){
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString,
+			final Object... values) {
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.find()");
-		
+
 		int tmpMaxRows = maxRows > 0 ? maxRows : 1;
 		int tmpStart = start > 0 ? start : 0;
-		
+
 		Integer count = this.countByQueryString(queryString, values);
 		if (count == null || count <= 0) {
 			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpMaxRows, tmpStart);
 		}
-		
+
 		List<T> result = this.find(tmpStart, tmpMaxRows, queryString, values);
 		return new PaginationSupport<T>(result, count, tmpMaxRows, tmpStart);
 	}
-	
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -884,10 +886,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public int executeNamedOfQuery(final String queryName) {
-		return this.executeNamedOfQuery(queryName, (Object[])null);
+		return this.executeNamedOfQuery(queryName, (Object[]) null);
 	}
-	
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -925,7 +926,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -962,7 +963,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -982,9 +983,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public int execute(final String queryString) {
-		return execute(queryString, (Object[])null);
+		return execute(queryString, (Object[]) null);
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -1022,7 +1023,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -1059,7 +1060,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -1331,7 +1332,6 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return new ArrayList(result);
 	}
 
-
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
@@ -1400,7 +1400,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
@@ -1423,9 +1423,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public int countByQueryString(final String queryString) {
-		return countByQueryString(queryString, (Object[])null);
+		return countByQueryString(queryString, (Object[]) null);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
@@ -1449,18 +1449,19 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public int countByQueryString(final String queryString, final Object... values) {
-		
+
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				
+
 				StringBuffer prefixCountOfQuery = new StringBuffer("SELECT COUNT(*) ");
-				String suffixCountOfQuery = queryString.substring(queryString.toUpperCase().indexOf("FROM"), queryString.length());
+				String suffixCountOfQuery = queryString.substring(queryString.toUpperCase().indexOf("FROM"),
+						queryString.length());
 				String countOfQuery = prefixCountOfQuery.append(suffixCountOfQuery).toString();
-				
+
 				logger.debug("Persistence automatic build count of Query: {}", countOfQuery);
-				
+
 				Query query = em.createQuery(countOfQuery);
-				
+
 				if (values != null) {
 					for (int i = 0; i < values.length; i++) {
 						query.setParameter(i + 1, values[i]);
@@ -1470,8 +1471,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -2079,8 +2079,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * 
 	 * Find all results by CriteriaQuery and PropertyFilter.
@@ -2094,7 +2093,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.findByCriteriaQuery(targetClass, filters, false);
 	}
-	
+
 	/**
 	 * 
 	 * Find distinct or all results by CriteriaQuery and PropertyFilter.
@@ -2106,8 +2105,9 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 * 
 	 */
 	@Override
-	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters, final boolean isDistinct) {
-	
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters,
+			final boolean isDistinct) {
+
 		return (List<T>) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -2129,15 +2129,12 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
-	
 
 	/**
 	 * ===Private================================================= 
 	 * Some private method for: -support public method
 	 * ================================================================
 	 */
-	
 
 	/**
 	 * 
@@ -2159,14 +2156,14 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		for (PropertyFilter filter : filters) {
 			for (String param : filter.getPropertyNames()) {
 				Predicate predicate = buildPropertyFilterPredicate(targetClass, criteriaBuilder, criteriaQuery, entity,
-						entityType, isDistinct, param, filter.getPropertyValue(), filter.getMatchType());
+						entityType, isDistinct, param, filter.getPropertyValue(), filter.getMatchType(), filter.getLikeMatchPatten());
 				predicateList.add(predicate);
 			}
 		}
 
 		return predicateList.toArray(new Predicate[predicateList.size()]);
 	}
-	
+
 	/**
 	 * 
 	 * @param targetClass
@@ -2183,18 +2180,27 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	private Predicate buildPropertyFilterPredicate(final Class<T> targetClass, final CriteriaBuilder criteriaBuilder,
 			final CriteriaQuery<T> criteriaQuery, final Root<T> entity, EntityType<T> entityType,
-			final boolean isDistinct, final String propertyName, final Object propertyValue, final MatchType matchType) {
+			final boolean isDistinct, final String propertyName, final Object propertyValue, final MatchType matchType, 
+			final LikeMatchPatten likeMatchPatten) {
 
 		Assert.hasText(propertyName, "propertyName cannot be null!");
 		
 		Expression expression = (Expression) entity.get(entityType.getSingularAttribute(propertyName));
-
+	
 		Predicate predicate = null;
 		try {
 			if (MatchType.EQ.equals(matchType)) {
 				predicate = criteriaBuilder.equal(expression, propertyValue);
 			} else if (MatchType.LIKE.equals(matchType)) {
-				predicate = criteriaBuilder.like(expression, String.valueOf(propertyValue)); //TODO
+				StringBuffer sbPatten = new StringBuffer();
+				if(LikeMatchPatten.ALL.equals(likeMatchPatten)) {
+					sbPatten.append("%").append(propertyValue).append("%");
+				} else if(LikeMatchPatten.P.equals(likeMatchPatten)) {
+					sbPatten.append("%").append(propertyValue);
+				} else if(LikeMatchPatten.S.equals(likeMatchPatten)) {
+					sbPatten.append(propertyValue).append("%");
+				}
+				predicate = criteriaBuilder.like(expression, sbPatten.toString());
 			} else if (MatchType.LE.equals(matchType)) {
 				predicate = criteriaBuilder.le(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
 			} else if (MatchType.LT.equals(matchType)) {
@@ -2210,8 +2216,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return predicate;
 	}
-	
-	
+
 	/**
 	 * 
 	 * Build Query String by class only.
