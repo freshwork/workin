@@ -8,7 +8,6 @@ import java.util.List;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-@SuppressWarnings("unchecked")
 public interface CrudService<T, PK extends Serializable> {
 	
 	/**
@@ -29,7 +28,7 @@ public interface CrudService<T, PK extends Serializable> {
 	 * @param objectsToPersist
 	 * 
 	 */
-	public void batchPersist(final List objectsToPersist);
+	public void batchPersist(final List<T> objectsToPersist);
 	
 	
 	/**
@@ -49,7 +48,7 @@ public interface CrudService<T, PK extends Serializable> {
 	 * 
 	 * @param objectsToMerge
 	 */
-	public void batchMerge(final List objectsToMerge);
+	public void batchMerge(final List<T> objectsToMerge);
 	
 	
 	/**
@@ -69,7 +68,7 @@ public interface CrudService<T, PK extends Serializable> {
 	 * 
 	 * @param objectsToRemove
 	 */
-	public void batchRemove(final List objectsToRemove);
+	public void batchRemove(final List<T> objectsToRemove);
 	
 	/**
 	 * 

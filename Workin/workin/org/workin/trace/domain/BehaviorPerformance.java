@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.workin.core.entity.IdEntity;
 
+
 @Entity
 @Table(name="BehaviorPerformance")
 public class BehaviorPerformance extends IdEntity {
@@ -24,9 +25,9 @@ public class BehaviorPerformance extends IdEntity {
 	
 	private String requestURI;
 	
-	private Date requestDateTime;
+	private Date requestdttm;
 	
-	private Date responseDateTime;
+	private Date responsedttm;
 	
 	
 	public long getUserId() {
@@ -64,6 +65,26 @@ public class BehaviorPerformance extends IdEntity {
 	}
 
 
+	public Date getRequestdttm() {
+		return requestdttm;
+	}
+
+
+	public void setRequestdttm(Date requestdttm) {
+		this.requestdttm = requestdttm;
+	}
+
+
+	public Date getResponsedttm() {
+		return responsedttm;
+	}
+
+
+	public void setResponsedttm(Date responsedttm) {
+		this.responsedttm = responsedttm;
+	}
+
+
 	public void setRequestIp(String requestIp) {
 		this.requestIp = requestIp;
 	}
@@ -77,27 +98,7 @@ public class BehaviorPerformance extends IdEntity {
 	public void setRequestURI(String requestURI) {
 		this.requestURI = requestURI;
 	}
-
-
-	public Date getRequestDateTime() {
-		return requestDateTime;
-	}
-
-
-	public void setRequestDateTime(Date requestDateTime) {
-		this.requestDateTime = requestDateTime;
-	}
 	
-	public Date getResponseDateTime() {
-		return responseDateTime;
-	}
-
-
-	public void setResponseDateTime(Date responseDateTime) {
-		this.responseDateTime = responseDateTime;
-	}
-
-
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);

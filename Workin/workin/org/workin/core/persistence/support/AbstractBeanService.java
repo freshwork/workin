@@ -38,7 +38,7 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 	@Override
 	@Transactional
 	@Profiled
-	public void batchPersist(final List objectsToPersist) {
+	public void batchPersist(final List<T> objectsToPersist) {
 		this.persistenceService.batchPersist(objectsToPersist);
 	}
 	
@@ -53,7 +53,7 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 	@Override
 	@Transactional
 	@Profiled
-	public void batchMerge(final List objectsToMerge) {
+	public void batchMerge(final List<T> objectsToMerge) {
 		this.persistenceService.batchMerge(objectsToMerge);
 	}
 	
@@ -67,7 +67,7 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 	@Override
 	@Transactional
 	@Profiled
-	public void batchRemove(final List objectsToRemove) {
+	public void batchRemove(final List<T> objectsToRemove) {
 		this.persistenceService.batchRemove(objectsToRemove);
 	}
 	

@@ -1,8 +1,16 @@
 package org.workin.trace.service;
 
-import org.workin.core.persistence.support.AbstractBeanService;
+import java.io.Serializable;
 
-public class BehaviorPerformanceServiceImpl extends AbstractBeanService implements
+import org.workin.core.persistence.support.AbstractBeanService;
+import org.workin.trace.domain.BehaviorPerformance;
+
+/**
+ * 
+ * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
+ *
+ */
+public class BehaviorPerformanceServiceImpl extends AbstractBeanService<BehaviorPerformance, Serializable> implements
 		BehaviorPerformanceService {
 
 }
