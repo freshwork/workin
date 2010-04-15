@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.workin.core.entity.Idable;
+import org.workin.trace.service.StoredLogService;
 import org.workin.util.Assert;
 
 /**
