@@ -66,6 +66,7 @@
 		<property name="sqlExecutor" ref="sqlExecutor"/>
 	</bean>
 	
+	
 	<bean id="persistenceService" class="org.workin.core.persistence.support.PersistenceServiceProvider">
 		<constructor-arg ref="jpaPersistence"></constructor-arg>
 		<constructor-arg ref="sqlMapPersistence"></constructor-arg>
