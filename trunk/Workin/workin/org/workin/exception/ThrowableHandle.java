@@ -2,6 +2,10 @@ package org.workin.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.workin.trace.domain.StoredLog;
+import org.workin.trace.service.StoredLogService;
+import org.workin.trace.service.StoredLogServiceImpl.LogLevel;
+import org.workin.util.DateUtils;
 import org.workin.util.StringUtils;
 
 /**
@@ -10,9 +14,9 @@ import org.workin.util.StringUtils;
  *
  */
 public class ThrowableHandle {
-	
+
 	private static final transient Logger handleLogger = LoggerFactory.getLogger(ThrowableHandle.class);
-	
+
 	/**
 	 * 
 	 * Handle Throwable with handleLogger.
@@ -22,7 +26,7 @@ public class ThrowableHandle {
 	public static void handle(Throwable throwable) {
 		handle(throwable, handleLogger);
 	}
-	
+
 	/**
 	 * 
 	 * Handle Throwable with handleLogger.
@@ -35,7 +39,7 @@ public class ThrowableHandle {
 		throwable.printStackTrace();
 		logger.error(throwable.getMessage(), throwable);
 	}
-	
+
 	/**
 	 * 
 	 * Handle Throwable with handleLogger with user message.
@@ -48,7 +52,7 @@ public class ThrowableHandle {
 	public static void handle(String userMessage, Throwable throwable) {
 		handle(userMessage, throwable, handleLogger);
 	}
-	
+
 	/**
 	 * 
 	 * Handle Throwable with userLogger with user message.
@@ -62,7 +66,7 @@ public class ThrowableHandle {
 		throwable.printStackTrace();
 		logger.error(userMessage, throwable.getMessage(), throwable);
 	}
-	
+
 	/**
 	 * 
 	 * Handle Throwable and then throw again. with handleLogger
@@ -74,7 +78,7 @@ public class ThrowableHandle {
 	public static void handleThrow(String userMessage, Throwable throwable) {
 		handleThrow(userMessage, throwable, handleLogger);
 	}
-	
+
 	/**
 	 * 
 	 * @param throwable
@@ -83,7 +87,7 @@ public class ThrowableHandle {
 	public static void handleThrow(Throwable throwable, Logger logger) {
 		handleThrow(null, throwable, logger);
 	}
-	
+
 	/**
 	 * 
 	 * Handle Throwable and then throw again. with userLogger
@@ -96,12 +100,92 @@ public class ThrowableHandle {
 	 */
 	public static void handleThrow(String userMessage, Throwable throwable, Logger logger) {
 		throwable.printStackTrace();
-		
-		if(StringUtils.hasText(userMessage))
+
+		if (StringUtils.hasText(userMessage))
 			logger.error(userMessage, throwable.getMessage(), throwable);
 		else
 			logger.error(throwable.getMessage(), throwable);
-		
+
 		throw new ServiceException(throwable);
+	}
+
+	/**
+	 * 
+	 * @param throwable
+	 * @param logger
+	 * 
+	 */
+	public static void handleStoreAndThrow(final StoredLogService storedLogService, final Throwable throwable, final Logger logger) {
+		storeLogToDb(storedLogService, null, throwable);
+		handleThrow(throwable, logger);
+	}
+
+	/**
+	 * 
+	 * @param userMessage
+	 * @param throwable
+	 * @param logger
+	 * 
+	 */
+	public static void handleStoreAndThrow(final StoredLogService storedLogService, final String userMessage, final Throwable throwable, final Logger logger) {
+		storeLogToDb(storedLogService, userMessage, throwable);
+		handleThrow(userMessage, throwable, logger);
+	}
+
+	/**
+	 * 
+	 * @param throwable
+	 */
+	public static void handleAndStore(final StoredLogService storedLogService, final Throwable throwable) {
+		storeLogToDb(storedLogService, null, throwable);
+		handle(throwable);
+	}
+
+	/**
+	 * 
+	 * @param throwable
+	 * @param logger
+	 * 
+	 */
+	public static void handleAndStore(final StoredLogService storedLogService, final Throwable throwable, final Logger logger) {
+		storeLogToDb(storedLogService, null, throwable);
+		handle(throwable, logger);
+	}
+
+	/**
+	 * 
+	 * @param userMessage
+	 * @param throwable
+	 * @param logger
+	 * 
+	 */
+	public static void handleAndStore(final StoredLogService storedLogService, final String userMessage,
+			final Throwable throwable, final Logger logger) {
+		storeLogToDb(storedLogService, userMessage, throwable);
+		handle(userMessage, throwable, logger);
+	}
+
+	/**
+	 * 
+	 * @param userMessage
+	 * @param throwable
+	 * 
+	 */
+	public static void storeLogToDb(final StoredLogService storedLogService, final String userMessage,
+			final Throwable throwable) {
+		if (storedLogService != null) {
+			synchronized (ThrowableHandle.class) {
+				StoredLog storedLog = new StoredLog();
+				storedLog.setLogdttm(DateUtils.currentDateTime());
+				storedLog.setLogLevel(LogLevel.ERROR.toString());
+				storedLog.setUserMessage(userMessage);
+				storedLog.setThrowAbleMessage(throwable.getMessage());
+				storedLog.setWhereClass(throwable.getStackTrace()[0].getClassName());
+
+				storedLogService.save(storedLog);
+			}
+		} else {
+			handleLogger.info("StoredLogService is null! You need config, If you want to store logs to DB.");
+		}
 	}
 }
