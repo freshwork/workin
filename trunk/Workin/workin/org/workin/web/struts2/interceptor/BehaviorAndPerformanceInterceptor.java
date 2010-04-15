@@ -33,14 +33,14 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		HttpServletRequest request = (HttpServletRequest) ac.get(ServletActionContext.HTTP_REQUEST);
 		
 		// AOP Before
-		Date requestDateTime = DateUtils.currentDateTime();
+		Date requestdttm = DateUtils.currentDateTime();
 		
 		// execute action
 		String result = invocation.invoke();
 		
 		// AOP After
-		Date responseDateTime = DateUtils.currentDateTime();
-		long spentTime = responseDateTime.getTime() - requestDateTime.getTime();
+		Date responsedttm = DateUtils.currentDateTime();
+		long spentTime = responsedttm.getTime() - requestdttm.getTime();
 		
 		// Save to DB
 		BehaviorPerformance entity = new BehaviorPerformance();
@@ -48,12 +48,11 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		entity.setUserName("G.Lee");
 		entity.setRequestIp(getRemoteIpAddress(request));
 		entity.setRequestURI(request.getRequestURI());
-		entity.setRequestDateTime(requestDateTime);
-		entity.setResponseDateTime(responseDateTime);
+		entity.setResponsedttm(responsedttm);
+		entity.setResponsedttm(responsedttm);
 		entity.setSpentTime(spentTime);
 		
 		behaviorAndPerformanceService.merge(entity);
-		
 		return result;
 	}
 	
