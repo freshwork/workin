@@ -14,7 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.workin.exception.ThrowableHandle;
 import org.workin.mail.AbstractMailService;
-import org.workin.mail.Mailer;
+import org.workin.mail.MailPackage;
 import org.workin.mail.constant.MailConstants;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
@@ -38,8 +38,8 @@ public class MimeMailService extends AbstractMailService {
 	}
 
 	@Override
-	public void sendMail(final Mailer mailer) {
-		Assert.notNull(mailer, "mailer" + MESSAGE_SENTMAIL_WHEN_NULL);
+	public void sendMail(final MailPackage mailPackage) {
+		Assert.notNull(mailPackage, "mailPackage" + MESSAGE_SENTMAIL_WHEN_NULL);
 
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -47,16 +47,16 @@ public class MimeMailService extends AbstractMailService {
 
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, encoding);
 
-			String iSayHello = StringUtils.hasText(this.sayHelloTo) ? this.sayHelloTo : mailer.getSayHelloTo();
+			String iSayHello = StringUtils.hasText(this.sayHelloTo) ? this.sayHelloTo : mailPackage.getSayHelloTo();
 			Assert.hasText(iSayHello, "iSayHello" + MESSAGE_SENTMAIL_WHEN_NULL);
 
-			String iMailFrom = StringUtils.hasText(this.mailFrom) ? this.mailFrom : mailer.getMailFrom();
+			String iMailFrom = StringUtils.hasText(this.mailFrom) ? this.mailFrom : mailPackage.getMailFrom();
 			Assert.hasText(iMailFrom, "iMailFrom" + MESSAGE_SENTMAIL_WHEN_NULL);
 
-			String iMailSubject = StringUtils.hasText(this.mailSubject) ? this.mailSubject : mailer.getMailSubject();
+			String iMailSubject = StringUtils.hasText(this.mailSubject) ? this.mailSubject : mailPackage.getMailSubject();
 			Assert.hasText(iMailSubject, "iMailSubject" + MESSAGE_SENTMAIL_WHEN_NULL);
 
-			List<String> iMailTo = CollectionUtils.isEmpty(this.mailTo) ? mailer.getMailTo() : this.mailTo;
+			List<String> iMailTo = CollectionUtils.isEmpty(this.mailTo) ? mailPackage.getMailTo() : this.mailTo;
 			Assert.notEmpty(iMailTo, "iMailTo" + MESSAGE_SENTMAIL_WHEN_EMPTY);
 
 			helper.setFrom(iMailFrom);
@@ -64,12 +64,12 @@ public class MimeMailService extends AbstractMailService {
 
 			helper.setTo(iMailTo.toArray((new String[0])));
 
-			if (!CollectionUtils.isEmpty(mailer.getMailCCTo())) {
-				helper.setCc(mailer.getMailCCTo().toArray(new String[0]));
+			if (!CollectionUtils.isEmpty(mailPackage.getMailCCTo())) {
+				helper.setCc(mailPackage.getMailCCTo().toArray(new String[0]));
 			}
 
-			if (!CollectionUtils.isEmpty(mailer.getMailBCCTo())) {
-				helper.setBcc(mailer.getMailBCCTo().toArray(new String[0]));
+			if (!CollectionUtils.isEmpty(mailPackage.getMailBCCTo())) {
+				helper.setBcc(mailPackage.getMailBCCTo().toArray(new String[0]));
 			}
 
 			helper.setSentDate(DateUtils.currentDateTime());

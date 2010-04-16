@@ -8,7 +8,7 @@ import java.util.List;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class Mailer implements Serializable {
+public class MailPackage implements Serializable {
 	
 	private static final long serialVersionUID = 2217633397753382169L;
 	
@@ -24,20 +24,20 @@ public class Mailer implements Serializable {
 	
 	private List<String> mailBCCTo;
 	
-	public Mailer() {
+	public MailPackage() {
 	}
 	
-	public Mailer(String sayHelloTo) {
+	public MailPackage(String sayHelloTo) {
 		this.sayHelloTo = sayHelloTo;
 	}
 	
 	
-	public Mailer(String sayHelloTo, List<String> mailTo) {
+	public MailPackage(String sayHelloTo, List<String> mailTo) {
 		this.sayHelloTo = sayHelloTo;
 		this.mailTo = mailTo;
 	}
 	
-	public Mailer(String sayHelloTo, String mailSubject, List<String> mailTo) {
+	public MailPackage(String sayHelloTo, String mailSubject, List<String> mailTo) {
 		this.sayHelloTo = sayHelloTo;
 		this.mailSubject = mailSubject;
 		this.mailTo = mailTo;

@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 import org.workin.exception.ThrowableHandle;
 import org.workin.jms.MessageListenerTemplate;
 import org.workin.mail.MailService;
-import org.workin.mail.Mailer;
+import org.workin.mail.MailPackage;
 import org.workin.notify.producer.NotifyMessageProducer.MailNotifierField;
 import org.workin.util.Assert;
 
@@ -38,8 +38,8 @@ public class NotifyMessageListener extends MessageListenerTemplate {
 					List<String> mailTo = new ArrayList<String>();
 					mailTo.add(email);
 					
-					Mailer mailer = new Mailer(name, mailTo);
-					mailService.sendMail(mailer);
+					MailPackage mailPackage = new MailPackage(name, mailTo);
+					mailService.sendMail(mailPackage);
 					logger.info("MailService sent mail in NotifyMessageListener...");
 			}
 		} catch (Exception ex) {
