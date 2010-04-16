@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.workin.spring.security.SpringSecurityUtils;
 import org.workin.trace.domain.BehaviorPerformance;
 import org.workin.trace.producer.BehaviorAndPerformanceProducer;
 import org.workin.util.DateUtils;
@@ -46,8 +47,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		// Store entity to db(BehaviorPerformance).
 		BehaviorPerformance entity = new BehaviorPerformance();
-		entity.setUserId(10086);
-		entity.setUserName("Admin");
+		entity.setUserName(getUserName());
 		entity.setRequestIp(getRemoteIpAddress(request));
 		entity.setRequestURI(request.getRequestURI());
 		entity.setRequestdttm(requestdttm);
@@ -59,15 +59,31 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		return result;
 	}
+	
+	/**
+	 * 
+	 * if you need get user form other way,u need Override this method only.
+	 * 
+	 * Get application user from spring security
+	 * 
+	 * @return
+	 * 
+	 */
+	protected static final String getUserName() {
+		return SpringSecurityUtils.getCurrentUserName();
+	}
 
 	/**
 	 * 
-	 * Get Remote Ip Address
+	 * if you need get IP address form other way,u need Override this method only.
+	 * 
+	 * Get remote Ip address
+	 * 
 	 * @param request
 	 * @return
 	 * 
 	 */
-	private static final String getRemoteIpAddress(final HttpServletRequest request) {
+	protected static final String getRemoteIpAddress(final HttpServletRequest request) {
 		String remoteIp = request.getHeader("x-forwarded-for");
 
 		if (!StringUtils.hasText(remoteIp) || "unknown".equalsIgnoreCase(remoteIp)) {
