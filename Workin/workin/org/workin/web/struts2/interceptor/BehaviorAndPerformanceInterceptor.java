@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.workin.trace.domain.BehaviorPerformance;
-import org.workin.trace.service.BehaviorPerformanceService;
+import org.workin.trace.producer.BehaviorAndPerformanceProducer;
 import org.workin.util.DateUtils;
 import org.workin.util.StringUtils;
 
@@ -23,39 +23,43 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 	private static final long serialVersionUID = -6462877210798477795L;
-	
-	@Autowired
-	BehaviorPerformanceService behaviorAndPerformanceService;
-	
+
+	@Autowired(required = true)
+	BehaviorAndPerformanceProducer behaviorAndPerformanceProducer;
+
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		ActionContext ac = invocation.getInvocationContext();
 		HttpServletRequest request = (HttpServletRequest) ac.get(ServletActionContext.HTTP_REQUEST);
-		
-		// AOP Before
+
+		// AOP Before - obtain request datetime.
 		Date requestdttm = DateUtils.currentDateTime();
-		
-		// execute action
+
+		// Handle and execute action logic.
 		String result = invocation.invoke();
-		
-		// AOP After
+
+		// AOP After - obtain response datetime.
 		Date responsedttm = DateUtils.currentDateTime();
-		long spentTime = responsedttm.getTime() - requestdttm.getTime();
 		
-		// Save to DB
+		// At last calculate spent time between request and response.
+		long spentTime = responsedttm.getTime() - requestdttm.getTime();
+
+		// Store entity to db(BehaviorPerformance).
 		BehaviorPerformance entity = new BehaviorPerformance();
 		entity.setUserId(0123L);
-		entity.setUserName("G.Lee");
+		entity.setUserName("Admin");
 		entity.setRequestIp(getRemoteIpAddress(request));
 		entity.setRequestURI(request.getRequestURI());
-		entity.setResponsedttm(responsedttm);
+		entity.setRequestdttm(requestdttm);
 		entity.setResponsedttm(responsedttm);
 		entity.setSpentTime(spentTime);
-		
-		behaviorAndPerformanceService.merge(entity);
+
+		// Use JMS(ActiveMQ) send Queue, implement async store entity to db(BehaviorPerformance).
+		behaviorAndPerformanceProducer.sendQueue(entity);
+
 		return result;
 	}
-	
+
 	/**
 	 * 
 	 * Get Remote Ip Address
@@ -63,9 +67,9 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * @return
 	 * 
 	 */
-	public static final String getRemoteIpAddress(final HttpServletRequest request) {
+	private static final String getRemoteIpAddress(final HttpServletRequest request) {
 		String remoteIp = request.getHeader("x-forwarded-for");
-		
+
 		if (!StringUtils.hasText(remoteIp) || "unknown".equalsIgnoreCase(remoteIp)) {
 			remoteIp = request.getHeader("Proxy-Client-IP");
 		}

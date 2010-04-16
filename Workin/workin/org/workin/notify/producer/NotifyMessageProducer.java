@@ -20,8 +20,7 @@ public class NotifyMessageProducer extends MessageProducerTemplate {
 	
 	/**
 	 * 
-	 * @author
-	 * @see NotifyMessageProducer 
+	 * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
 	 *
 	 */
 	public enum MailNotifierField {
@@ -37,16 +36,6 @@ public class NotifyMessageProducer extends MessageProducerTemplate {
 		}
 	}
 	
-	@Override
-	public void sendQueue(final Serializable... targetObject) {
-		sendMessage(notifyQueue, targetObject);
-	}
-
-	@Override
-	public void sendTopic(final Serializable... targetObject) {
-		sendMessage(notifyTopic, targetObject);
-	}
-	
 	
 	/**
 	 * 
@@ -56,7 +45,8 @@ public class NotifyMessageProducer extends MessageProducerTemplate {
 	 * @param targetObject
 	 *
 	 */
-	protected void sendMessage(final Destination destination, final Serializable... targetObject) {
+	public void sendMessage(final Destination destination, final Serializable... targetObject) {
+		Assert.notNull(targetObject, "targetObject cannot be null!When sendMessage.");
 		for (Serializable target : targetObject) {
 			MailNotifier mailNotifier = new MailNotifier();
 
