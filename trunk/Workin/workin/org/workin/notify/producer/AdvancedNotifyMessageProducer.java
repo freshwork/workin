@@ -19,7 +19,7 @@ import org.workin.util.Assert;
  *
  */
 public class AdvancedNotifyMessageProducer extends NotifyMessageProducer {
-	
+
 	/**
 	 * 
 	 * Advanced Send Message With MapMessage.
@@ -29,13 +29,13 @@ public class AdvancedNotifyMessageProducer extends NotifyMessageProducer {
 	 * 
 	 */
 	@Override
-	protected void sendMessage(final Destination destination, final Serializable... targetObject) {
+	public void sendMessage(final Destination destination, final Serializable... targetObject) {
+		Assert.notNull(targetObject, "targetObject cannot be null!When sendMessage.");
 		for (Serializable target : targetObject) {
 			try {
-
 				final MailNotifier mailNotifier = (MailNotifier) target;
 
-				jmsTemplate.send(notifyTopic, new MessageCreator() {
+				jmsTemplate.send(destination, new MessageCreator() {
 					public Message createMessage(Session session) throws JMSException {
 						MapMessage message = buildMapMessageWithSession(session, mailNotifier);
 						return message;
@@ -43,13 +43,14 @@ public class AdvancedNotifyMessageProducer extends NotifyMessageProducer {
 				});
 
 			} catch (ClassCastException cex) {
-				ThrowableHandle.handleThrow("Must be use MailNotifier to sendTopic.", cex, logger);
+				ThrowableHandle.handleThrow("Must be use MailNotifier to sendMessage().", cex, logger);
 			} catch (Exception ex) {
-				ThrowableHandle.handleThrow("Hit Exception, When execute NotifyMessageProducer.sendTopic().", ex, logger);
+				ThrowableHandle.handleThrow("Hit Exception, When execute NotifyMessageProducer.sendMessage().", ex,
+						logger);
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Build mapmessage with session and mailNotifier.

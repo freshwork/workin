@@ -19,7 +19,7 @@
 	<import resource="apps/*.xml"/>
 	<import resource="email/applicationContext-email.xml"/>
 	<import resource="rss/applicationContext-rss.xml"/>
-	<import resource="jms/applicationContext-notify.xml"/>
+	<import resource="jms/applicationContext-*.xml"/>
 
 	
 	<!-- bridge java.util.logging to slf4j -->

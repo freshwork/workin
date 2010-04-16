@@ -11,9 +11,9 @@ import org.workin.notify.producer.NotifyMessageProducer;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class NotifyMessageTest extends SpringTxTestCase {
+public class NotifyMessageProducerTest extends SpringTxTestCase {
 	
-	@Autowired
+	@Autowired(required=true)
 	private NotifyMessageProducer notifyMessageProducer;
 	
 	@Test
@@ -22,10 +22,6 @@ public class NotifyMessageTest extends SpringTxTestCase {
 		MailNotifier bily = new MailNotifier();
 		bily.setName("Bily");
 		bily.setEmail("zhangchuan.wang@elegoninfotech.com");
-		
-		MailNotifier bobo = new MailNotifier();
-		bobo.setName("BOBO");
-		bobo.setEmail("avery.wang@elegoninfotech.com");
 		
 		MailNotifier goingmm = new MailNotifier();
 		goingmm.setName("G.Lee");
