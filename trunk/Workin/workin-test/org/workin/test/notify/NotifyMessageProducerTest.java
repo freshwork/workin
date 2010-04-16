@@ -27,7 +27,6 @@ public class NotifyMessageProducerTest extends SpringTxTestCase {
 		goingmm.setName("G.Lee");
 		goingmm.setEmail("junjie.li@elegoninfotech.com");
 		
-		notifyMessageProducer.sendQueue(goingmm);
 		notifyMessageProducer.sendTopic(goingmm);
 	}
 }

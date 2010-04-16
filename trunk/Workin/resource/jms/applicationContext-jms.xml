@@ -22,17 +22,20 @@
 
 	<!-- Queue Defind -->
 	<bean id="notifyQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="q.notify" />
+		<constructor-arg value="queue.notify" />
 	</bean>
 
 	<!-- Topic Defind -->
 	<bean id="notifyTopic" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="t.notify" />
+		<constructor-arg value="toptic.notify" />
 	</bean>
 
 	<!-- Spring JMS Template -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="cachingConnectionFactory" />
+		<property name="explicitQosEnabled" value="true" />
+		<property name="deliveryPersistent" value="false" />
+		<property name="priority" value="9" />
 	</bean>
 
 </beans>

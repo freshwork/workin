@@ -27,8 +27,11 @@ public class BehaviorAndPerformanceProducerTest extends SpringTxTestCase {
 		targetObject.setRequestURI("/admin/user.do");
 		targetObject.setRequestdttm(DateUtils.currentDateTime());
 		targetObject.setResponsedttm(DateUtils.currentDateTime());
-		targetObject.setSpentTime(1000L);
+		targetObject.setSpentTime(1000);
 		
-		behaviorAndPerformanceProducer.sendQueue(targetObject);			
+		for(int i=0; i<5; i++) {
+			behaviorAndPerformanceProducer.sendTopic(targetObject);	
+		}
+					
 	}
 }

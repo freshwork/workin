@@ -10,7 +10,8 @@
 		<property name="notifyQueue" ref="notifyQueue" />
 		<property name="notifyTopic" ref="notifyTopic" />
 	</bean>
-
+	
+	
 	<!-- Async Receive Queue Message Container -->
 	<bean id="notifyQueueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
