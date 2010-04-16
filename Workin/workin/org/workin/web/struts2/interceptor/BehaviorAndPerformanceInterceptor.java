@@ -46,7 +46,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		// Store entity to db(BehaviorPerformance).
 		BehaviorPerformance entity = new BehaviorPerformance();
-		entity.setUserId(0123L);
+		entity.setUserId(10086);
 		entity.setUserName("Admin");
 		entity.setRequestIp(getRemoteIpAddress(request));
 		entity.setRequestURI(request.getRequestURI());
