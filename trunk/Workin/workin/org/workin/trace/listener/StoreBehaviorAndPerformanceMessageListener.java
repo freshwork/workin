@@ -4,6 +4,7 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.workin.exception.ThrowableHandle;
 import org.workin.jms.MessageListenerTemplate;
 import org.workin.trace.domain.BehaviorPerformance;
@@ -23,17 +24,23 @@ public class StoreBehaviorAndPerformanceMessageListener extends MessageListenerT
 	public void onMessage(Message message) {
 		try {
 			Assert.notNull(behaviorAndPerformanceService, "behaviorAndPerformanceService cannot be null!");
+			
 			MapMessage mapMessage = (MapMessage) message;
 			BehaviorPerformance behaviorPerformance = new BehaviorPerformance();
 			behaviorPerformance.setUserId(mapMessage.getLongProperty(BPSavedWithKeys.USERID.toString()));
-			behaviorPerformance.setSpentTime(mapMessage.getLong(BPSavedWithKeys.SPENTTIME.toString()));
+			behaviorPerformance.setSpentTime(mapMessage.getLongProperty(BPSavedWithKeys.SPENTTIME.toString()));
 			
-			behaviorPerformance.setUserName(mapMessage.getString(BPSavedWithKeys.USERNAME.toString()));
-			behaviorPerformance.setRequestIp(mapMessage.getString(BPSavedWithKeys.REQUESTIP.toString()));
-			behaviorPerformance.setRequestURI(mapMessage.getString(BPSavedWithKeys.REQUESTURI.toString()));
+			behaviorPerformance.setUserName(mapMessage.getStringProperty(BPSavedWithKeys.USERNAME.toString()));
+			behaviorPerformance.setRequestIp(mapMessage.getStringProperty(BPSavedWithKeys.REQUESTIP.toString()));
+			behaviorPerformance.setRequestURI(mapMessage.getStringProperty(BPSavedWithKeys.REQUESTURI.toString()));
 			
-			behaviorPerformance.setRequestdttm(DateUtils.stringToDate(mapMessage.getString(BPSavedWithKeys.REQUESTDTTM.toString())));
-			behaviorPerformance.setResponsedttm(DateUtils.stringToDate(mapMessage.getString(BPSavedWithKeys.RESPONSEDTTM.toString())));
+			if(StringUtils.hasText(mapMessage.getStringProperty(BPSavedWithKeys.REQUESTDTTM.toString()))) {
+				behaviorPerformance.setRequestdttm(DateUtils.stringToDate(mapMessage.getStringProperty(BPSavedWithKeys.REQUESTDTTM.toString())));	
+			}
+			
+			if(StringUtils.hasText(mapMessage.getStringProperty(BPSavedWithKeys.RESPONSEDTTM.toString()))) {
+				behaviorPerformance.setResponsedttm(DateUtils.stringToDate(mapMessage.getStringProperty(BPSavedWithKeys.RESPONSEDTTM.toString())));
+			}
 			
 			behaviorAndPerformanceService.merge(behaviorPerformance);
 			logger.info("BehaviorAndPerformanceService merged behaviorPerformance in StoreBehaviorAndPerformanceMessageListener...");
