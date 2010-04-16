@@ -16,7 +16,8 @@
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="notifyQueue" />
 		<property name="messageListener" ref="storeBehaviorAndPerformanceMessageListener" />
-		<property name="concurrentConsumers" value="10" />
+		<property name="concurrentConsumers" value="5" />
+		<property name="maxConcurrentConsumers" value="10" />
 	</bean>
 	
 	<!-- Async Receive Topic Message Container -->
