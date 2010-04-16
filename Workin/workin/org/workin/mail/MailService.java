@@ -9,6 +9,6 @@ package org.workin.mail;
  */
 public interface MailService {
 	
-	public void sendMail(final Mailer mailer);
+	public void sendMail(final MailPackage mailPackage);
 	
 }

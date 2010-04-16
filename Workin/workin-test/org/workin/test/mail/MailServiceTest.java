@@ -1,12 +1,10 @@
 package org.workin.test.mail;
 
-import javax.annotation.Resource;
-
 import org.junit.Test;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.workin.fortest.spring.SpringContextTestCase;
+import org.workin.mail.MailPackage;
 import org.workin.mail.MailService;
-import org.workin.mail.Mailer;
 
 /**
  * 
@@ -15,21 +13,17 @@ import org.workin.mail.Mailer;
  */
 public class MailServiceTest extends SpringContextTestCase {
 	
-	@Resource
-	private MailService mailService;
-	
-	@Resource
+	@Autowired(required=true)
 	private MailService mimeMailService;
 	
-	@Test
-	public void simpleMailServiceSendMailTest() {
-		Mailer mailer = new Mailer("G.Lee");
-		mailService.sendMail(mailer);
+	public void setMimeMailService(MailService mimeMailService) {
+		this.mimeMailService = mimeMailService;
 	}
+
 	
 	@Test
 	public void mimeMailServiceSendMailTest() {
-		Mailer mailer = new Mailer("G.Lee");
-		mimeMailService.sendMail(mailer);
+		MailPackage mailPackage = new MailPackage("G.Lee");
+		mimeMailService.sendMail(mailPackage);
 	}
 }

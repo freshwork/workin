@@ -20,7 +20,7 @@
 	</bean>
 	
 	<!-- Simple Mail -->
-	<bean id="mailService" class="org.workin.mail.support.SimpleMailService">
+	<!-- bean id="mailService" class="org.workin.mail.support.SimpleMailService">
 		<property name="mailFrom" value="${mail.mailFrom}" />
 		<property name="mailTo">
 			<list>
@@ -37,7 +37,7 @@
 		</property>
 		
 		<property name="mailSender" ref="mailSender" />
-	</bean>
+	</bean-->
 	
 	
 	<!-- MIME Mail -->
