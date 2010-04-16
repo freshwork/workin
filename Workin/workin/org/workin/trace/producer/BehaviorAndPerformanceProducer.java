@@ -72,25 +72,25 @@ public class BehaviorAndPerformanceProducer extends MessageProducerTemplate {
 		MapMessage message = session.createMapMessage();
 		
 		logger.debug("send behaviorPerformance UserId: {}",  behaviorPerformance.getUserId());
-		message.setLong(BPSavedWithKeys.USERID.toString(), behaviorPerformance.getUserId());
+		message.setLongProperty(BPSavedWithKeys.USERID.toString(), behaviorPerformance.getUserId());
 		
 		logger.debug("send behaviorPerformance SpentTime: {}",  behaviorPerformance.getSpentTime());
-		message.setLong(BPSavedWithKeys.SPENTTIME.toString(), behaviorPerformance.getSpentTime());
+		message.setLongProperty(BPSavedWithKeys.SPENTTIME.toString(), behaviorPerformance.getSpentTime());
 		
 		logger.debug("send behaviorPerformance UserName: {}",  behaviorPerformance.getUserName());
-		message.setString(BPSavedWithKeys.USERNAME.toString(), behaviorPerformance.getUserName());
+		message.setStringProperty(BPSavedWithKeys.USERNAME.toString(), behaviorPerformance.getUserName());
 		
 		logger.debug("send behaviorPerformance RequestIp: {}",  behaviorPerformance.getRequestIp());
-		message.setString(BPSavedWithKeys.REQUESTIP.toString(), behaviorPerformance.getRequestIp());
+		message.setStringProperty(BPSavedWithKeys.REQUESTIP.toString(), behaviorPerformance.getRequestIp());
 		
 		logger.debug("send behaviorPerformance RequestURI: {}",  behaviorPerformance.getRequestURI());
-		message.setString(BPSavedWithKeys.REQUESTURI.toString(), behaviorPerformance.getRequestURI());
+		message.setStringProperty(BPSavedWithKeys.REQUESTURI.toString(), behaviorPerformance.getRequestURI());
 		
 		logger.debug("send behaviorPerformance Requestdttm: {}",  DateUtils.dateToString(behaviorPerformance.getRequestdttm()));
-		message.setString(BPSavedWithKeys.REQUESTDTTM.toString(), DateUtils.dateToString(behaviorPerformance.getRequestdttm()));
+		message.setStringProperty(BPSavedWithKeys.REQUESTDTTM.toString(), DateUtils.dateToString(behaviorPerformance.getRequestdttm()));
 		
 		logger.debug("send behaviorPerformance Responsedttm: {}",  DateUtils.dateToString(behaviorPerformance.getResponsedttm()));
-		message.setString(BPSavedWithKeys.RESPONSEDTTM.toString(), DateUtils.dateToString(behaviorPerformance.getResponsedttm()));
+		message.setStringProperty(BPSavedWithKeys.RESPONSEDTTM.toString(), DateUtils.dateToString(behaviorPerformance.getResponsedttm()));
 		
 		return message;
 	}
