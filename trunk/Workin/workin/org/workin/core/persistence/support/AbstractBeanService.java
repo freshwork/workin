@@ -21,7 +21,6 @@ import org.workin.util.Assert;
 public abstract class AbstractBeanService<T, PK extends Serializable> implements BeanService, CrudService<T, PK> {
 	
 	public PersistenceService getPersistenceService() {
-		Assert.notNull(persistenceService, " Persistence Service cannot be null!");
 		return persistenceService;
 	}
 	
@@ -103,8 +102,8 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 		return this.persistenceService.findByCriteriaQuery(targetClass, filters, isDistinct);
 	}
 	
-	@Autowired
-	private PersistenceService persistenceService;
+	@Autowired(required=true)
+	protected PersistenceService persistenceService;
 
 	// logger for all service
 	protected transient final Logger logger = LoggerFactory.getLogger(this.getClass());
