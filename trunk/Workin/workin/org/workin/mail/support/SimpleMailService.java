@@ -1,10 +1,15 @@
 package org.workin.mail.support;
 
+import java.util.List;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.workin.exception.ThrowableHandle;
 import org.workin.mail.AbstractMailService;
+import org.workin.mail.Mailer;
 import org.workin.util.Assert;
+import org.workin.util.CollectionUtils;
 import org.workin.util.DateUtils;
+import org.workin.util.StringUtils;
 
 /**
  * 
@@ -12,47 +17,59 @@ import org.workin.util.DateUtils;
  *
  */
 public class SimpleMailService extends AbstractMailService {
-	
+
 	private String textTemplate;
-	
+
 	public void setTextTemplate(String textTemplate) {
 		this.textTemplate = textTemplate;
 	}
 
 	@Override
-	public void sendMail(final String userName) {
-		this.sendMail(userName, this.mailTo);
-	}
-	
-	@Override
-	public void sendMail(final String userName, final String... send2s) {
-		
-		Assert.notNull(userName, "userName cannot null, when sendMail by SimpleMailService.");
-		Assert.notEmpty(send2s, " send2s cannot empty! who is sent email.");
-		
+	public void sendMail(final Mailer mailer) {
+		Assert.notNull(mailer, "mailer" + MESSAGE_SENTMAIL_WHEN_NULL);
+
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setFrom(this.mailFrom);
+
+		String iSayHello = StringUtils.hasText(this.sayHelloTo) ? this.sayHelloTo : mailer.getSayHelloTo();
+		Assert.hasText(iSayHello, "iSayHello" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+		String iMailFrom = StringUtils.hasText(this.mailFrom) ? this.mailFrom : mailer.getMailFrom();
+		Assert.hasText(iMailFrom, "iMailFrom" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+		String iMailSubject = StringUtils.hasText(this.mailSubject) ? this.mailSubject : mailer.getMailSubject();
+		Assert.hasText(iMailSubject, "iMailSubject" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+		List<String> iMailTo = CollectionUtils.isEmpty(this.mailTo) ? mailer.getMailTo() : this.mailTo;
+		Assert.notEmpty(iMailTo, "iMailTo" + MESSAGE_SENTMAIL_WHEN_EMPTY);
+
+		mailMessage.setFrom(iMailFrom);
+		mailMessage.setSubject(iMailSubject);
+		mailMessage.setTo(iMailTo.toArray((new String[0])));
 		
-		if(send2s.length > 1) {
-			mailMessage.setBcc(send2s);
-		} else {
-			mailMessage.setTo(send2s);
+		if (!CollectionUtils.isEmpty(mailer.getMailCCTo())) {
+			mailMessage.setCc(mailer.getMailCCTo().toArray(new String[0]));
 		}
-			
-		mailMessage.setSubject(this.mailSubject);
-		mailMessage.setSentDate(DateUtils.getNow());
-		
-		String textContent = String.format(textTemplate, userName, DateUtils.getNow());
+
+		if (!CollectionUtils.isEmpty(mailer.getMailBCCTo())) {
+			mailMessage.setBcc(mailer.getMailBCCTo().toArray(new String[0]));
+		}
+		mailMessage.setSentDate(DateUtils.currentDateTime());
+
+		String textContent = String.format(textTemplate, iSayHello, mailMessage.getSentDate());
 		mailMessage.setText(textContent);
-		
+
 		try {
 			mailSender.send(mailMessage);
-			
-			for(String sentMailto: send2s) {
-				logger.info("Send mail with SimpleMailService from {} to {}.",this.mailFrom, sentMailto);
+
+			for (String sentMailTo : iMailTo) {
+				logger.info("Send mail with SimpleMailService from {} to {}.", iMailFrom, sentMailTo);
 			}
-		} catch (Exception e) {
-			ThrowableHandle.handleThrow("Mail send fail...", e, logger);
+		} catch (Exception ex) {
+			ThrowableHandle.handleThrow("Hit Exception, When execute SimpleMailService.sendMail(final Mailer mailer)", ex, logger);
 		}
+
 	}
+	
+	private static final String MESSAGE_SENTMAIL_WHEN_NULL = "cannot be null, When send mail with SimpleMailService.";
+	private static final String MESSAGE_SENTMAIL_WHEN_EMPTY = "cannot be empty, When send mail with SimpleMailService.";
 }

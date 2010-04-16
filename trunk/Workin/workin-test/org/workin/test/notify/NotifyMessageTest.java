@@ -3,7 +3,7 @@ package org.workin.test.notify;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.workin.fortest.spring.SpringTxTestCase;
-import org.workin.jms.JMSUser;
+import org.workin.notify.MailNotifier;
 import org.workin.notify.producer.NotifyMessageProducer;
 
 /**
@@ -11,26 +11,27 @@ import org.workin.notify.producer.NotifyMessageProducer;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class JMSQueueNotifyTested extends SpringTxTestCase {
+public class NotifyMessageTest extends SpringTxTestCase {
 	
 	@Autowired
 	private NotifyMessageProducer notifyMessageProducer;
 	
 	@Test
-	public void sendQueueTest() {
+	public void sendQueueAndTopicTest() {
 		
-		JMSUser bily = new JMSUser();
-		bily.setName("Bily-Topic");
+		MailNotifier bily = new MailNotifier();
+		bily.setName("Bily");
 		bily.setEmail("zhangchuan.wang@elegoninfotech.com");
 		
-		JMSUser bobo = new JMSUser();
-		bobo.setName("BOBO-Topic");
+		MailNotifier bobo = new MailNotifier();
+		bobo.setName("BOBO");
 		bobo.setEmail("avery.wang@elegoninfotech.com");
 		
-		JMSUser goingmm = new JMSUser();
-		goingmm.setName("G.Lee-Topic");
+		MailNotifier goingmm = new MailNotifier();
+		goingmm.setName("G.Lee");
 		goingmm.setEmail("junjie.li@elegoninfotech.com");
 		
-		notifyMessageProducer.sendQueue(goingmm, bily);
+		notifyMessageProducer.sendQueue(goingmm);
+		notifyMessageProducer.sendTopic(goingmm);
 	}
 }
