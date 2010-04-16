@@ -21,9 +21,12 @@
 	
 	<!-- Simple Mail -->
 	<bean id="mailService" class="org.workin.mail.support.SimpleMailService">
-		<property name="mailSender" ref="mailSender" />
 		<property name="mailFrom" value="${mail.mailFrom}" />
-		<property name="mailTo" value="${mail.mailTo}" />
+		<property name="mailTo">
+			<list>
+				<value>${mail.mailTo}</value>
+			</list>
+		</property>
 		<property name="mailSubject" value="${mail.mailSubject}" />
 		<property name="textTemplate">
 			<value>
@@ -32,13 +35,19 @@
 			]]>
 			</value>
 		</property>
+		
+		<property name="mailSender" ref="mailSender" />
 	</bean>
 	
 	
 	<!-- MIME Mail -->
 	<bean id="mimeMailService" class="org.workin.mail.support.MimeMailService">
 		<property name="mailFrom" value="${mail.mailFrom}" />
-		<property name="mailTo" value="${mail.mailTo}" />
+		<property name="mailTo">
+			<list>
+				<value>${mail.mailTo}</value>
+			</list>
+		</property>
 		<property name="mailSubject" value="${mail.mimeMailSubject}" />
 		
 		<property name="templateName" value="${mail.templateName}" />

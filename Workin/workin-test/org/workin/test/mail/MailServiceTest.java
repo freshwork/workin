@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import org.workin.fortest.spring.SpringContextTestCase;
 import org.workin.mail.MailService;
+import org.workin.mail.Mailer;
 
 /**
  * 
@@ -22,12 +23,13 @@ public class MailServiceTest extends SpringContextTestCase {
 	
 	@Test
 	public void simpleMailServiceSendMailTest() {
-		mailService.sendMail("G.Lee");
+		Mailer mailer = new Mailer("G.Lee");
+		mailService.sendMail(mailer);
 	}
 	
 	@Test
 	public void mimeMailServiceSendMailTest() {
-		String[] send2s = {"junjie.li@elegoninfotech.com"};
-		mimeMailService.sendMail("G.Lee", send2s);
+		Mailer mailer = new Mailer("G.Lee");
+		mimeMailService.sendMail(mailer);
 	}
 }

@@ -2,6 +2,7 @@ package org.workin.mail.support;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -13,8 +14,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.workin.exception.ThrowableHandle;
 import org.workin.mail.AbstractMailService;
+import org.workin.mail.Mailer;
 import org.workin.mail.constant.MailConstants;
 import org.workin.util.Assert;
+import org.workin.util.CollectionUtils;
+import org.workin.util.DateUtils;
 import org.workin.util.StringUtils;
 
 import freemarker.template.Configuration;
@@ -27,55 +31,64 @@ import freemarker.template.TemplateException;
  *
  */
 public class MimeMailService extends AbstractMailService {
-	
-	
+
 	@Autowired
 	public void setFreemarkerConfiguration(Configuration freemarkerConfiguration) throws IOException {
 		template = freemarkerConfiguration.getTemplate(templateName, encoding);
 	}
-	
-	@Override
-	public void sendMail(final String userName) {
-		this.sendMail(userName, this.mailTo);
-	}
-	
-	@Override
-	public void sendMail(final String userName, final String... send2s) {
-		
-		Assert.notNull(userName, "userName cannot null, when sendMail by SimpleMailService.");
-		Assert.notEmpty(send2s, " send2s cannot empty! who is sent email.");
-		
-		MimeMessage mimeMessage = mailSender.createMimeMessage();
-		
-		try {
-			
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, encoding);
-			
-			if(send2s.length > 1) {
-				helper.setBcc(send2s);
-			} else {
-				helper.setTo(send2s);
-			}
-			
-			helper.setFrom(this.mailFrom);
-			helper.setSubject(this.mailSubject);
 
-			buildContent(helper, userName);
+	@Override
+	public void sendMail(final Mailer mailer) {
+		Assert.notNull(mailer, "mailer" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+		try {
+
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, encoding);
+
+			String iSayHello = StringUtils.hasText(this.sayHelloTo) ? this.sayHelloTo : mailer.getSayHelloTo();
+			Assert.hasText(iSayHello, "iSayHello" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+			String iMailFrom = StringUtils.hasText(this.mailFrom) ? this.mailFrom : mailer.getMailFrom();
+			Assert.hasText(iMailFrom, "iMailFrom" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+			String iMailSubject = StringUtils.hasText(this.mailSubject) ? this.mailSubject : mailer.getMailSubject();
+			Assert.hasText(iMailSubject, "iMailSubject" + MESSAGE_SENTMAIL_WHEN_NULL);
+
+			List<String> iMailTo = CollectionUtils.isEmpty(this.mailTo) ? mailer.getMailTo() : this.mailTo;
+			Assert.notEmpty(iMailTo, "iMailTo" + MESSAGE_SENTMAIL_WHEN_EMPTY);
+
+			helper.setFrom(iMailFrom);
+			helper.setSubject(iMailSubject);
+
+			helper.setTo(iMailTo.toArray((new String[0])));
+
+			if (!CollectionUtils.isEmpty(mailer.getMailCCTo())) {
+				helper.setCc(mailer.getMailCCTo().toArray(new String[0]));
+			}
+
+			if (!CollectionUtils.isEmpty(mailer.getMailBCCTo())) {
+				helper.setBcc(mailer.getMailBCCTo().toArray(new String[0]));
+			}
+
+			helper.setSentDate(DateUtils.currentDateTime());
+
+			buildContent(helper, iSayHello);
 			buildAttachment(helper);
 
 			mailSender.send(mimeMessage);
-			
-			for(String sentMailto: send2s) {
-				logger.info("Send mail with MimeMailService from {} to {}.",this.mailFrom, sentMailto);
+
+			for (String sentMailTo : iMailTo) {
+				logger.info("Send mail with MimeMailService from {} to {}.", iMailFrom, sentMailTo);
 			}
 		} catch (MessagingException e) {
-			ThrowableHandle.handleThrow("Build mail failing.", e, logger);
-		} catch (Exception e) {
-			ThrowableHandle.handleThrow("Send mail failing.", e, logger);
+			ThrowableHandle.handleThrow("Hit MessagingException, When execute MimeMailService.sendMail()", e, logger);
+		} catch (Exception ex) {
+			ThrowableHandle.handleThrow("Hit Exception, When execute MimeMailService.sendMail()", ex, logger);
 		}
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param  helper
@@ -84,22 +97,22 @@ public class MimeMailService extends AbstractMailService {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	private void buildContent(MimeMessageHelper helper, String userName) throws MessagingException {
+	private void buildContent(MimeMessageHelper helper, String sayHelloTo) throws MessagingException {
 
 		try {
 			Map context = new HashMap();
-			context.put(USER_NAME, userName);
-			
+			context.put(USER_NAME, sayHelloTo);
+
 			String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, context);
 			helper.setText(content, true);
-			
+
 		} catch (IOException e) {
 			ThrowableHandle.handleThrow("Build mail content fail... FreeMarker template cannot found.", e, logger);
-		} catch (TemplateException e) {
-			ThrowableHandle.handleThrow("Build mail content fail... FreeMarker template Error.", e, logger);
+		} catch (TemplateException ex) {
+			ThrowableHandle.handleThrow("Build mail content fail... FreeMarker template Error.", ex, logger);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param  helper
@@ -110,32 +123,33 @@ public class MimeMailService extends AbstractMailService {
 		try {
 			ClassPathResource attachment = new ClassPathResource(attachmentPath);
 			helper.addAttachment(attachmentName, attachment.getFile());
-		} catch (IOException e) {
-			ThrowableHandle.handleThrow("Build mail attachment failling...Attachment file cannot found.", e, logger);
+		} catch (IOException ex) {
+			ThrowableHandle
+					.handleThrow("Build mail attachment failling...Attachment file cannot be found.", ex, logger);
 		}
 	}
-	
+
 	// mail content template with freemarker
 	private Template template;
-	
+
 	// template name conf
 	private String templateName;
-	
+
 	// attachment name conf
 	private String attachmentName;
-	
+
 	// attachment path conf
 	private String attachmentPath;
-	
+
 	// mail use encoding conf
 	private String encoding;
-	
+
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
 	}
-	
+
 	public void setEncoding(String encoding) {
-		this.encoding = StringUtils.hasText(encoding)? encoding : MailConstants.MAIL_CONTENT_ENCODING;
+		this.encoding = StringUtils.hasText(encoding) ? encoding : MailConstants.MAIL_CONTENT_ENCODING;
 	}
 
 	public void setAttachmentName(String attachmentName) {
@@ -145,7 +159,9 @@ public class MimeMailService extends AbstractMailService {
 	public void setAttachmentPath(String attachmentPath) {
 		this.attachmentPath = attachmentPath;
 	}
-	
+
 	private static final String USER_NAME = "userName";
-	
+
+	private static final String MESSAGE_SENTMAIL_WHEN_NULL = "cannot be null, When send mail with MimeMailService.";
+	private static final String MESSAGE_SENTMAIL_WHEN_EMPTY = "cannot be empty, When send mail with MimeMailService.";
 }

@@ -1,16 +1,28 @@
-package org.workin.jms;
+package org.workin.notify;
+
+import java.io.Serializable;
 
 /**
  * 
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class JMSUser {
-
+public class MailNotifier implements Serializable {
+	
+	private static final long serialVersionUID = -2842876987886708750L;
+	
 	private String name;
-
+	
 	private String email;
-
+	
+	public MailNotifier() {
+	}
+	
+	public MailNotifier(String name, String email) {
+		this.name = name;
+		this.email = email;
+	}
+	
 	public String getName() {
 		return name;
 	}

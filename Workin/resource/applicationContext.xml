@@ -19,8 +19,8 @@
 	<import resource="apps/*.xml"/>
 	<import resource="email/applicationContext-email.xml"/>
 	<import resource="rss/applicationContext-rss.xml"/>
-	<!--import resource="jms/applicationContext-jms.xml"/-->
-	<!--import resource="log/applicationContext-log.xml"/-->
+	<import resource="jms/applicationContext-notify.xml"/>
+
 	
 	<!-- bridge java.util.logging to slf4j -->
     <bean id="julToSlf4jHandler" class="org.workin.log.JulToSlf4jHandler" lazy-init="false" />

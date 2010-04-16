@@ -107,5 +107,5 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 	private PersistenceService persistenceService;
 
 	// logger for all service
-	private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected transient final Logger logger = LoggerFactory.getLogger(this.getClass());
 }

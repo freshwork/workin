@@ -1,6 +1,7 @@
 package org.workin.jms.producer;
 
-import org.workin.jms.JMSUser;
+import java.io.Serializable;
+
 
 /**
  * 
@@ -11,22 +12,20 @@ public interface MessageProducer {
 	
 	/**
 	 * 
-	 * send message to user with queue style.
+	 * Send message with topic queue.
 	 * 
-	 * @param user
+	 * @param targetObject
+	 * 
 	 */
-	public abstract void sendQueue(final JMSUser... user);
+	public abstract void sendQueue(final Serializable... targetObject);
 	
 	/**
 	 * 
-	 * send message to user with topic style.
+	 * Send message with topic style.
 	 * 
-	 * @param user
+	 * @param targetObject
+	 * 
 	 */
-	public abstract void sendTopic(final JMSUser... user);
+	public abstract void sendTopic(final Serializable... targetObject);
 	
-	
-	public static final String CONSTANT_NAME = "name";
-	
-	public static final String CONSTANT_EMAIL = "email";
 }
