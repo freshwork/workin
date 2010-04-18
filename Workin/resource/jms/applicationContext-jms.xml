@@ -36,6 +36,23 @@
 		<property name="explicitQosEnabled" value="true" />
 		<property name="deliveryPersistent" value="false" />
 		<property name="priority" value="9" />
+		
+		<property name="messageConverter" ref="messageConverterTemplate" />
 	</bean>
-
+	
+	<!-- Default Converter  -->
+	<bean id="defaultMessageConverter" class="org.workin.jms.messageconverter.DefaultMessageConverter" />
+	
+	<!-- Message Converter Template  -->
+	<bean id="messageConverterTemplate" class="org.workin.jms.messageconverter.CoverterTemplate">
+		<property name="defaultMessageConverter" ref="defaultMessageConverter" />
+	</bean>
+	
+	<bean id="defaultMessageProducer" class="org.workin.jms.producer.DefaultMessageProducer">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="notifyQueue" ref="notifyQueue" />
+		<property name="notifyTopic" ref="notifyTopic" />
+	</bean>
+	
+	<bean id="defauletMessageConsumer" class="org.workin.jms.consumer.DefaultMessageConsumer"/>
 </beans>

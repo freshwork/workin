@@ -3,8 +3,8 @@ package org.workin.test.trace;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.workin.fortest.spring.SpringTxTestCase;
+import org.workin.jms.producer.DefaultMessageProducer;
 import org.workin.trace.domain.BehaviorPerformance;
-import org.workin.trace.producer.BehaviorAndPerformanceProducer;
 import org.workin.util.DateUtils;
 
 /**
@@ -14,8 +14,8 @@ import org.workin.util.DateUtils;
  */
 public class BehaviorAndPerformanceProducerTest extends SpringTxTestCase {
 	
-	@Autowired(required=true)
-	BehaviorAndPerformanceProducer behaviorAndPerformanceProducer;
+	@Autowired(required = true)
+	private DefaultMessageProducer defaultMessageProducer;
 	
 	@Test
 	public void behaviorAndPerformanceProducerSendQueue() {
@@ -29,8 +29,8 @@ public class BehaviorAndPerformanceProducerTest extends SpringTxTestCase {
 		targetObject.setResponsedttm(DateUtils.currentDateTime());
 		targetObject.setSpentTime(1000);
 		
-		for(int i=0; i<5; i++) {
-			behaviorAndPerformanceProducer.sendTopic(targetObject);	
+		for(int i=0; i<10; i++) {
+			defaultMessageProducer.sendQueue(targetObject);	
 		}
 					
 	}

@@ -3,29 +3,26 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<description>JMS(Trace Module) Config</description>
-
-	<!-- Use Spring JmsTemplate Message producer -->
-	<bean id="behaviorAndPerformanceMessageProducer" class="org.workin.trace.producer.BehaviorAndPerformanceProducer">
-		<property name="jmsTemplate" ref="jmsTemplate" />
-		<property name="notifyQueue" ref="notifyQueue" />
-		<property name="notifyTopic" ref="notifyTopic" />
-	</bean>
-
+	
 	<!-- Async Receive Queue Message Container -->
-	<bean id="behaviorAndPerformanceQueueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	<bean id="traceQueueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="notifyQueue" />
-		<property name="messageListener" ref="storeBehaviorAndPerformanceMessageListener" />
+		<property name="messageListener" ref="traceMessageListener" />
 		<property name="concurrentConsumers" value="5" />
 		<property name="maxConcurrentConsumers" value="10" />
 	</bean>
 	
 	<!-- Async Receive Topic Message Container -->
-	<bean id="behaviorAndPerformanceTopicContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	<bean id="traceTopicContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="notifyTopic" />
-		<property name="messageListener" ref="storeBehaviorAndPerformanceMessageListener" />
+		<property name="messageListener" ref="traceMessageListener" />
 	</bean>
 	
-	<bean id="storeBehaviorAndPerformanceMessageListener" class="org.workin.trace.listener.StoreBehaviorAndPerformanceMessageListener" />
+	<bean id="traceMessageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="defauletMessageConsumer" />
+		<property name="defaultListenerMethod" value="receiveMessage" />
+		<property name="messageConverter" ref="messageConverterTemplate" />
+	</bean>
 </beans>

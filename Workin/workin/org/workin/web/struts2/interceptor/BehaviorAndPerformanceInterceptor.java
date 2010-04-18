@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.workin.jms.producer.DefaultMessageProducer;
 import org.workin.spring.security.SpringSecurityUtils;
 import org.workin.trace.domain.BehaviorPerformance;
-import org.workin.trace.producer.BehaviorAndPerformanceProducer;
 import org.workin.util.DateUtils;
 import org.workin.util.StringUtils;
 
@@ -26,7 +26,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	private static final long serialVersionUID = -6462877210798477795L;
 
 	@Autowired(required = true)
-	BehaviorAndPerformanceProducer behaviorAndPerformanceProducer;
+	private DefaultMessageProducer defaultMessageProducer;
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
@@ -55,7 +55,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		entity.setSpentTime(spentTime);
 
 		// Use JMS(ActiveMQ) send Queue, implement async store entity to db(BehaviorPerformance).
-		behaviorAndPerformanceProducer.sendQueue(entity);
+		defaultMessageProducer.sendQueue(entity);
 
 		return result;
 	}
@@ -98,4 +98,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		return remoteIp;
 	}
 
+	public void setDefaultMessageProducer(DefaultMessageProducer defaultMessageProducer) {
+		this.defaultMessageProducer = defaultMessageProducer;
+	}
 }
