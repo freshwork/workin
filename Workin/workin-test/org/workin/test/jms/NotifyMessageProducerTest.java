@@ -1,4 +1,4 @@
-package org.workin.test.notify;
+package org.workin.test.jms;
 
 import java.util.ArrayList;
 import java.util.List;
