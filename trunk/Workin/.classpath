@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="resource"/>
 	<classpathentry excluding="META-INF/" kind="src" path="workin-test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lib.workin"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
