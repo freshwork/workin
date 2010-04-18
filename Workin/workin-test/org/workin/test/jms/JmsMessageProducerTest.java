@@ -9,6 +9,7 @@ import org.workin.fortest.spring.SpringTxTestCase;
 import org.workin.jms.producer.DefaultMessageProducer;
 import org.workin.mail.MailPackage;
 import org.workin.trace.domain.BehaviorPerformance;
+import org.workin.trace.domain.StoredLog;
 import org.workin.util.DateUtils;
 
 /**
@@ -48,9 +49,16 @@ public class JmsMessageProducerTest extends SpringTxTestCase {
 		targetObject.setResponsedttm(DateUtils.currentDateTime());
 		targetObject.setSpentTime(1000);
 		
-		for(int i=0; i<10; i++) {
-			defaultMessageProducer.sendQueue(targetObject);	
-		}
-					
+		defaultMessageProducer.sendQueue(targetObject);	
 	}
+	
+	@Test
+	public void userDefaultMessageProducerStoreLog() {
+		StoredLog storedLog = new StoredLog();
+		storedLog.setLogdttm(DateUtils.currentDateTime());
+		storedLog.setUserMessage("test in JMS");
+		storedLog.setWhereClass(this.getClass().getName());
+		defaultMessageProducer.sendQueue(storedLog);
+	}
+	
 }

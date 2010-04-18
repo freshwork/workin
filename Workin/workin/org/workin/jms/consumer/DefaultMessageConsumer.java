@@ -7,7 +7,9 @@ import org.workin.exception.ThrowableHandle;
 import org.workin.mail.MailPackage;
 import org.workin.mail.MailService;
 import org.workin.trace.domain.BehaviorPerformance;
+import org.workin.trace.domain.StoredLog;
 import org.workin.trace.service.BehaviorPerformanceService;
+import org.workin.trace.service.StoredLogService;
 
 /**
  * 
@@ -22,6 +24,8 @@ public class DefaultMessageConsumer implements MessageConsumer {
 	@Autowired
 	BehaviorPerformanceService behaviorAndPerformanceService;
 	
+	@Autowired
+	StoredLogService storedLogService;
 	
 	@Override
 	public void receiveMessage(MailPackage message) {
@@ -33,7 +37,7 @@ public class DefaultMessageConsumer implements MessageConsumer {
 				logger.debug("Cannot find mailService, Please config...");
 			}
 		} catch (Exception ex) {
-			ThrowableHandle.handleThrow("Hit Exception, When execute DefaultMessageConsumer.receiveMailPackage()", ex, logger);
+			ThrowableHandle.handleThrow("Hit Exception, When execute DefaultMessageConsumer.receiveMessage()", ex, logger);
 		}
 	}
 
@@ -41,18 +45,36 @@ public class DefaultMessageConsumer implements MessageConsumer {
 	public void receiveMessage(BehaviorPerformance message) {
 		try {
 			if(behaviorAndPerformanceService != null) {
-				behaviorAndPerformanceService.merge((BehaviorPerformance)message);
-				logger.info("BehaviorAndPerformanceService merged behaviorPerformance in DefaultMessageConsumer...");
+				behaviorAndPerformanceService.merge(message);
+				logger.debug("BehaviorAndPerformanceService merged behaviorPerformance in DefaultMessageConsumer...");
 			} else {
 				logger.debug("Cannot find behaviorAndPerformanceService, Please config...");
 			}
 		} catch (Exception ex) {
 			ThrowableHandle.handleThrow(
-					"Hit Exception, When execute StoreBehaviorAndPerformanceMessageConsumer.onMessage().", ex, logger);
+					"Hit Exception, When execute DefaultMessageConsumer.receiveMessage().", ex, logger);
+		}	
+	}
+	
+	public void receiveMessage(final StoredLog message) {
+		try {
+			if(storedLogService != null) {
+				storedLogService.merge(message);
+				logger.debug("storedLogService merged storedLog in DefaultMessageConsumer...");
+			} else {
+				logger.debug("Cannot find storedLogService, Please config...");
+			}
+		} catch (Exception ex) {
+			ThrowableHandle.handleThrow(
+					"Hit Exception, When execute DefaultMessageConsumer.receiveMessage().", ex, logger);
 		}	
 	}
 	
 	
+	public void setStoredLogService(StoredLogService storedLogService) {
+		this.storedLogService = storedLogService;
+	}
+
 	public void setMailService(MailService mailService) {
 		this.mailService = mailService;
 	}
