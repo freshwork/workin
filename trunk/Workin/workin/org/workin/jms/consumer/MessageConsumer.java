@@ -2,6 +2,7 @@ package org.workin.jms.consumer;
 
 import org.workin.mail.MailPackage;
 import org.workin.trace.domain.BehaviorPerformance;
+import org.workin.trace.domain.StoredLog;
 
 
 /**
@@ -14,5 +15,7 @@ public interface MessageConsumer {
 	public void receiveMessage(final MailPackage message);
 	
 	public void receiveMessage(final BehaviorPerformance message);
+	
+	public void receiveMessage(final StoredLog message);
 	
 }
