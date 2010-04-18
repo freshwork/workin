@@ -30,12 +30,15 @@ public class DefaultMessageConsumer implements MessageConsumer {
 	@Override
 	public void receiveMessage(MailPackage message) {
 		try {
-			if(mailService != null) {
-				mailService.sendMail(message);
-				logger.debug("MailService sent mail in DefaultMessageConsumer...");
-			} else {
-				logger.debug("Cannot find mailService, Please config...");
+			synchronized (this) {
+				if(mailService != null) {
+					mailService.sendMail(message);
+					logger.debug("MailService sent mail in DefaultMessageConsumer...");
+				} else {
+					logger.debug("Cannot find mailService, Please config...");
+				}
 			}
+
 		} catch (Exception ex) {
 			ThrowableHandle.handleThrow("Hit Exception, When execute DefaultMessageConsumer.receiveMessage()", ex, logger);
 		}
@@ -44,11 +47,13 @@ public class DefaultMessageConsumer implements MessageConsumer {
 	@Override
 	public void receiveMessage(BehaviorPerformance message) {
 		try {
-			if(behaviorAndPerformanceService != null) {
-				behaviorAndPerformanceService.merge(message);
-				logger.debug("BehaviorAndPerformanceService merged behaviorPerformance in DefaultMessageConsumer...");
-			} else {
-				logger.debug("Cannot find behaviorAndPerformanceService, Please config...");
+			synchronized (this) {
+				if(behaviorAndPerformanceService != null) {
+					behaviorAndPerformanceService.merge(message);
+					logger.debug("BehaviorAndPerformanceService merged behaviorPerformance in DefaultMessageConsumer...");
+				} else {
+					logger.debug("Cannot find behaviorAndPerformanceService, Please config...");
+				}
 			}
 		} catch (Exception ex) {
 			ThrowableHandle.handleThrow(
@@ -56,13 +61,16 @@ public class DefaultMessageConsumer implements MessageConsumer {
 		}	
 	}
 	
+	@Override
 	public void receiveMessage(final StoredLog message) {
 		try {
-			if(storedLogService != null) {
-				storedLogService.merge(message);
-				logger.debug("storedLogService merged storedLog in DefaultMessageConsumer...");
-			} else {
-				logger.debug("Cannot find storedLogService, Please config...");
+			synchronized (this) {
+				if(storedLogService != null) {
+					storedLogService.merge(message);
+					logger.debug("storedLogService merged storedLog in DefaultMessageConsumer...");
+				} else {
+					logger.debug("Cannot find storedLogService, Please config...");
+				}
 			}
 		} catch (Exception ex) {
 			ThrowableHandle.handleThrow(
@@ -82,7 +90,6 @@ public class DefaultMessageConsumer implements MessageConsumer {
 	public void setBehaviorAndPerformanceService(BehaviorPerformanceService behaviorAndPerformanceService) {
 		this.behaviorAndPerformanceService = behaviorAndPerformanceService;
 	}
-
 
 	private transient final Logger logger = LoggerFactory.getLogger(DefaultMessageConsumer.class);
 }
