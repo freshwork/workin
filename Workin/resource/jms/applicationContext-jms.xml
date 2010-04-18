@@ -55,4 +55,25 @@
 	</bean>
 	
 	<bean id="defauletMessageConsumer" class="org.workin.jms.consumer.DefaultMessageConsumer"/>
+	
+	<!-- Async Receive Queue Message Container -->
+	<bean id="notifyQueueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="notifyQueue" />
+		<property name="messageListener" ref="notifyMessageListener" />
+		<property name="concurrentConsumers" value="10" />
+	</bean>
+
+	<!-- Async Receive Topic Message Container -->
+	<bean id="notifyTopicContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="notifyTopic" />
+		<property name="messageListener" ref="notifyMessageListener" />
+	</bean>
+	
+	<bean id="notifyMessageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="defauletMessageConsumer" />
+		<property name="defaultListenerMethod" value="receiveMessage" />
+		<property name="messageConverter" ref="messageConverterTemplate" />
+	</bean>
 </beans>
