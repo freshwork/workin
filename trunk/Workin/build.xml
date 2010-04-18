@@ -166,20 +166,7 @@
 		</jar>
 		<echo message="Project: ${project.name}, Jar org.workin.jms.${workin.version}.jar OK!" />
 	</target>
-
-
-	<!-- for Jar workin notify -->
-	<target name="notifyJar" depends="complie">
-		<jar jarfile="${target.jars.dir}\org.workin.notify.${workin.version}.jar">
-			<fileset dir="${build.dir}">
-				<include name="org/workin/mail/**" />
-				<include name="org/workin/jms/**" />
-				<include name="org/workin/notify/**" />
-			</fileset>
-		</jar>
-		<echo message="Project: ${project.name}, Jar org.workin.notify.${workin.version}.jar OK!" />
-	</target>
-
+	
 	<!-- for Jar workin ws -->
 	<target name="wsJar" depends="complie">
 		<jar jarfile="${target.jars.dir}\org.workin.ws.${workin.version}.jar">
@@ -246,14 +233,13 @@
 				<include name="org.workin.web.${workin.version}.jar" />
 				<include name="org.workin.fortest.${workin.version}.jar" />
 				<include name="org.workin.mail.${workin.version}.jar" />
-				<include name="org.workin.notify.${workin.version}.jar" />
 			</fileset>
 		</copy>
 		<echo message="Project: ${project.name}, copied release jars to Dev team release... OK!" />
 	</target>
 	
 	<!-- executer for all tasks -->
-	<target name="executer" depends="init, complie, test, commonsJar, coreJar, fortestJar, mailJar, jmsJar, notifyJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
+	<target name="executer" depends="init, complie, test, commonsJar, coreJar, fortestJar, mailJar, jmsJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
 		<echo message="Project: ${project.name}, Executer all tasks done." />
 	</target>
 </project>
