@@ -1,9 +1,13 @@
-package org.workin.test.trace;
+package org.workin.test.jms;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.workin.fortest.spring.SpringTxTestCase;
 import org.workin.jms.producer.DefaultMessageProducer;
+import org.workin.mail.MailPackage;
 import org.workin.trace.domain.BehaviorPerformance;
 import org.workin.util.DateUtils;
 
@@ -12,13 +16,28 @@ import org.workin.util.DateUtils;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class BehaviorAndPerformanceProducerTest extends SpringTxTestCase {
+public class JmsMessageProducerTest extends SpringTxTestCase {
 	
 	@Autowired(required = true)
-	private DefaultMessageProducer defaultMessageProducer;
+	public DefaultMessageProducer defaultMessageProducer;
 	
 	@Test
-	public void behaviorAndPerformanceProducerSendQueue() {
+	public void userDefaultMessageProducerSendMail() {
+	
+		
+		MailPackage goingmm = new MailPackage();
+		goingmm.setSayHelloTo("goingmm");
+		
+		List<String> mailTos= new ArrayList<String>();
+		mailTos.add("junjie.li@elegoninfotech.com");
+		
+		goingmm.setMailTo(mailTos);
+		
+		defaultMessageProducer.sendQueue(goingmm);
+	}
+	
+	@Test
+	public void userDefaultMessageProducerStorebBehaviorAndPerformance() {
 		BehaviorPerformance targetObject = new BehaviorPerformance();
 		
 		targetObject.setUserId(10086);
