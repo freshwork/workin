@@ -4,14 +4,6 @@
 
 	<description>JMS(Notify Module) Config</description>
 	
-	<!-- Use Spring JmsTemplate Message producer -->
-	<bean id="notifyMessageProducer" class="org.workin.notify.producer.NotifyMessageProducer">
-		<property name="jmsTemplate" ref="jmsTemplate" />
-		<property name="notifyQueue" ref="notifyQueue" />
-		<property name="notifyTopic" ref="notifyTopic" />
-	</bean>
-	
-	
 	<!-- Async Receive Queue Message Container -->
 	<bean id="notifyQueueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
@@ -27,5 +19,9 @@
 		<property name="messageListener" ref="notifyMessageListener" />
 	</bean>
 	
-	<bean id="notifyMessageListener" class="org.workin.notify.listener.NotifyMessageListener" />
+	<bean id="notifyMessageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="defauletMessageConsumer" />
+		<property name="defaultListenerMethod" value="receiveMessage" />
+		<property name="messageConverter" ref="messageConverterTemplate" />
+	</bean>
 </beans>

@@ -1,10 +1,13 @@
 package org.workin.test.notify;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.workin.fortest.spring.SpringTxTestCase;
-import org.workin.notify.MailNotifier;
-import org.workin.notify.producer.NotifyMessageProducer;
+import org.workin.jms.producer.DefaultMessageProducer;
+import org.workin.mail.MailPackage;
 
 /**
  * 
@@ -13,20 +16,21 @@ import org.workin.notify.producer.NotifyMessageProducer;
  */
 public class NotifyMessageProducerTest extends SpringTxTestCase {
 	
-	@Autowired(required=true)
-	private NotifyMessageProducer notifyMessageProducer;
+	@Autowired(required = true)
+	public DefaultMessageProducer defaultMessageProducer;
 	
 	@Test
 	public void sendQueueAndTopicTest() {
+	
 		
-		MailNotifier bily = new MailNotifier();
-		bily.setName("Bily");
-		bily.setEmail("zhangchuan.wang@elegoninfotech.com");
+		MailPackage goingmm = new MailPackage();
+		goingmm.setSayHelloTo("goingmm");
 		
-		MailNotifier goingmm = new MailNotifier();
-		goingmm.setName("G.Lee");
-		goingmm.setEmail("junjie.li@elegoninfotech.com");
+		List<String> mailTos= new ArrayList<String>();
+		mailTos.add("junjie.li@elegoninfotech.com");
 		
-		notifyMessageProducer.sendTopic(goingmm);
+		goingmm.setMailTo(mailTos);
+		
+		defaultMessageProducer.sendQueue(goingmm);
 	}
 }
