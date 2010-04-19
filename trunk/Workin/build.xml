@@ -78,7 +78,6 @@
 				<include name="org/workin/util/**" />
 				<include name="org/workin/exception/**" />
 				<include name="org/workin/log/**" />
-				<include name="org/workin/trace/**" />
 			</fileset>
 		</jar>
 		<echo message="Project: ${project.name}, Jar org.workin.commons.${workin.version}.jar... OK!" />
@@ -94,18 +93,6 @@
 		<echo message="Project: ${project.name}, Jar org.workin.core.${workin.version}.jar OK!" />
 	</target>
 
-
-	<!-- for Jar workin fortest -->
-	<target name="fortestJar" depends="complie">
-		<jar jarfile="${target.jars.dir}\org.workin.fortest.${workin.version}.jar">
-			<fileset dir="${build.dir}">
-				<include name="org/workin/fortest/**" />
-			</fileset>
-		</jar>
-		<echo message="Project: ${project.name}, Jar org.workin.fortest.${workin.version}.jar OK!" />
-	</target>
-
-
 	<!-- for Jar workin mail -->
 	<target name="mailJar" depends="complie">
 		<jar jarfile="${target.jars.dir}\org.workin.mail.${workin.version}.jar">
@@ -115,7 +102,48 @@
 		</jar>
 		<echo message="Project: ${project.name}, Jar org.workin.mail.${workin.version}.jar OK!" />
 	</target>
-
+	
+	<!-- for Jar workin trace -->
+	<target name="traceJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.trace.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/trace/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.trace.${workin.version}.jar OK!" />
+	</target>
+	
+	<!-- for Jar workin jms -->
+	<target name="jmsJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.jms.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/jms/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.jms.${workin.version}.jar OK!" />
+	</target>
+	
+	
+	<!-- for Jar workin spring -->
+	<target name="springJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.spring.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/spring/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.spring.${workin.version}.jar OK!" />
+	</target>
+		
+	<!-- for Jar workin fortest -->
+	<target name="fortestJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.fortest.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/fortest/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.fortest.${workin.version}.jar OK!" />
+	</target>
+	
 	<!-- for Jar workin rss -->
 	<target name="rssJar" depends="complie">
 		<jar jarfile="${target.jars.dir}\org.workin.rss.${workin.version}.jar">
@@ -136,16 +164,6 @@
 		<echo message="Project: ${project.name}, Jar org.workin.xml.${workin.version}.jar OK!" />
 	</target>
 
-	<!-- for Jar workin spring -->
-	<target name="springJar" depends="complie">
-		<jar jarfile="${target.jars.dir}\org.workin.spring.${workin.version}.jar">
-			<fileset dir="${build.dir}">
-				<include name="org/workin/spring/**" />
-			</fileset>
-		</jar>
-		<echo message="Project: ${project.name}, Jar org.workin.spring.${workin.version}.jar OK!" />
-	</target>
-
 	<!-- for Jar workin web -->
 	<target name="webJar" depends="complie">
 		<jar jarfile="${target.jars.dir}\org.workin.web.${workin.version}.jar">
@@ -156,16 +174,6 @@
 		<echo message="Project: ${project.name}, Jar org.workin.web.${workin.version}.jar OK!" />
 	</target>
 
-
-	<!-- for Jar workin jms -->
-	<target name="jmsJar" depends="complie">
-		<jar jarfile="${target.jars.dir}\org.workin.jms.${workin.version}.jar">
-			<fileset dir="${build.dir}">
-				<include name="org/workin/jms/**" />
-			</fileset>
-		</jar>
-		<echo message="Project: ${project.name}, Jar org.workin.jms.${workin.version}.jar OK!" />
-	</target>
 	
 	<!-- for Jar workin ws -->
 	<target name="wsJar" depends="complie">
@@ -229,17 +237,19 @@
 			<fileset dir="${target.jars.dir}\">
 				<include name="org.workin.commons.${workin.version}.jar" />
 				<include name="org.workin.core.${workin.version}.jar" />
-				<include name="org.workin.spring.${workin.version}.jar" />
 				<include name="org.workin.web.${workin.version}.jar" />
-				<include name="org.workin.fortest.${workin.version}.jar" />
 				<include name="org.workin.mail.${workin.version}.jar" />
+				<include name="org.workin.trace.${workin.version}.jar" />
+				<include name="org.workin.jms.${workin.version}.jar" />
+				<include name="org.workin.spring.${workin.version}.jar" />
+				<include name="org.workin.fortest.${workin.version}.jar" />
 			</fileset>
 		</copy>
 		<echo message="Project: ${project.name}, copied release jars to Dev team release... OK!" />
 	</target>
 	
 	<!-- executer for all tasks -->
-	<target name="executer" depends="init, complie, test, commonsJar, coreJar, fortestJar, mailJar, jmsJar, rssJar, xmlJar, springJar, webJar, wsJar, releaseJarsToDevTeam">
+	<target name="executer" depends="init, complie, test, commonsJar, coreJar, webJar, mailJar, jmsJar, jmsJar, springJar, fortestJar, rssJar, xmlJar, wsJar, releaseJarsToDevTeam">
 		<echo message="Project: ${project.name}, Executer all tasks done." />
 	</target>
 </project>
