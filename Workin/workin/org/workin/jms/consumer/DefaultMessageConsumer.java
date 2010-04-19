@@ -18,13 +18,13 @@ import org.workin.trace.service.StoredLogService;
  */
 public class DefaultMessageConsumer implements MessageConsumer {
 	
-	@Autowired
+	@Autowired(required=false)
 	private MailService mailService;
 	
-	@Autowired
+	@Autowired(required=false)
 	BehaviorPerformanceService behaviorAndPerformanceService;
 	
-	@Autowired
+	@Autowired(required=false)
 	StoredLogService storedLogService;
 	
 	@Override
