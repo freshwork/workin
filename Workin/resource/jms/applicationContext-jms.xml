@@ -10,7 +10,7 @@
 	
 	<!-- ActiveMQ Connection Factory -->
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory" depends-on="broker">
-		<property name="brokerURL" value="${jms.broker_url}" />
+		<!-- property name="brokerURL" value="${jms.broker_url}" />-->
 		<property name="useAsyncSend" value="true" />
 	</bean>
 
