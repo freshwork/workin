@@ -108,6 +108,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		// Store entity to db(BehaviorPerformance).
 		BehaviorPerformance entity = new BehaviorPerformance();
+		entity.setUserId(getUserId());
 		entity.setUserName(getUserName());
 		entity.setRequestIp(getRemoteIpAddress(request));
 		entity.setRequestURI(request.getRequestURI());
@@ -168,12 +169,22 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		return false;
 	}
-
+	
 	/**
 	 * 
-	 * If you need get user form other way,u need Override this method only.
+	 * If you need get user id form other way,u need Override this method only.
 	 * 
-	 * Get application user from spring security
+	 * @return
+	 */
+	protected static final long getUserId() {
+		return 0L;
+	}
+	
+	/**
+	 * 
+	 * If you need get user name form other way,u need Override this method only.
+	 * 
+	 * Get application user name from spring security
 	 * 
 	 * @return
 	 * 
@@ -193,8 +204,14 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * 
 	 */
 	protected static final String getRemoteIpAddress(final HttpServletRequest request) {
-		String remoteIp = request.getHeader("x-forwarded-for");
-
+		String remoteIp = SpringSecurityUtils.getCurrentUserIp(); 
+		
+		if(StringUtils.hasText(remoteIp)) {
+			return remoteIp;
+		}
+		
+		remoteIp = request.getHeader("x-forwarded-for");
+		
 		if (!StringUtils.hasText(remoteIp) || "unknown".equalsIgnoreCase(remoteIp)) {
 			remoteIp = request.getHeader("Proxy-Client-IP");
 		}

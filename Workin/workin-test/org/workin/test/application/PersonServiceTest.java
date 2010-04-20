@@ -67,7 +67,7 @@ public class PersonServiceTest extends SpringTxTestCase {
 		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
 		PropertyFilter filter_name = new PropertyFilter("EQS_name", "goingmm");
 		filters.add(filter_name);
-		PropertyFilter filter_sex = new PropertyFilter("SLIKES_sex", "mal");
+		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
 		filters.add(filter_sex);
 		PropertyFilter filter_version = new PropertyFilter("GEL_version", "0");
 		filters.add(filter_version);
