@@ -1,8 +1,10 @@
 package org.workin.util;
 
-import org.springframework.security.providers.encoding.Md5PasswordEncoder;
-import org.springframework.security.providers.encoding.PasswordEncoder;
-import org.springframework.security.providers.encoding.ShaPasswordEncoder;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+
+
 
 /**
  * 
