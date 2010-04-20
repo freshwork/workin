@@ -843,7 +843,25 @@ public abstract class StringUtils extends org.apache.commons.lang.StringUtils {
 		String afterDelimiter = toSplit.substring(offset + delimiter.length());
 		return new String[] { beforeDelimiter, afterDelimiter };
 	}
-
+	
+	/**
+	 * 
+	 * Split with apache common StringUtils.
+	 * 
+	 * @param toSplit
+	 * @param delimiter
+	 * @return
+	 * 
+	 */
+	public static String[] splitWithApacheStringUtils(String toSplit, String delimiter) {
+		int offset = toSplit.indexOf(delimiter);
+		if (offset < 0) {
+			return new String[]{toSplit};
+		}
+		
+		return org.apache.commons.lang.StringUtils.split(toSplit, delimiter);
+	}
+	
 	/**
 	 * Take an array Strings and split each element based on the given delimiter.
 	 * A <code>Properties</code> instance is then generated, with the left of the
