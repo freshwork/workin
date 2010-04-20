@@ -69,7 +69,6 @@ public class PropertyFilter {
 			matchPattenCode = StringUtils.substring(matchTypeStr, 0, 1);
 			matchTypeCode = StringUtils.substring(matchTypeStr, 1, matchTypeStr.length() - 1);
 			propertyTypeCode = StringUtils.substring(matchTypeStr, matchTypeStr.length() - 1, matchTypeStr.length());
-			likeMatchPatten = Enum.valueOf(LikeMatchPatten.class, matchPattenCode);
 		} else {
 			matchTypeStr = StringUtils.substringBefore(filterName, "_");
 			matchTypeCode = StringUtils.substring(matchTypeStr, 0, matchTypeStr.length() - 1);
@@ -78,6 +77,7 @@ public class PropertyFilter {
 		
 		try {
 			matchType = Enum.valueOf(MatchType.class, matchTypeCode);
+			likeMatchPatten = Enum.valueOf(LikeMatchPatten.class, matchPattenCode);
 		} catch (RuntimeException e) {
 			throw new IllegalArgumentException("filter name: " + filterName
 					+ "Not prepared in accordance with rules, not get more types of property.", e);
