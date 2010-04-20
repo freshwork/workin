@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.workin.exception.NestedRuntimeException;
 import org.workin.jms.producer.DefaultMessageProducer;
 import org.workin.spring.security.SpringSecurityUtils;
 import org.workin.trace.domain.BehaviorPerformance;
@@ -34,19 +35,65 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	@Autowired(required = true)
 	private DefaultMessageProducer defaultMessageProducer;
 	
-	// Defind by User, for ignore request URI in this intercept action.
+	// Use can switch interceptor on or off flag.
+	private String onOff = CONSTANT_PARAM_ON;
+	
+	// User defind this parameter, for ignore request URI in this intercept action.
 	private Set<String> ignoreRequestURIs = Collections.emptySet();
+
+	// User defind this parameter, for allowed request URI in this intercept action.
+	private Set<String> allowedRequestURIs = Collections.emptySet();
+
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		ActionContext ac = invocation.getInvocationContext();
 		HttpServletRequest request = (HttpServletRequest) ac.get(ServletActionContext.HTTP_REQUEST);
-		
-		if (!ignoreRequestURIs.isEmpty() && hasIgnoreRequestURI(ignoreRequestURIs, request.getRequestURI())) {
-			logger.debug("{} be defind in ignore request URI set. So don't trace it...", request.getRequestURI());
+
+		// Straightforward execute action, If user switch this flag to off.
+		if (CONSTANT_PARAM_OFF.equalsIgnoreCase(onOff)) {
 			return invocation.invoke();
 		}
-		
+
+		String theRequestUri = request.getRequestURI();
+
+		if (!ignoreRequestURIs.isEmpty() && !allowedRequestURIs.isEmpty()) {
+			throw new NestedRuntimeException(
+					"Hit exception in BehaviorAndPerformanceInterceptor, ignoreRequestURIs and allowedRequestURIs can not both be configured.");
+		}
+
+		if (!ignoreRequestURIs.isEmpty()) {
+			if (matchIgnoreRequestURIs(ignoreRequestURIs, theRequestUri)) {
+				logger.debug("{} be defind in ignore request URIs. So don't trace it...", theRequestUri);
+				return invocation.invoke();
+			} else {
+				return executeAopedAction(invocation);
+			}
+		} else if (!allowedRequestURIs.isEmpty()) {
+			if (matchAllowedRequestURIs(allowedRequestURIs, theRequestUri)) {
+				logger.debug("{} be defind in allowed request URIs. So trace it...", theRequestUri);
+				return executeAopedAction(invocation);
+			} else {
+				return invocation.invoke();
+			}
+		} else {
+			return executeAopedAction(invocation);
+		}
+	}
+
+	/**
+	 * 
+	 * Aoped Action, it's means insert some event before and after this action.
+	 * 
+	 * @param invocation
+	 * @return
+	 * @throws Exception
+	 * 
+	 */
+	private final String executeAopedAction(ActionInvocation invocation) throws Exception {
+		ActionContext ac = invocation.getInvocationContext();
+		HttpServletRequest request = (HttpServletRequest) ac.get(ServletActionContext.HTTP_REQUEST);
+
 		// AOP Before - obtain request datetime.
 		Date requestdttm = DateUtils.currentDateTime();
 
@@ -73,34 +120,58 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		return result;
 	}
-	
+
 	/**
 	 * 
-	 * User will defind ignore request URI.
+	 * Is match allowed request URIs?.
 	 * 
 	 * @param extensionCollection
 	 * @param requestURI
 	 * @return
 	 * 
 	 */
-	private static final boolean hasIgnoreRequestURI(Collection<String> extensionCollection, String requestURI) {
+	private static final boolean matchAllowedRequestURIs(Collection<String> extensionCollection, String requestURI) {
 		if (!StringUtils.hasText(requestURI)) {
-			return true;
+			return false;
 		}
-		
+
 		for (String extension : extensionCollection) {
-			logger.debug("In struts2 config file, defind ignore request URI: {}", extension);
-			if (requestURI.startsWith(requestURI)) {
+			logger.debug("In struts2 config file, defind allowed request URI: {}", extension);
+			if (requestURI.startsWith(extension)) {
 				return true;
 			}
 		}
 
 		return false;
 	}
-	
+
 	/**
 	 * 
-	 * if you need get user form other way,u need Override this method only.
+	 * Is match ignore request URIs?.
+	 * 
+	 * @param extensionCollection
+	 * @param requestURI
+	 * @return
+	 * 
+	 */
+	private static final boolean matchIgnoreRequestURIs(Collection<String> extensionCollection, String requestURI) {
+		if (!StringUtils.hasText(requestURI)) {
+			return true;
+		}
+
+		for (String extension : extensionCollection) {
+			logger.debug("In struts2 config file, defind ignore request URI: {}", extension);
+			if (requestURI.startsWith(extension)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * 
+	 * If you need get user form other way,u need Override this method only.
 	 * 
 	 * Get application user from spring security
 	 * 
@@ -143,6 +214,18 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	public void setIgnoreRequestURIs(String stringOfIgnoreRequestURIs) {
 		this.ignoreRequestURIs = TextParseUtil.commaDelimitedStringToSet(stringOfIgnoreRequestURIs);
 	}
+
+	public void setAllowedRequestURIs(String allowedRequestURIs) {
+		this.allowedRequestURIs = TextParseUtil.commaDelimitedStringToSet(allowedRequestURIs);
+	}
+
+	public void setOnOff(String onOff) {
+		this.onOff = onOff;
+	}
+
+	private static final String CONSTANT_PARAM_ON = "on";
+
+	private static final String CONSTANT_PARAM_OFF = "off";
 
 	private transient static final Logger logger = LoggerFactory.getLogger(BehaviorAndPerformanceInterceptor.class);
 }
