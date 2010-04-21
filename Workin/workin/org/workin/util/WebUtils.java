@@ -141,7 +141,7 @@ public class WebUtils {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map getParametersStartingWith(HttpServletRequest request, String prefix) {
+	public static Map<String, String> getParametersStartingWith(HttpServletRequest request, String prefix) {
 		Enumeration paramNames = request.getParameterNames();
 		Map params = new TreeMap();
 		if (prefix == null) {
@@ -152,7 +152,7 @@ public class WebUtils {
 			if ("".equals(prefix) || paramName.startsWith(prefix)) {
 				String unprefixed = paramName.substring(prefix.length());
 				String[] values = request.getParameterValues(paramName);
-				if (values == null || values.length == 0) {//NOSONAR
+				if (values == null || values.length == 0) {
 					// Do nothing, no values found at all.
 				} else if (values.length > 1) {
 					params.put(unprefixed, values);
