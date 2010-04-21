@@ -37,10 +37,10 @@ public class GMailEngine extends ListImageCaptchaEngine {
 		int imageWidth = 250;
 		int imageHeight = 100;
 
-		//word generator
+		// word generator
 		WordGenerator dictionnaryWords = new ComposeDictionaryWordGenerator(new FileDictionary("toddlist"));
 
-		//word2image components
+		// word2image components
 		TextPaster randomPaster = new DecoratedRandomTextPaster(minWordLength, maxWordLength,
 				new RandomListColorGenerator(new Color[] { new Color(23, 170, 27), new Color(220, 34, 11),
 						new Color(23, 67, 172) }), new TextDecorator[] {});

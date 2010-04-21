@@ -18,7 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.workin.exception.ThrowableHandle;
 import org.workin.util.StringUtils;
+import org.workin.util.WebUtils;
 
 import com.octo.captcha.service.CaptchaService;
 import com.octo.captcha.service.CaptchaServiceException;
@@ -30,17 +32,18 @@ import com.octo.captcha.service.CaptchaServiceException;
  */
 public class JCaptchaFilter implements Filter {
 
-	public static final String CAPTCHA_PARAMTER_NAME_PARAM = "captchaParamterName";
-	public static final String CAPTCHA_SERVICE_ID_PARAM = "captchaServiceId";
-	public static final String FILTER_PROCESSES_URL_PARAM = "filterProcessesUrl";
-	public static final String FAILURE_URL_PARAM = "failureUrl";
-	public static final String AUTO_PASS_VALUE_PARAM = "autoPassValue";
 
+	// Define in web.xml 
+	public static final String PARAM_CAPTCHA_PARAMTER_NAME = "captchaParamterName";
+	public static final String PARAM_CAPTCHA_SERVICE_ID = "captchaServiceId";
+	public static final String PARAM_FILTER_PROCESSES_URL = "filterProcessesUrl";
+	public static final String PARAM_FAILURE_URL = "failureUrl";
+	public static final String PARAM_AUTO_PASS_VALUE = "autoPassValue";
+
+	// Default value define
 	public static final String DEFAULT_FILTER_PROCESSES_URL = "/j_spring_security_check";
 	public static final String DEFAULT_CAPTCHA_SERVICE_ID = "captchaService";
 	public static final String DEFAULT_CAPTCHA_PARAMTER_NAME = "j_captcha";
-
-	private static final Logger logger = LoggerFactory.getLogger(JCaptchaFilter.class);
 
 	private String failureUrl;
 	private String filterProcessesUrl = DEFAULT_FILTER_PROCESSES_URL;
@@ -56,29 +59,34 @@ public class JCaptchaFilter implements Filter {
 	}
 
 	private void initParameters(final FilterConfig fConfig) {
-		if (StringUtils.isBlank(fConfig.getInitParameter(FAILURE_URL_PARAM)))
-			throw new IllegalArgumentException("CaptchaFilter缺少failureUrl参数");
+		if (StringUtils.isBlank(fConfig.getInitParameter(PARAM_FAILURE_URL)))
+			throw new IllegalArgumentException("CaptchaFilter missing failureUrl parameter.");
 
-		failureUrl = fConfig.getInitParameter(FAILURE_URL_PARAM);
+		failureUrl = fConfig.getInitParameter(PARAM_FAILURE_URL);
 
-		if (StringUtils.isNotBlank(fConfig.getInitParameter(FILTER_PROCESSES_URL_PARAM))) {
-			filterProcessesUrl = fConfig.getInitParameter(FILTER_PROCESSES_URL_PARAM);
+		if (StringUtils.isNotBlank(fConfig.getInitParameter(PARAM_FILTER_PROCESSES_URL))) {
+			filterProcessesUrl = fConfig.getInitParameter(PARAM_FILTER_PROCESSES_URL);
 		}
 
-		if (StringUtils.isNotBlank(fConfig.getInitParameter(CAPTCHA_SERVICE_ID_PARAM))) {
-			captchaServiceId = fConfig.getInitParameter(CAPTCHA_SERVICE_ID_PARAM);
+		if (StringUtils.isNotBlank(fConfig.getInitParameter(PARAM_CAPTCHA_SERVICE_ID))) {
+			captchaServiceId = fConfig.getInitParameter(PARAM_CAPTCHA_SERVICE_ID);
 		}
 
-		if (StringUtils.isNotBlank(fConfig.getInitParameter(CAPTCHA_PARAMTER_NAME_PARAM))) {
-			captchaParamterName = fConfig.getInitParameter(CAPTCHA_PARAMTER_NAME_PARAM);
+		if (StringUtils.isNotBlank(fConfig.getInitParameter(PARAM_CAPTCHA_PARAMTER_NAME))) {
+			captchaParamterName = fConfig.getInitParameter(PARAM_CAPTCHA_PARAMTER_NAME);
 		}
 
-		if (StringUtils.isNotBlank(fConfig.getInitParameter(AUTO_PASS_VALUE_PARAM))) {
-			autoPassValue = fConfig.getInitParameter(AUTO_PASS_VALUE_PARAM);
+		if (StringUtils.isNotBlank(fConfig.getInitParameter(PARAM_AUTO_PASS_VALUE))) {
+			autoPassValue = fConfig.getInitParameter(PARAM_AUTO_PASS_VALUE);
 		}
 	}
 
-	
+	/**
+	 * 
+	 * Get CaptchaService instance from ApplicationContext.
+	 * 
+	 * @param fConfig
+	 */
 	private void initCaptchaService(final FilterConfig fConfig) {
 		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(fConfig.getServletContext());
 		captchaService = (CaptchaService) context.getBean(captchaServiceId);
@@ -86,13 +94,14 @@ public class JCaptchaFilter implements Filter {
 
 	public void destroy() {
 	}
-
+	
 	public void doFilter(final ServletRequest theRequest, final ServletResponse theResponse, final FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) theRequest;
 		HttpServletResponse response = (HttpServletResponse) theResponse;
 		String servletPath = request.getServletPath();
-
+		
+		// To verify compliance filterProcessesUrl process the request, verify the remaining image to generate the request.
 		if (StringUtils.startsWith(servletPath, filterProcessesUrl)) {
 			boolean validated = validateCaptchaChallenge(request);
 			if (validated) {
@@ -105,13 +114,19 @@ public class JCaptchaFilter implements Filter {
 		}
 	}
 
-
+	/**
+	 * 
+	 * Generated verification code image.
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * 
+	 */
 	private void genernateCaptchaImage(final HttpServletRequest request, final HttpServletResponse response)
 			throws IOException {
 
-		response.setHeader("Cache-Control", "no-store");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", 0);
+		WebUtils.setNoCacheHeader(response);
 		response.setContentType("image/jpeg");
 
 		ServletOutputStream out = response.getOutputStream();
@@ -121,22 +136,29 @@ public class JCaptchaFilter implements Filter {
 			ImageIO.write(challenge, "jpg", out);
 			out.flush();
 		} catch (CaptchaServiceException e) {
-			logger.error(e.getMessage(), e);
+			ThrowableHandle.handle(e, logger);
 		} finally {
 			out.close();
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * 
+	 */
 	private boolean validateCaptchaChallenge(final HttpServletRequest request) {
 		try {
 			String captchaID = request.getSession().getId();
 			String challengeResponse = request.getParameter(captchaParamterName);
 
-			if (autoPassValue != null && autoPassValue.equals(challengeResponse))
+			if (autoPassValue != null && autoPassValue.equals(challengeResponse)) {
 				return true;
+			}
 			return captchaService.validateResponseForID(captchaID, challengeResponse);
 		} catch (CaptchaServiceException e) {
-			logger.error(e.getMessage(), e);
+			ThrowableHandle.handle(e, logger);
 			return false;
 		}
 	}
@@ -145,4 +167,6 @@ public class JCaptchaFilter implements Filter {
 			throws IOException {
 		response.sendRedirect(request.getContextPath() + failureUrl);
 	}
+	
+	private transient static final Logger logger = LoggerFactory.getLogger(JCaptchaFilter.class);
 }

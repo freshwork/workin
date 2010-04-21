@@ -5,7 +5,7 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd"
 	default-lazy-init="true">
 
-	<description>SpringSecurity</description>
+	<description>JCaptcha Code Verification Services </description>
 
 	<bean id="captchaService" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
 		<property name="captchaEngine">
@@ -14,4 +14,5 @@
 
 		<property name="minGuarantedStorageDelayInSeconds" value="120" />
 	</bean>
+	
 </beans>
