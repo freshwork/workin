@@ -103,4 +103,9 @@ public class BehaviorPerformance extends IdEntity {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
+
+	@Override
+	public void setDynCompareValue() {
+		super.setDynCompareField(requestdttm);
+	}
 }
