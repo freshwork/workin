@@ -38,10 +38,10 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	// Use can switch interceptor on or off flag.
 	private String onOff = CONSTANT_PARAM_ON;
 	
-	// User defind this parameter, for ignore request URI in this intercept action.
+	// User define this parameter, for ignore request URI in this intercept action.
 	private Set<String> ignoreRequestURIs = Collections.emptySet();
 
-	// User defind this parameter, for allowed request URI in this intercept action.
+	// User define this parameter, for allowed request URI in this intercept action.
 	private Set<String> allowedRequestURIs = Collections.emptySet();
 
 
@@ -64,14 +64,14 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		if (!ignoreRequestURIs.isEmpty()) {
 			if (matchIgnoreRequestURIs(ignoreRequestURIs, theRequestUri)) {
-				logger.debug("{} be defind in ignore request URIs. So don't trace it...", theRequestUri);
+				logger.debug("{} be define in ignore request URIs. So don't trace it...", theRequestUri);
 				return invocation.invoke();
 			} else {
 				return executeAopedAction(invocation);
 			}
 		} else if (!allowedRequestURIs.isEmpty()) {
 			if (matchAllowedRequestURIs(allowedRequestURIs, theRequestUri)) {
-				logger.debug("{} be defind in allowed request URIs. So trace it...", theRequestUri);
+				logger.debug("{} be define in allowed request URIs. So trace it...", theRequestUri);
 				return executeAopedAction(invocation);
 			} else {
 				return invocation.invoke();
@@ -137,7 +137,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		}
 
 		for (String extension : extensionCollection) {
-			logger.debug("In struts2 config file, defind allowed request URI: {}", extension);
+			logger.debug("In struts2 config file, define allowed request URI: {}", extension);
 			if (requestURI.startsWith(extension)) {
 				return true;
 			}
@@ -161,7 +161,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		}
 
 		for (String extension : extensionCollection) {
-			logger.debug("In struts2 config file, defind ignore request URI: {}", extension);
+			logger.debug("In struts2 config file, define ignore request URI: {}", extension);
 			if (requestURI.startsWith(extension)) {
 				return true;
 			}
