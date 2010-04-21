@@ -1,12 +1,10 @@
 package org.workin.util;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,24 +20,36 @@ import org.workin.web.constant.WebConstants;
 public class WebUtils {
 	
 	public static final long ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
+	
+	public static final String AUTHENTICATION_HEADER = "Authorization";
+
+	/**
+	 * Set up client cache ecpires time.
+	 * 
+	 */
+	public static void setExpiresHeader(HttpServletResponse response, long expiresSeconds) {
+		//Http 1.0 header
+		response.setDateHeader("Expires", System.currentTimeMillis() + expiresSeconds * 1000);
+		//Http 1.1 header
+		response.setHeader("Cache-Control", "private, max-age=" + expiresSeconds);
+	}
 
 	/**
 	 * 
-	 * set browser download header.
+	 * Set up client no cache header.
 	 * 
-	 * @param fileName download fileName.
 	 */
-	public static void setDownloadableHeader(HttpServletResponse response, String fileName) {
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+	public static void setNoCacheHeader(HttpServletResponse response) {
+		//Http 1.0 header
+		response.setDateHeader("Expires", 0);
+		response.addHeader("Pragma", "no-cache");
+		//Http 1.1 header
+		response.setHeader("Cache-Control", "no-cache");
 	}
-	
-	
+
 	/**
 	 * 
-	 * set LastModifiedHeader.
-	 * 
-	 * @param response
-	 * @param lastModifiedDate
+	 * Set up LastModified Header.
 	 * 
 	 */
 	public static void setLastModifiedHeader(HttpServletResponse response, long lastModifiedDate) {
@@ -48,82 +58,20 @@ public class WebUtils {
 
 	/**
 	 * 
-	 * set Etag.
-	 *  
-	 * @param response
-	 * @param etag
+	 * Set up Etag Header.
+	 * 
 	 */
 	public static void setEtag(HttpServletResponse response, String etag) {
 		response.setHeader("ETag", etag);
 	}
 
 	/**
-	 * set Expires time header.
 	 * 
-	 * @param response
-	 * @param expiresSeconds
-	 */
-	public static void setExpiresHeader(HttpServletResponse response, long expiresSeconds) {
-		//Http 1.0 header
-		response.setDateHeader("Expires", System.currentTimeMillis() + expiresSeconds * 1000);
-		//Http 1.1 header
-		response.setHeader("Cache-Control", "max-age=" + expiresSeconds);
-	}
-
-	/**
+	 * Base on browser, If-Modified-Since Header, Determine whether the text has been modified
 	 * 
-	 * set no cache header.
+	 * If have not any modified, checkIfModify return false ,Set 304 not modify status.
 	 * 
-	 * @param response
-	 */
-	public static void setNoCacheHeader(HttpServletResponse response) {
-		response.setHeader("Pragma", "No-cache");
-		
-		//Http 1.0 header
-		response.setDateHeader("Expires", 0);
-		//Http 1.1 header
-		response.setHeader("Cache-Control", "no-cache");
-	}
-
-	/**
-	 * 
-	 * check client holder gzip.
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static boolean checkAccetptGzip(HttpServletRequest request) {
-		//Http1.1 header
-		String acceptEncoding = request.getHeader("Accept-Encoding");
-
-		if (StringUtils.contains(acceptEncoding, "gzip")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * 
-	 * set Gzip Header and return GZIPOutputStream.
-	 * 
-	 * @param response
-	 * @return
-	 * @throws IOException
-	 */
-	public static OutputStream buildGzipOutputStream(HttpServletResponse response) throws IOException {
-		response.setHeader("Content-Encoding", "gzip");
-		return new GZIPOutputStream(response.getOutputStream());
-	}
-
-	/**
-	 * 
-	 * check if modified since.
-	 * 
-	 * @param request
-	 * @param response
 	 * @param lastModified
-	 * @return
 	 * 
 	 */
 	public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response,
@@ -138,19 +86,19 @@ public class WebUtils {
 
 	/**
 	 * 
-	 * check if none match Etag.
+	 * Base on browser, If-None-Match Header, Determine whether the Etag has been modified.
 	 * 
-	 * @param request
-	 * @param response
+	 * 
+	 * If Etag Effective, checkIfNoneMatch return false, Set 304 not modify status.
+	 * 
 	 * @param etag
-	 * @return
 	 * 
 	 */
 	public static boolean checkIfNoneMatchEtag(HttpServletRequest request, HttpServletResponse response, String etag) {
 		String headerValue = request.getHeader("If-None-Match");
 		if (headerValue != null) {
 			boolean conditionSatisfied = false;
-			if (!headerValue.equals("*")) {
+			if (!"*".equals(headerValue)) {
 				StringTokenizer commaTokenizer = new StringTokenizer(headerValue, ",");
 
 				while (!conditionSatisfied && commaTokenizer.hasMoreTokens()) {
@@ -171,30 +119,29 @@ public class WebUtils {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 
-	 * @param userName
-	 * @param password
-	 * @return
+	 * Set the browser pop-up download dialog Header.
 	 * 
+	 * @param fileName
 	 */
-	public static String encodeHttpBasic(String userName, String password) {
-		String encode = userName + ":" + password;
-		return "Basic " + EncodeUtils.base64Encode(encode.getBytes());
+	public static void setFileDownloadHeader(HttpServletResponse response, String fileName) {
+		try {
+			String encodedfileName = new String(fileName.getBytes(), "ISO8859-1");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedfileName + "\"");
+		} catch (UnsupportedEncodingException e) {
+			ThrowableHandle.handle(e);
+		}
 	}
-	
+
 	/**
 	 * 
-	 * get the same prefix Request Parameters.
+	 * Get the same prefix Request Parameters.
 	 * 
-	 * @param request
-	 * @param prefix
-	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> getParametersStartingWith(HttpServletRequest request, String prefix) {
-		Assert.notNull(request, "Request must not be null");
+	public static Map getParametersStartingWith(HttpServletRequest request, String prefix) {
 		Enumeration paramNames = request.getParameterNames();
 		Map params = new TreeMap();
 		if (prefix == null) {
@@ -206,6 +153,7 @@ public class WebUtils {
 				String unprefixed = paramName.substring(prefix.length());
 				String[] values = request.getParameterValues(paramName);
 				if (values == null || values.length == 0) {//NOSONAR
+					// Do nothing, no values found at all.
 				} else if (values.length > 1) {
 					params.put(unprefixed, values);
 				} else {
@@ -214,6 +162,18 @@ public class WebUtils {
 			}
 		}
 		return params;
+	}
+
+	/**
+	 * 
+	 * @param userName
+	 * @param password
+	 * @return
+	 * 
+	 */
+	public static String encodeHttpBasic(String userName, String password) {
+		String encode = userName + ":" + password;
+		return "Basic " + EncodeUtils.base64Encode(encode.getBytes());
 	}
 	
 	
