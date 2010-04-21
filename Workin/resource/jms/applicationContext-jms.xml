@@ -20,12 +20,12 @@
 		<property name="sessionCacheSize" value="10" />
 	</bean>
 
-	<!-- Queue Defind -->
+	<!-- Queue Define -->
 	<bean id="notifyQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="queue.notify" />
 	</bean>
 
-	<!-- Topic Defind -->
+	<!-- Topic Define -->
 	<bean id="notifyTopic" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="toptic.notify" />
 	</bean>
