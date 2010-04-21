@@ -176,7 +176,7 @@ public class EncodeUtils {
 	 * @param xmlEscaped
 	 * @return
 	 */
-	public static String xtmlUnescape(String xmlEscaped) {
+	public static String xmlUnescape(String xmlEscaped) {
 		return StringEscapeUtils.unescapeXml(xmlEscaped);
 	}
 }
