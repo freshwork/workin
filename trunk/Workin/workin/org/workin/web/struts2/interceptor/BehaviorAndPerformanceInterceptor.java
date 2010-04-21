@@ -176,7 +176,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * 
 	 * @return
 	 */
-	protected static final long getUserId() {
+	protected long getUserId() {
 		return 0L;
 	}
 	
@@ -189,7 +189,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * @return
 	 * 
 	 */
-	protected static final String getUserName() {
+	protected String getUserName() {
 		return SpringSecurityUtils.getCurrentUserName();
 	}
 
@@ -203,7 +203,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * @return
 	 * 
 	 */
-	protected static final String getRemoteIpAddress(final HttpServletRequest request) {
+	protected String getRemoteIpAddress(final HttpServletRequest request) {
 		String remoteIp = SpringSecurityUtils.getCurrentUserIp(); 
 		
 		if(StringUtils.hasText(remoteIp)) {
