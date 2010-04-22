@@ -29,9 +29,9 @@ public class WebUtils {
 	 */
 	public static void setExpiresHeader(HttpServletResponse response, long expiresSeconds) {
 		//Http 1.0 header
-		response.setDateHeader("Expires", System.currentTimeMillis() + expiresSeconds * 1000);
+		response.setDateHeader(WebConstants.RES_HEADER_KEY_EXPIRES, System.currentTimeMillis() + expiresSeconds * 1000);
 		//Http 1.1 header
-		response.setHeader("Cache-Control", "private, max-age=" + expiresSeconds);
+		response.setHeader(WebConstants.RES_HEADER_KEY_CACHECONTROL, WebConstants.RES_HEADER_MAXAGE + expiresSeconds);
 	}
 
 	/**
@@ -41,10 +41,10 @@ public class WebUtils {
 	 */
 	public static void setNoCacheHeader(HttpServletResponse response) {
 		//Http 1.0 header
-		response.setDateHeader("Expires", 0);
-		response.addHeader("Pragma", "no-cache");
+		response.setDateHeader(WebConstants.RES_HEADER_KEY_EXPIRES, 0);
+		response.addHeader(WebConstants.RES_HEADER_KEY_PRAGMA, WebConstants.RES_HEADER_NOCACHE);
 		//Http 1.1 header
-		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader(WebConstants.RES_HEADER_KEY_CACHECONTROL, WebConstants.RES_HEADER_NOCACHE);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class WebUtils {
 	 * 
 	 */
 	public static void setLastModifiedHeader(HttpServletResponse response, long lastModifiedDate) {
-		response.setDateHeader("Last-Modified", lastModifiedDate);
+		response.setDateHeader(WebConstants.RES_HEADER_KEY_LASTMODIFIED, lastModifiedDate);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class WebUtils {
 	 * 
 	 */
 	public static void setEtag(HttpServletResponse response, String etag) {
-		response.setHeader("ETag", etag);
+		response.setHeader(WebConstants.RES_HEADER_KEY_ETAG, etag);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class WebUtils {
 	 */
 	public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response,
 			long lastModified) {
-		long ifModifiedSince = request.getDateHeader("If-Modified-Since");
+		long ifModifiedSince = request.getDateHeader(WebConstants.RES_HEADER_KEY_IFMODIFIEDSINCE);
 		if ((ifModifiedSince != -1) && (lastModified < ifModifiedSince + 1000)) {
 			response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
 			return false;
@@ -95,7 +95,7 @@ public class WebUtils {
 	 * 
 	 */
 	public static boolean checkIfNoneMatchEtag(HttpServletRequest request, HttpServletResponse response, String etag) {
-		String headerValue = request.getHeader("If-None-Match");
+		String headerValue = request.getHeader(WebConstants.RES_HEADER_KEY_IFNONEMATCH);
 		if (headerValue != null) {
 			boolean conditionSatisfied = false;
 			if (!"*".equals(headerValue)) {
@@ -113,7 +113,7 @@ public class WebUtils {
 
 			if (conditionSatisfied) {
 				response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-				response.setHeader("ETag", etag);
+				response.setHeader(WebConstants.RES_HEADER_KEY_ETAG, etag);
 				return false;
 			}
 		}
@@ -128,8 +128,8 @@ public class WebUtils {
 	 */
 	public static void setFileDownloadHeader(HttpServletResponse response, String fileName) {
 		try {
-			String encodedfileName = new String(fileName.getBytes(), "ISO8859-1");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedfileName + "\"");
+			String encodedfileName = new String(fileName.getBytes(), WebConstants.CONTENT_ENCODING_ISO88591);
+			response.setHeader(WebConstants.RES_HEADER_KEY_CONTENTDISPOSITION, "attachment; filename=\"" + encodedfileName + "\"");
 		} catch (UnsupportedEncodingException e) {
 			ThrowableHandle.handle(e);
 		}
@@ -195,7 +195,7 @@ public class WebUtils {
 		
 		try {
 			
-			String encoding = WebConstants.RENDER_CONTENT_ENCODING;
+			String encoding = WebConstants.CONTENT_ENCODING_UTF8;
 			boolean noCache = WebConstants.NOCACHE_DEFAULT;
 			
 			for (String header : headers) {
