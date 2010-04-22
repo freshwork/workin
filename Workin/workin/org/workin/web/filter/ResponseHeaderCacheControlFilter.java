@@ -2,6 +2,7 @@ package org.workin.web.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -17,25 +18,40 @@ import org.workin.web.constant.WebConstants;
  * 
  * For Response set Expires... Header
  * 
- * eg.web.xml
+ * eg.
+ * 
+ * Web.xml
  * 
  * 	<filter>
- * 		<filter-name>cacheControlHeaderFilter</filter-name>
+ * 		<filter-name>responseHeaderCacheControlFilter</filter-name>
  * 		<filter-class>org.workin.web.filter.ResponseHeaderCacheControlFilter</filter-class>
  * 		<init-param>
  * 			<param-name>expiresSeconds</param-name>
- * 			<param-value>100000</param-value>
+ * 			<param-value>3000000</param-value>
  * 		</init-param>
  * 	</filter>
+ * 
  * 	<filter-mapping>
- * 		<filter-name>cacheControlHeaderFilter</filter-name>
- * 		<url-pattern>/img/*</url-pattern>
+ * 		<filter-name>responseHeaderCacheControlFilter</filter-name>
+ * 		<url-pattern>/images/*</url-pattern>
+ * 	</filter-mapping>
+ * 	
+ * 	<filter-mapping>
+ * 		<filter-name>responseHeaderCacheControlFilter</filter-name>
+ * 		<url-pattern>/css/*</url-pattern>
+ * 	</filter-mapping>
+ * 	
+ * 	<filter-mapping>
+ * 		<filter-name>responseHeaderCacheControlFilter</filter-name>
+ * 		<url-pattern>/js/*</url-pattern>
  * 	</filter-mapping>
  * 
+ * @see org.springside.examples.showcase.web.CacheControlHeaderFilter
  * 
+ * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class ResponseHeaderCacheControlFilter {
+public class ResponseHeaderCacheControlFilter implements Filter {
 
 	private long expiresSeconds;
 	

@@ -10,7 +10,7 @@ import com.opensymphony.xwork2.Preparable;
  * @param <T>
  */
 @SuppressWarnings("serial")
-public abstract class CRUDActionSupport<T> extends DefaultActionSupport implements
+public abstract class GenericActionSupport<T> extends AbstractActionSupport implements
 		ModelDriven<T>, Preparable {
 
 	// redirect to action default screen

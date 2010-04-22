@@ -1,9 +1,9 @@
 package org.workin.web.struts2;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -25,9 +25,9 @@ import com.opensymphony.xwork2.ActionSupport;
  *
  */
 @SuppressWarnings({"serial","unchecked"})
-public abstract class DefaultActionSupport extends ActionSupport {
+public abstract class AbstractActionSupport extends ActionSupport {
 	
-	@Autowired
+	@Autowired(required = false)
 	protected StoredLogService storedLogService;
 	
 	public void setStoredLogService(StoredLogService storedLogService) {
@@ -37,7 +37,7 @@ public abstract class DefaultActionSupport extends ActionSupport {
 	/**
 	 * 
 	 * <li>
-	 * 		Get 'request' object from servlet's ActionContext.
+	 * 		Get 'request' object from ServletActionContext.
 	 * </li> 
 	 * 
 	 *
@@ -50,9 +50,9 @@ public abstract class DefaultActionSupport extends ActionSupport {
 	
 	/**
 	 *
-	 *<li>
-	 * 		Get 'session' object from 's ActionContext.
-	 * </li> 
+	 *	<li>
+	 * 		Get 'session' object from ServletActionContext.
+	 * 	</li> 
 	 * 
 	 * @return HttpSession
 	 */
@@ -77,6 +77,19 @@ public abstract class DefaultActionSupport extends ActionSupport {
 	protected Serializable getAttribute(String attrKey) {
 		return (Serializable)this.getRequest().getAttribute(attrKey);
 	}
+	
+	/**
+	 *	<li>
+	 * 		Get 'ServletContext' object from ServletActionContext.
+	 * 	</li> 
+	 * 
+	 * @return
+	 * 
+	 */
+	protected ServletContext getServletContext() {
+		return ServletActionContext.getServletContext();
+	}
+	
 	
 	/**
 	 * 
@@ -188,72 +201,7 @@ public abstract class DefaultActionSupport extends ActionSupport {
 	public void setPageResultSizeAttribute(int totalCount) {
 		this.setAttribute(PAGE_RESULT_SIZE, totalCount);
 	}
-	
-	
-	public String getSaveToPath() {
-		return saveToPath;
-	}
 
-	public void setSaveToPath(String saveToPath) {
-		this.saveToPath = saveToPath;
-	}
-	
-	/**
-	 * 
-	 * @param fileFileName
-	 * @return
-	 * 
-	 */
-	protected File getFileWithUploadFileName (String fileFileName) {
-		
-		// write the file to the file specified
-		File root = new File(getResourcesPath());
-
-		if (!root.exists()) {
-			try {
-				root.mkdirs();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return new File(root, fileFileName);
-	}
-	
-	
-	/**
-	 * 
-	 * Get Resources path with fileFileName.
-	 * 
-	 * 
-	 * @return resources path
-	 * 
-	 */
-	protected String getResourcesPath() {
-		
-		StringBuilder resourcesPath;
-		StringBuilder paramPath = new StringBuilder(File.separator);
-		
-		if (StringUtils.hasText(saveToPath)) {
-			paramPath.append(this.getSaveToPath());
-		} else {
-			paramPath.append(WebConstants.FILE_UPLOAD_FOLDER);
-		}
-		
-		resourcesPath = new StringBuilder(ServletActionContext.getServletContext().getRealPath(String.valueOf(paramPath))); 
-		
-		resourcesPath.append(File.separator);
-		resourcesPath.append(this.getRequest().getRemoteUser());
-		resourcesPath.append(File.separator);
-		
-		logger.debug(" show paramPath, when getResourcesPath : {}.", resourcesPath);
-		
-		return String.valueOf(resourcesPath);
-	}
-	
-	// path, where is file to save
-	private String saveToPath;
-	
 	// for pagination key
 	protected static final String PAGE_RESULT_SIZE = "resultSize";
 	

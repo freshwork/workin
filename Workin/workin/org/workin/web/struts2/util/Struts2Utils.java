@@ -1,4 +1,4 @@
-package org.workin.web.struts2;
+package org.workin.web.struts2.util;
 
 import java.util.Collection;
 import java.util.Map;
@@ -120,7 +120,7 @@ public class Struts2Utils {
 	 * 
 	 */
 	public static void renderText(final String text, final String... headers) {
-		render(WebConstants.RENDER_CONTENT_TYPE_TEXT, text, headers);
+		render(WebConstants.CONTENT_TYPE_TEXT_PLAIN, text, headers);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class Struts2Utils {
 	 * 
 	 */
 	public static void renderHtml(final String html, final String... headers) {
-		render(WebConstants.RENDER_CONTENT_TYPE_HTML, html, headers);
+		render(WebConstants.CONTENT_TYPE_TEXT_HTML, html, headers);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class Struts2Utils {
 	 * 
 	 */
 	public static void renderXml(final String xml, final String... headers) {
-		render(WebConstants.RENDER_CONTENT_TYPE_XML, xml, headers);
+		render(WebConstants.CONTENT_TYPE_TEXT_XML, xml, headers);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class Struts2Utils {
 	 * @param headers
 	 */
 	public static void renderJson(final String string, final String... headers) {
-		render(WebConstants.RENDER_CONTENT_TYPE_JSON, string, headers);
+		render(WebConstants.CONTENT_TYPE_APPLICATION_JSON, string, headers);
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class Struts2Utils {
 	 */
 	public static void renderJson(final Collection<?> collection, final String... headers) {
 		String jsonString = JSONArray.fromObject(collection).toString();
-		render(WebConstants.RENDER_CONTENT_TYPE_JSON, jsonString, headers);
+		render(WebConstants.CONTENT_TYPE_APPLICATION_JSON, jsonString, headers);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class Struts2Utils {
 	 */
 	public static void renderJson(final Object[] array, final String... headers) {
 		String jsonString = JSONArray.fromObject(array).toString();
-		render(WebConstants.RENDER_CONTENT_TYPE_JSON, jsonString, headers);
+		render(WebConstants.CONTENT_TYPE_APPLICATION_JSON, jsonString, headers);
 	}
 
 	/**
@@ -220,10 +220,9 @@ public class Struts2Utils {
 	public static void renderJsonp(final String callbackName, final Map contentMap, final String... headers) {
 		String jsonParam = JSONObject.fromObject(contentMap).toString();
 		StringBuilder result = new StringBuilder().append(callbackName).append("(").append(jsonParam).append(");");
-		render(WebConstants.RENDER_CONTENT_TYPE_JSON, result.toString(), headers);
+		render(WebConstants.CONTENT_TYPE_APPLICATION_JSON, result.toString(), headers);
 	}
-	
-	
+
 	private static final String PROPERTY_NAME = "id";
 	
 	private static final transient Logger logger = LoggerFactory.getLogger(Struts2Utils.class);
