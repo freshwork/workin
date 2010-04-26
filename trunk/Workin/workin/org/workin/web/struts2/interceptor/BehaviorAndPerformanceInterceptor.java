@@ -3,7 +3,9 @@ package org.workin.web.struts2.interceptor;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,16 +36,21 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 	@Autowired(required = true)
 	private DefaultMessageProducer defaultMessageProducer;
-	
+
 	// Use can switch interceptor on or off flag.
-	private String onOff = CONSTANT_PARAM_ON;
-	
+	private String onOff;
+
 	// User define this parameter, for ignore request URI in this intercept action.
-	private Set<String> ignoreRequestURIs = Collections.emptySet();
+	private Set<Pattern> ignoreRequestURIs;
 
 	// User define this parameter, for allowed request URI in this intercept action.
-	private Set<String> allowedRequestURIs = Collections.emptySet();
+	private Set<Pattern> allowedRequestURIs;
 
+	public BehaviorAndPerformanceInterceptor() {
+		onOff = CONSTANT_PARAM_ON;
+		ignoreRequestURIs = Collections.emptySet();
+		allowedRequestURIs = Collections.emptySet();
+	}
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
@@ -64,14 +71,14 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 
 		if (!ignoreRequestURIs.isEmpty()) {
 			if (matchIgnoreRequestURIs(ignoreRequestURIs, theRequestUri)) {
-				logger.debug("{} be define in ignore request URIs. So don't trace it...", theRequestUri);
+				logger.debug("{} be define in ignore request URIs. so don't trace it...", theRequestUri);
 				return invocation.invoke();
 			} else {
 				return executeAopedAction(invocation);
 			}
 		} else if (!allowedRequestURIs.isEmpty()) {
 			if (matchAllowedRequestURIs(allowedRequestURIs, theRequestUri)) {
-				logger.debug("{} be define in allowed request URIs. So trace it...", theRequestUri);
+				logger.debug("{} be define in allowed request URIs. so trace it...", theRequestUri);
 				return executeAopedAction(invocation);
 			} else {
 				return invocation.invoke();
@@ -126,19 +133,21 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * 
 	 * Is match allowed request URIs?.
 	 * 
-	 * @param extensionCollection
+	 * @param allowdPattenCollection
 	 * @param requestURI
+	 * 
 	 * @return
 	 * 
 	 */
-	private static final boolean matchAllowedRequestURIs(Collection<String> extensionCollection, String requestURI) {
+	protected static final boolean matchAllowedRequestURIs(Collection<Pattern> allowdPattenCollection, String requestURI) {
 		if (!StringUtils.hasText(requestURI)) {
 			return false;
 		}
 
-		for (String extension : extensionCollection) {
-			logger.debug("In struts2 config file, define allowed request URI: {}", extension);
-			if (requestURI.startsWith(extension)) {
+		for (Pattern allowdPatten : allowdPattenCollection) {
+			logger.debug("In Struts2 Config file, Defined allowed request URI Patten: {}", allowdPatten);
+			
+			if(allowdPatten.matcher(requestURI).matches()) {
 				return true;
 			}
 		}
@@ -150,26 +159,27 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * 
 	 * Is match ignore request URIs?.
 	 * 
-	 * @param extensionCollection
+	 * @param ignorePattenCollection
 	 * @param requestURI
+	 * 
 	 * @return
 	 * 
 	 */
-	private static final boolean matchIgnoreRequestURIs(Collection<String> extensionCollection, String requestURI) {
+	protected static final boolean matchIgnoreRequestURIs(Collection<Pattern> ignorePattenCollection, String requestURI) {
 		if (!StringUtils.hasText(requestURI)) {
 			return true;
 		}
 
-		for (String extension : extensionCollection) {
-			logger.debug("In struts2 config file, define ignore request URI: {}", extension);
-			if (requestURI.startsWith(extension)) {
+		for (Pattern ignorePatten : ignorePattenCollection) {
+			logger.debug("In Struts2 Config file, Defined ignore request URI Patten: {}", ignorePatten);
+			if(ignorePatten.matcher(requestURI).matches()) {
 				return true;
 			}
 		}
 
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * If you need get user id form other way,u need Override this method only.
@@ -179,7 +189,7 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	protected long getUserId() {
 		return 0L;
 	}
-	
+
 	/**
 	 * 
 	 * If you need get user name form other way,u need Override this method only.
@@ -204,14 +214,14 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 	 * 
 	 */
 	protected String getRemoteIpAddress(final HttpServletRequest request) {
-		String remoteIp = SpringSecurityUtils.getCurrentUserIp(); 
-		
-		if(StringUtils.hasText(remoteIp)) {
+		String remoteIp = SpringSecurityUtils.getCurrentUserIp();
+
+		if (StringUtils.hasText(remoteIp)) {
 			return remoteIp;
 		}
-		
+
 		remoteIp = request.getHeader("x-forwarded-for");
-		
+
 		if (!StringUtils.hasText(remoteIp) || "unknown".equalsIgnoreCase(remoteIp)) {
 			remoteIp = request.getHeader("Proxy-Client-IP");
 		}
@@ -223,17 +233,41 @@ public class BehaviorAndPerformanceInterceptor extends AbstractInterceptor {
 		}
 		return remoteIp;
 	}
+	
+	/**
+	 * 
+	 * @param commaDelim
+	 * @return
+	 */
+	private Collection<String> asCollection(String commaDelim) {
+		if (!StringUtils.hasText(commaDelim)) {
+			return null;
+		}
+		return TextParseUtil.commaDelimitedStringToSet(commaDelim);
+	}
 
 	public void setDefaultMessageProducer(DefaultMessageProducer defaultMessageProducer) {
 		this.defaultMessageProducer = defaultMessageProducer;
 	}
 
 	public void setIgnoreRequestURIs(String stringOfIgnoreRequestURIs) {
-		this.ignoreRequestURIs = TextParseUtil.commaDelimitedStringToSet(stringOfIgnoreRequestURIs);
+	    Collection<String> patterns = asCollection(stringOfIgnoreRequestURIs);
+	    
+	    if (patterns != null) {
+	      this.ignoreRequestURIs = new HashSet<Pattern>();
+	      for (String pattern : patterns)
+	        this.ignoreRequestURIs.add(Pattern.compile(pattern));
+	    }
 	}
 
 	public void setAllowedRequestURIs(String allowedRequestURIs) {
-		this.allowedRequestURIs = TextParseUtil.commaDelimitedStringToSet(allowedRequestURIs);
+	    Collection<String> patterns = asCollection(allowedRequestURIs);
+	    
+	    if (patterns != null) {
+	      this.allowedRequestURIs = new HashSet<Pattern>();
+	      for (String pattern : patterns)
+	        this.allowedRequestURIs.add(Pattern.compile(pattern));
+	    }
 	}
 
 	public void setOnOff(String onOff) {
