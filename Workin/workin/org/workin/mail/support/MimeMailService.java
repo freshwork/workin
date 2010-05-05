@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.mail.AbstractMailService;
 import org.workin.mail.MailPackage;
 import org.workin.mail.constant.MailConstants;
@@ -83,9 +83,9 @@ public class MimeMailService extends AbstractMailService {
 				logger.info("Send mail with MimeMailService from {} to {}.", iMailFrom, sentMailTo);
 			}
 		} catch (MessagingException e) {
-			ThrowableHandle.handleThrow("Hit MessagingException, When execute MimeMailService.sendMail()", e, logger);
+			ThrowableHandler.handleThrow("Hit MessagingException, When execute MimeMailService.sendMail()", e, logger);
 		} catch (Exception ex) {
-			ThrowableHandle.handleThrow("Hit Exception, When execute MimeMailService.sendMail()", ex, logger);
+			ThrowableHandler.handleThrow("Hit Exception, When execute MimeMailService.sendMail()", ex, logger);
 		}
 	}
 
@@ -107,9 +107,9 @@ public class MimeMailService extends AbstractMailService {
 			helper.setText(content, true);
 
 		} catch (IOException e) {
-			ThrowableHandle.handleThrow("Build mail content fail... FreeMarker template cannot found.", e, logger);
+			ThrowableHandler.handleThrow("Build mail content fail... FreeMarker template cannot found.", e, logger);
 		} catch (TemplateException ex) {
-			ThrowableHandle.handleThrow("Build mail content fail... FreeMarker template Error.", ex, logger);
+			ThrowableHandler.handleThrow("Build mail content fail... FreeMarker template Error.", ex, logger);
 		}
 	}
 
@@ -124,7 +124,7 @@ public class MimeMailService extends AbstractMailService {
 			ClassPathResource attachment = new ClassPathResource(attachmentPath);
 			helper.addAttachment(attachmentName, attachment.getFile());
 		} catch (IOException ex) {
-			ThrowableHandle
+			ThrowableHandler
 					.handleThrow("Build mail attachment failling...Attachment file cannot be found.", ex, logger);
 		}
 	}

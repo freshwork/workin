@@ -13,9 +13,9 @@ import org.workin.util.StringUtils;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-public class ThrowableHandle {
+public class ThrowableHandler {
 
-	private static final transient Logger handleLogger = LoggerFactory.getLogger(ThrowableHandle.class);
+	private static final transient Logger handleLogger = LoggerFactory.getLogger(ThrowableHandler.class);
 
 	/**
 	 * 
@@ -174,7 +174,7 @@ public class ThrowableHandle {
 	public static void storeLogToDb(final StoredLogService storedLogService, final String userMessage,
 			final Throwable throwable) {
 		if (storedLogService != null) {
-			synchronized (ThrowableHandle.class) {
+			synchronized (ThrowableHandler.class) {
 				StoredLog storedLog = new StoredLog();
 				storedLog.setLogdttm(DateUtils.currentDateTime());
 				storedLog.setLogLevel(LogLevel.ERROR.toString());

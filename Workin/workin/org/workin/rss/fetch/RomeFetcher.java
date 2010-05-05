@@ -13,7 +13,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
 
@@ -63,13 +63,13 @@ public class RomeFetcher implements Fetcher {
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-			ThrowableHandle.handleThrow(userMessage, e, logger);
+			ThrowableHandler.handleThrow(userMessage, e, logger);
 		} catch (IOException e) {
 			e.printStackTrace();
-			ThrowableHandle.handleThrow(userMessage, e, logger);
+			ThrowableHandler.handleThrow(userMessage, e, logger);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ThrowableHandle.handleThrow(userMessage, e, logger);
+			ThrowableHandler.handleThrow(userMessage, e, logger);
 		}
 
 		return feed;
@@ -112,10 +112,10 @@ public class RomeFetcher implements Fetcher {
 			output.output(feed,new PrintWriter(os));
 		} catch (IOException e) {
 			e.printStackTrace();
-			ThrowableHandle.handleThrow(userMessage, e, logger);
+			ThrowableHandler.handleThrow(userMessage, e, logger);
 		} catch (FeedException e) {
 			e.printStackTrace();
-			ThrowableHandle.handleThrow(userMessage, e, logger);
+			ThrowableHandler.handleThrow(userMessage, e, logger);
 		}
 	}
 	

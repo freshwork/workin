@@ -2,7 +2,7 @@ package org.workin.web.struts2;
 
 import java.io.File;
 
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.FileUtils;
 import org.workin.util.StringUtils;
 import org.workin.web.constant.WebConstants;
@@ -52,7 +52,7 @@ public class GenericFileUploadActionSupport extends AbstractActionSupport {
 			try {
 				parent.mkdirs();
 			} catch (Exception e) {
-				ThrowableHandle.handle("Hit Exception, When mkdirs" + fileWillUploadToPath, e, logger);
+				ThrowableHandler.handle("Hit Exception, When mkdirs" + fileWillUploadToPath, e, logger);
 			}
 		}
 		

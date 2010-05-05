@@ -3,7 +3,7 @@ package org.workin.test.exception;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.fortest.BaseTestCase;
 
 /**
@@ -23,7 +23,7 @@ public class ThrowableHandleTested extends BaseTestCase {
 		try {
 			throw new Exception("testHandleStringThrowable");
 		} catch (Exception e) {
-			ThrowableHandle.handle(buildMessage(e), e);
+			ThrowableHandler.handle(buildMessage(e), e);
 		}
 	}
 
@@ -32,7 +32,7 @@ public class ThrowableHandleTested extends BaseTestCase {
 		try {
 			throw new Exception("testHandleStringThrowableLogger");
 		} catch (Exception e) {
-			ThrowableHandle.handle(buildMessage(e), e, logger);
+			ThrowableHandler.handle(buildMessage(e), e, logger);
 		}
 	}
 
@@ -42,7 +42,7 @@ public class ThrowableHandleTested extends BaseTestCase {
 			throw new Exception("testHandleThrowStringThrowable");
 		} catch (Exception e) {
 			try {
-				ThrowableHandle.handle(buildMessage(e), e);
+				ThrowableHandler.handle(buildMessage(e), e);
 			} catch (Exception e2) {
 				assertEquals(USER_MESSAGE, e2.getMessage());
 			}
@@ -55,7 +55,7 @@ public class ThrowableHandleTested extends BaseTestCase {
 			throw new Exception("testHandleThrowStringThrowableLogger");
 		} catch (Exception e) {
 			try {
-				ThrowableHandle.handle(buildMessage(e), e, logger);
+				ThrowableHandler.handle(buildMessage(e), e, logger);
 			} catch (Exception e2) {
 				assertEquals(USER_MESSAGE, e2.getMessage());
 			}

@@ -12,7 +12,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
 import org.workin.util.WebUtils;
@@ -79,7 +79,7 @@ public class Struts2Utils {
 				}
 			}
 		} catch (Exception e) {
-			ThrowableHandle.handle(e, logger);
+			ThrowableHandler.handle(e, logger);
 		}
 	}
 	
@@ -106,7 +106,7 @@ public class Struts2Utils {
 			WebUtils.render(contentType, content, response, headers);
 
 		} catch (Exception e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		}
 	}
 	

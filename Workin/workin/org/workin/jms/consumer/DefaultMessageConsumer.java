@@ -3,7 +3,7 @@ package org.workin.jms.consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.mail.MailPackage;
 import org.workin.mail.MailService;
 import org.workin.trace.domain.BehaviorPerformance;
@@ -40,7 +40,7 @@ public class DefaultMessageConsumer implements MessageConsumer {
 			}
 
 		} catch (Exception ex) {
-			ThrowableHandle.handleThrow("Hit Exception, When execute DefaultMessageConsumer.receiveMessage()", ex, logger);
+			ThrowableHandler.handleThrow("Hit Exception, When execute DefaultMessageConsumer.receiveMessage()", ex, logger);
 		}
 	}
 
@@ -56,7 +56,7 @@ public class DefaultMessageConsumer implements MessageConsumer {
 				}
 			}
 		} catch (Exception ex) {
-			ThrowableHandle.handleThrow(
+			ThrowableHandler.handleThrow(
 					"Hit Exception, When execute DefaultMessageConsumer.receiveMessage().", ex, logger);
 		}	
 	}
@@ -73,7 +73,7 @@ public class DefaultMessageConsumer implements MessageConsumer {
 				}
 			}
 		} catch (Exception ex) {
-			ThrowableHandle.handleThrow(
+			ThrowableHandler.handleThrow(
 					"Hit Exception, When execute DefaultMessageConsumer.receiveMessage().", ex, logger);
 		}	
 	}

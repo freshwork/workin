@@ -12,7 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.ws.constant.WSConstants;
 import org.workin.xml.JaxbBinder;
 
@@ -59,7 +59,7 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 			HttpResponse response = httpclient.execute(get);
 			xml = buildXml(response);
 		} catch (Exception e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		}
 		
 		logger.info(" excuteXMLRest xml: " + xml);
@@ -102,7 +102,7 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 				logger.info("Response Status Code:" + statusLine.getStatusCode());
 			}
 		} catch (Exception e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		}
 		
 		logger.info(" excuteXMLResponseRest xml: " + xml);
@@ -128,9 +128,9 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 				xml.append(new String(buffer, WSConstants.WS_CONTENT_ENCODING));
 			}
 		} catch (IllegalStateException e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		} catch (IOException e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		} 
 		
 		return xml.toString();

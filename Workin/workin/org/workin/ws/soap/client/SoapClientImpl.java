@@ -8,7 +8,7 @@ import javax.xml.ws.Service;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 import org.workin.ws.constant.WSConstants;
 
@@ -63,7 +63,7 @@ public class SoapClientImpl<T> extends SoapClientTemplet<T> {
 				return (T) service.getPort(this.serviceInterfaceClass); 
 			}
 		} catch (Exception e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		}
 		return null;
 	}

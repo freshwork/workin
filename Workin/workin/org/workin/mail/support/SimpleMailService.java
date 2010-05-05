@@ -3,7 +3,7 @@ package org.workin.mail.support;
 import java.util.List;
 
 import org.springframework.mail.SimpleMailMessage;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.mail.AbstractMailService;
 import org.workin.mail.MailPackage;
 import org.workin.util.Assert;
@@ -65,7 +65,7 @@ public class SimpleMailService extends AbstractMailService {
 				logger.info("Send mail with SimpleMailService from {} to {}.", iMailFrom, sentMailTo);
 			}
 		} catch (Exception ex) {
-			ThrowableHandle.handleThrow("Hit Exception, When execute SimpleMailService.sendMail()", ex, logger);
+			ThrowableHandler.handleThrow("Hit Exception, When execute SimpleMailService.sendMail()", ex, logger);
 		}
 
 	}

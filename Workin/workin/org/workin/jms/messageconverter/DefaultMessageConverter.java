@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.jms.support.converter.MessageConverter;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class DefaultMessageConverter implements MessageConverter {
 			objectMessage.setObjectProperty(MessageStoredKeys.BYTESMAP.toString(), bytesMap);
 
 		} catch (IOException ex) {
-			ThrowableHandle.handleThrow("Hit IOException,When execute toMessage(...)", ex, logger);
+			ThrowableHandler.handleThrow("Hit IOException,When execute toMessage(...)", ex, logger);
 		}
 
 		return objectMessage;
@@ -74,9 +74,9 @@ public class DefaultMessageConverter implements MessageConverter {
 				returnObject = ois.readObject();
 				return returnObject;
 			} catch (IOException e) {
-				ThrowableHandle.handleThrow("Hit IOException,When execute fromMessage(...)", e, logger);
+				ThrowableHandler.handleThrow("Hit IOException,When execute fromMessage(...)", e, logger);
 			} catch (ClassNotFoundException e) {
-				ThrowableHandle.handleThrow("Hit ClassNotFoundException,When execute fromMessage(...)", e, logger);
+				ThrowableHandler.handleThrow("Hit ClassNotFoundException,When execute fromMessage(...)", e, logger);
 			}
 
 			return returnObject;

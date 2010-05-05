@@ -9,7 +9,7 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.web.constant.WebConstants;
 
 /**
@@ -131,7 +131,7 @@ public class WebUtils {
 			String encodedfileName = new String(fileName.getBytes(), WebConstants.CONTENT_ENCODING_ISO88591);
 			response.setHeader(WebConstants.RES_HEADER_KEY_CONTENTDISPOSITION, "attachment; filename=\"" + encodedfileName + "\"");
 		} catch (UnsupportedEncodingException e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		}
 	}
 
@@ -223,7 +223,7 @@ public class WebUtils {
 			response.getWriter().flush();
 
 		} catch (Exception e) {
-			ThrowableHandle.handle(e);
+			ThrowableHandler.handle(e);
 		}
 	}
 }
