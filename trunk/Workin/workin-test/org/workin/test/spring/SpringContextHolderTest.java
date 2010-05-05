@@ -2,7 +2,7 @@ package org.workin.test.spring;
 
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.fortest.BaseTestCase;
 import org.workin.spring.SpringContextHolder;
 import org.workin.util.ReflectionUtils;
@@ -23,7 +23,7 @@ public class SpringContextHolderTest extends BaseTestCase {
 			
 			fail("No exception throw for applicationContxt hadn't been init.");
 		} catch (IllegalStateException e) {
-			ThrowableHandle.handle("Hit IllegalStateException,when SpringContextHolder.getBean()", e, logger);
+			ThrowableHandler.handle("Hit IllegalStateException,when SpringContextHolder.getBean()", e, logger);
 		}
 
 		new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");

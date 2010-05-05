@@ -10,7 +10,7 @@ import javax.jws.WebService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 import org.workin.util.FileUtils;
 import org.workin.ws.constant.WSConstants;
@@ -36,7 +36,7 @@ public class LargeImageWebServiceImpl implements LargeImageWebService {
 			if (url != null)
 				file = new File(FileUtils.findAsResource(imagePath).getFile());
 		} catch (Exception e) {
-			ThrowableHandle.handle("Hit Exception,when call getImage(String imagePath).", e, logger);
+			ThrowableHandler.handle("Hit Exception,when call getImage(String imagePath).", e, logger);
 		}
 		return getImage(file);
 	}
@@ -52,7 +52,7 @@ public class LargeImageWebServiceImpl implements LargeImageWebService {
 			result.setImageData(dataHandler);
 		} catch (Exception e) {
 			result.setResult(WSResult.IMAGE_ERROR, "Image reading error.");
-			ThrowableHandle.handle("Hit Exception,when call getImage(File imageFile).", e, logger);
+			ThrowableHandler.handle("Hit Exception,when call getImage(File imageFile).", e, logger);
 		}
 		return result;
 	}

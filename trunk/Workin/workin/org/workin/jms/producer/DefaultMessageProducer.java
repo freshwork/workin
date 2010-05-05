@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.jms.Destination;
 
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 
 /**
@@ -22,7 +22,7 @@ public class DefaultMessageProducer extends MessageProducerTemplate {
 			try {
 				jmsTemplate.convertAndSend(destination, target);
 			} catch (Exception ex) {
-				ThrowableHandle.handleThrow("Hit Exception, When execute DefaultMessageProducer.sendMessage(...).", ex, logger);
+				ThrowableHandler.handleThrow("Hit Exception, When execute DefaultMessageProducer.sendMessage(...).", ex, logger);
 			}
 		}
 	}

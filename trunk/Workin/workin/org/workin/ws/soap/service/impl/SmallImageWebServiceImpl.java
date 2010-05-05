@@ -11,7 +11,7 @@ import javax.jws.WebService;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 import org.workin.util.FileUtils;
 
@@ -37,7 +37,7 @@ public class SmallImageWebServiceImpl implements SmallImageWebService {
 			if(url != null)
 				file = new File(FileUtils.findAsResource(imagePath).getFile());
 		} catch (Exception e) {
-			ThrowableHandle.handle("Hit Exception,when call getImage(String imagePath).", e, logger);
+			ThrowableHandler.handle("Hit Exception,when call getImage(String imagePath).", e, logger);
 		}
 		return getImage(file);
 	}
@@ -55,7 +55,7 @@ public class SmallImageWebServiceImpl implements SmallImageWebService {
 			result.setImageData(imageBytes);
 		} catch (IOException e) {
 			result.setResult(WSResult.IMAGE_ERROR, "Image reading error.");
-			ThrowableHandle.handle("Hit Exception,when call getImage(File imageFile).", e, logger);
+			ThrowableHandler.handle("Hit Exception,when call getImage(File imageFile).", e, logger);
 		} finally {
 			IOUtils.closeQuietly(is);
 		}

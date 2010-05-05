@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.workin.exception.ThrowableHandle;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.StringUtils;
 import org.workin.util.WebUtils;
 
@@ -136,7 +136,7 @@ public class JCaptchaFilter implements Filter {
 			ImageIO.write(challenge, "jpg", out);
 			out.flush();
 		} catch (CaptchaServiceException e) {
-			ThrowableHandle.handle(e, logger);
+			ThrowableHandler.handle(e, logger);
 		} finally {
 			out.close();
 		}
@@ -158,7 +158,7 @@ public class JCaptchaFilter implements Filter {
 			}
 			return captchaService.validateResponseForID(captchaID, challengeResponse);
 		} catch (CaptchaServiceException e) {
-			ThrowableHandle.handle(e, logger);
+			ThrowableHandler.handle(e, logger);
 			return false;
 		}
 	}
