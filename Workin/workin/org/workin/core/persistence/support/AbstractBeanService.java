@@ -67,6 +67,13 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 	@Override
 	@Transactional
 	@Profiled
+	public void remove(final Class<T> entityClass, final PK id) {
+		this.persistenceService.remove(entityClass, id);
+	}
+	
+	@Override
+	@Transactional
+	@Profiled
 	public void batchRemove(final List<T> objectsToRemove) {
 		this.persistenceService.batchRemove(objectsToRemove);
 	}
