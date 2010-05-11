@@ -242,6 +242,7 @@
 				<include name="org.workin.trace.${workin.version}.jar" />
 				<include name="org.workin.jms.${workin.version}.jar" />
 				<include name="org.workin.spring.${workin.version}.jar" />
+				<include name="org.workin.ws.${workin.version}.jar" />
 				<include name="org.workin.fortest.${workin.version}.jar" />
 			</fileset>
 		</copy>

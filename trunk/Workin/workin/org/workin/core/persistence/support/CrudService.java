@@ -53,7 +53,7 @@ public interface CrudService<T, PK extends Serializable> {
 	
 	/**
 	 * 
-	 * remove entity to database.
+	 * remove entity from database using entity object.
 	 * 
 	 * @param   objectToRemove
 	 * 
@@ -61,6 +61,16 @@ public interface CrudService<T, PK extends Serializable> {
 	 * 
 	 */
 	public void remove(final T objectToRemove);
+	
+	/**
+	 * 
+	 * remove entity from database using entity class and entity id.
+	 * 
+	 * @param entityClass
+	 * @param id
+	 * 
+	 */
+	public void remove(final Class<T> entityClass, final PK id);
 	
 	/**
 	 * 
