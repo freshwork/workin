@@ -1,6 +1,9 @@
 package org.workin.core.persistence.support;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.google.common.collect.Lists;
 
 /**
  * 
@@ -12,11 +15,9 @@ public class PaginationSupport<T> implements Serializable {
 
 	private static final long serialVersionUID = -7315205992759496506L;
 
-	private static final int PAGESIZE = 10;
+	public static final int PAGESIZE = 10;
 
 	private int pageSize = PAGESIZE;
-
-	private Object data;
 
 	private int totalCount;
 
@@ -24,33 +25,58 @@ public class PaginationSupport<T> implements Serializable {
 
 	private int startIndex = 0;
 
-	public PaginationSupport(Object data, int totalCount) {
+	private int lastStartIndex;
+	
+	private List<T> result = Lists.newArrayList();
+
+	// For search filter.
+	
+	public PaginationSupport() {
+		setPageSize(PAGESIZE);
+		setStartIndex(0);
+	}
+	
+	public PaginationSupport(final int pageNumber) {
+		setPageSize(pageSize);
+		setStartIndex((pageNumber - 1) * PAGESIZE);
+	}
+	
+	public PaginationSupport(final int pageNumber, final int pageSize) {
+		setPageSize(pageSize);
+		setStartIndex((pageNumber - 1) * pageSize);
+	}
+	
+	public PaginationSupport(final List<T> result, int totalCount) {
 		setPageSize(PAGESIZE);
 		setTotalCount(totalCount);
-		setData(data);
+		setResult(result);
 		setStartIndex(0);
 	}
 
-	public PaginationSupport(Object data, int totalCount, int startIndex) {
+	public PaginationSupport(final List<T> result, int totalCount, int startIndex) {
 		setPageSize(PAGESIZE);
 		setTotalCount(totalCount);
-		setData(data);
+		setResult(result);
 		setStartIndex(startIndex);
 	}
 
-	public PaginationSupport(Object data, int totalCount, int pageSize, int startIndex) {
+	public PaginationSupport(final List<T> result, int totalCount, int startIndex, int pageSize) {
 		setPageSize(pageSize);
 		setTotalCount(totalCount);
-		setData(data);
+		setResult(result);
 		setStartIndex(startIndex);
 	}
-
-	public Object getData() {
-		return data;
+	
+	public void setPageNumber(int pageNumber) {
+		setStartIndex((pageNumber - 1) * pageSize);
 	}
 
-	public void setData(Object data) {
-		this.data = data;
+	public List<T> getResult() {
+		return result;
+	}
+
+	public void setResult(List<T> result) {
+		this.result = result;
 	}
 
 	public int getPageSize() {
@@ -115,6 +141,33 @@ public class PaginationSupport<T> implements Serializable {
 		}
 	}
 
+	// Get page number
+	public int getCurrentPageIndex() {
+		return getStartIndex() / pageSize + 1;
+	}
+
+	public int getFirstPageIndex() {
+		return 1;
+	}
+
+	public int getNextPageIndex() {
+		if (getCurrentPageIndex() >= getLastPageIndex())
+			return getLastPageIndex();
+		else
+			return getCurrentPageIndex() + 1;
+	}
+
+	public int getPreviousPageIndex() {
+		if (getCurrentPageIndex() <= 1)
+			return 1;
+		else
+			return getCurrentPageIndex() - 1;
+	}
+
+	public int getLastPageIndex() {
+		return getPageCount();
+	}
+
 	public int getNextIndex() {
 		int nextIndex = getStartIndex() + pageSize;
 
@@ -133,12 +186,11 @@ public class PaginationSupport<T> implements Serializable {
 			return previousIndex;
 	}
 
-	public int getLastPageIndex() {
-		return (getPageCount() - 1) * pageSize;
-	}
+	public int getLastIndex() {
+		if (indexes != null && indexes.length > 0) {
+			lastStartIndex = indexes[indexes.length - 1];
+		}
+		return lastStartIndex;
 
-	public int getCurrentPageIndex() {
-		return getStartIndex() / pageSize + 1;
 	}
-
 }

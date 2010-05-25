@@ -858,11 +858,11 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		Integer count = this.countByQueryString(queryString, values);
 		if (count == null || count <= 0) {
-			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpMaxRows, tmpStart);
+			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpStart, tmpMaxRows);
 		}
 
 		List<T> result = this.find(tmpStart, tmpMaxRows, queryString, values);
-		return new PaginationSupport<T>(result, count, tmpMaxRows, tmpStart);
+		return new PaginationSupport<T>(result, count, tmpStart, tmpMaxRows);
 	}
 
 	/**
@@ -1161,12 +1161,12 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		Integer count = countByProperty(entityClass, propertyName, value);
 
 		if (count == null || count <= 0) {
-			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpMaxRows, tmpStart);
+			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpStart, tmpMaxRows);
 		}
 
 		List<T> result = this.findByProperty(entityClass, propertyName, value, start, maxRows);
 
-		return new PaginationSupport<T>(result, count, tmpMaxRows, tmpStart);
+		return new PaginationSupport<T>(result, count, tmpStart, tmpMaxRows);
 	}
 
 	/**
@@ -1281,12 +1281,12 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		Integer count = countByPropertys(entityClass, params);
 		if (count == null || count <= 0) {
-			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpMaxRows, tmpStart);
+			return new PaginationSupport<T>(new ArrayList<T>(0), 0, tmpStart, tmpMaxRows);
 		}
 
 		List<T> result = findByPropertys(entityClass, params, start, maxRows);
 
-		return new PaginationSupport<T>(result, count, tmpMaxRows, tmpStart);
+		return new PaginationSupport<T>(result, count, tmpStart, tmpMaxRows);
 	}
 
 	/**

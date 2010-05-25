@@ -196,14 +196,14 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 
 		if (count == null || count.intValue() <= 0) {
 			logger.info("After the query execution Count the number of records is zero.");
-			return new PaginationSupport(new LinkedList(), count.intValue(), maxRows, offset);
+			return new PaginationSupport(new LinkedList(), count.intValue(), offset, maxRows);
 		}
 		
 		int tmpOffset = (offset < 0 ? 0 : offset);
 		int tmpMaxRows = (maxRows <= 0 ? 1 : maxRows);
 
 		List<?> resultList = getSqlMapClientTemplate().queryForList(sqlMapId, parameterObject, tmpOffset, tmpMaxRows);
-		return new PaginationSupport(resultList, count.intValue(), tmpMaxRows, tmpOffset);
+		return new PaginationSupport(resultList, count.intValue(), tmpOffset, tmpMaxRows);
 	}
 
 	@Override

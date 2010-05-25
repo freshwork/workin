@@ -259,9 +259,8 @@ public class PersonServiceTest extends SpringTxTestCase {
 	private void assertPersonList(PaginationSupport personList, int dynamicSize) {
 		assertNotNull(personList);
 		assertTrue(personList.getTotalCount() == 30);
-		assertTrue(personList.getPageSize() == dynamicSize);
 
-		List persionList = (List) personList.getData();
+		List persionList = (List) personList.getResult();
 		assertTrue(persionList.size() == dynamicSize);
 	}
 	
