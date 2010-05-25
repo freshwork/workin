@@ -71,4 +71,9 @@ public interface WebConstants {
 	public static final String PARAM_REQUEST_CALLBACK = "callback";
 	// Define parameter client response cache exprires sencond.
 	public static final String PARAM_EXPIRES_SECOND = "expiresSeconds";
+	
+	// Define page number.
+	public static final String PAGE_NUMBER = "pageNo";
+	// Define pagination key
+	public static final String PAGE_RESULT_SIZE = "resultSize";
 }

@@ -13,6 +13,8 @@ import org.displaytag.util.ParamEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.workin.core.persistence.support.PaginationSupport;
+import org.workin.exception.ThrowableHandler;
 import org.workin.trace.service.StoredLogService;
 import org.workin.util.StringUtils;
 import org.workin.web.constant.WebConstants;
@@ -174,7 +176,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 * 
 	 */
 	public int getPageSize() {
-		return WebConstants.DEFAULT_PAGE_SIZE;
+		return PaginationSupport.PAGESIZE;
 	}
 	
 	/**
@@ -185,10 +187,43 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 * @return
 	 * 
 	 */
+	@Deprecated
 	public int getStartIndex(String displayTableId) {
 		String pageIndexName = new ParamEncoder(displayTableId).encodeParameterName(TableTagParameters.PARAMETER_PAGE);
 		int currentPageNo = StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : (Integer.parseInt(getParameter(pageIndexName)) - 1);
 		return currentPageNo * this.getPageSize();
+	}
+	
+	/**
+	 * 
+	 * Get page number.
+	 * 
+	 * @param usingKey
+	 * 			1) Display table Id.	
+	 * 		or	  
+	 * 			2) Parameter WebConstants.PAGE_NUMBER's value.
+	 *        
+	 * @return
+	 * 
+	 */
+	public int getPageNo(String usingKey) {
+		int pageNumber = 0;
+		
+		if(WebConstants.PAGE_NUMBER.equals(usingKey)) {
+			String parameterPageNumber = this.getParameter(WebConstants.PAGE_NUMBER);
+			if(parameterPageNumber != null){
+				try {
+					pageNumber = Integer.parseInt(this.getParameter(WebConstants.PAGE_NUMBER));	
+				} catch (Exception ex) {
+					ThrowableHandler.handle("Paramber PageNo invalid!", ex, logger);
+				}
+			}
+		} else {
+			String pageIndexName = new ParamEncoder(usingKey).encodeParameterName(TableTagParameters.PARAMETER_PAGE);
+			pageNumber = StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : (Integer.parseInt(getParameter(pageIndexName)) - 1);
+		}
+		
+		return pageNumber;
 	}
 	
 	/**
@@ -199,11 +234,8 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 * 
 	 */
 	public void setPageResultSizeAttribute(int totalCount) {
-		this.setAttribute(PAGE_RESULT_SIZE, totalCount);
+		this.setAttribute(WebConstants.PAGE_RESULT_SIZE, totalCount);
 	}
-
-	// for pagination key
-	protected static final String PAGE_RESULT_SIZE = "resultSize";
 	
 	// for all sub action
 	protected transient final Logger logger = LoggerFactory.getLogger(this.getClass());

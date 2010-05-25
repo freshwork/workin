@@ -267,7 +267,7 @@ public class PersistenceProviderTested extends AbstractTestCase {
 	public void assertForFindGoingmm(PaginationSupport ps) {
 		assertNotNull(ps);
 		assertEquals(PERSON_GOINGMM_COUNT, ps.getTotalCount());
-		assertEquals(PERSON_GOINGMM_COUNT, ((List)ps.getData()).size());
+		assertEquals(PERSON_GOINGMM_COUNT, ((List)ps.getResult()).size());
 	}
 	
 	/**
@@ -292,7 +292,7 @@ public class PersistenceProviderTested extends AbstractTestCase {
 	public void assertForFindGoogle(PaginationSupport ps) {
 		assertNotNull(ps);
 		assertEquals(PERSON_GOOGLE_COUNT, ps.getTotalCount());
-		assertEquals(PERSON_GOOGLE_COUNT, ((List)ps.getData()).size());
+		assertEquals(PERSON_GOOGLE_COUNT, ((List)ps.getResult()).size());
 	}
 	
 	/**
