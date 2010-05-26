@@ -18,6 +18,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2119,12 +2120,16 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				criteriaQuery.select(entity);
 				criteriaQuery.distinct(isDistinct);
 
-				Predicate predicate[] = buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
+				Predicate predicates[] = buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
 						entity, entityType, isDistinct, filters);
+				
+				if(!ArrayUtils.isEmpty(predicates)) {
+					criteriaQuery.where(predicates);
+				} else {
+					criteriaQuery.where(criteriaBuilder.conjunction());
+				}
 
-				criteriaQuery.where(criteriaBuilder.and(predicate));
 				TypedQuery<T> finalCriteriaQuery = em.createQuery(criteriaQuery);
-
 				return (List<T>) finalCriteriaQuery.getResultList();
 			}
 		});
@@ -2153,11 +2158,20 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			EntityType<T> entityType, final boolean isDistinct, final List<PropertyFilter> filters) {
 
 		List<Predicate> predicateList = new ArrayList<Predicate>();
+		
 		for (PropertyFilter filter : filters) {
-			for (String param : filter.getPropertyNames()) {
+			if (!filter.isMultiProperty()) { 
 				Predicate predicate = buildPropertyFilterPredicate(targetClass, criteriaBuilder, criteriaQuery, entity,
-						entityType, isDistinct, param, filter.getPropertyValue(), filter.getMatchType(), filter.getLikeMatchPatten());
-				predicateList.add(predicate);
+						entityType, isDistinct, filter.getPropertyName(), filter.getPropertyValue(), filter.getMatchType(), filter.getLikeMatchPatten());
+				predicateList.add(criteriaBuilder.and(predicate));
+			} else {
+				List<Predicate> multiPropertiesPredicateList = new ArrayList<Predicate>();
+				for (String param : filter.getPropertyNames()) {
+					Predicate predicate = buildPropertyFilterPredicate(targetClass, criteriaBuilder, criteriaQuery, entity,
+							entityType, isDistinct, param, filter.getPropertyValue(), filter.getMatchType(), filter.getLikeMatchPatten());
+					multiPropertiesPredicateList.add(predicate);
+				}
+				predicateList.add(criteriaBuilder.or(multiPropertiesPredicateList.toArray(new Predicate[multiPropertiesPredicateList.size()])));
 			}
 		}
 
