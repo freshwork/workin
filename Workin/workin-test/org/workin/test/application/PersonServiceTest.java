@@ -65,10 +65,10 @@ public class PersonServiceTest extends SpringTxTestCase {
 	@Test
 	public void findByCriteriaQuery() {
 		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
-		PropertyFilter filter_name = new PropertyFilter("EQS_name", "goingmm");
+		PropertyFilter filter_name = new PropertyFilter("EQS_name_OR_sex", NEW_USER_NAME);
 		filters.add(filter_name);
-		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
-		filters.add(filter_sex);
+//		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
+//		filters.add(filter_sex);
 		PropertyFilter filter_version = new PropertyFilter("GEL_version", "0");
 		filters.add(filter_version);
 
