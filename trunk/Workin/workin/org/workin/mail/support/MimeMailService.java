@@ -62,14 +62,14 @@ public class MimeMailService extends AbstractMailService {
 			helper.setFrom(iMailFrom);
 			helper.setSubject(iMailSubject);
 
-			helper.setTo(iMailTo.toArray((new String[0])));
+			helper.setTo(iMailTo.toArray((new String[iMailTo.size()])));
 
 			if (!CollectionUtils.isEmpty(mailPackage.getMailCCTo())) {
-				helper.setCc(mailPackage.getMailCCTo().toArray(new String[0]));
+				helper.setCc(mailPackage.getMailCCTo().toArray(new String[mailPackage.getMailCCTo().size()]));
 			}
 
 			if (!CollectionUtils.isEmpty(mailPackage.getMailBCCTo())) {
-				helper.setBcc(mailPackage.getMailBCCTo().toArray(new String[0]));
+				helper.setBcc(mailPackage.getMailBCCTo().toArray(new String[mailPackage.getMailBCCTo().size()]));
 			}
 
 			helper.setSentDate(DateUtils.currentDateTime());

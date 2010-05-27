@@ -44,14 +44,14 @@ public class SimpleMailService extends AbstractMailService {
 
 		mailMessage.setFrom(iMailFrom);
 		mailMessage.setSubject(iMailSubject);
-		mailMessage.setTo(iMailTo.toArray((new String[0])));
+		mailMessage.setTo(iMailTo.toArray((new String[iMailTo.size()])));
 		
 		if (!CollectionUtils.isEmpty(mailPackage.getMailCCTo())) {
-			mailMessage.setCc(mailPackage.getMailCCTo().toArray(new String[0]));
+			mailMessage.setCc(mailPackage.getMailCCTo().toArray(new String[mailPackage.getMailCCTo().size()]));
 		}
 
 		if (!CollectionUtils.isEmpty(mailPackage.getMailBCCTo())) {
-			mailMessage.setBcc(mailPackage.getMailBCCTo().toArray(new String[0]));
+			mailMessage.setBcc(mailPackage.getMailBCCTo().toArray(new String[mailPackage.getMailBCCTo().size()]));
 		}
 		mailMessage.setSentDate(DateUtils.currentDateTime());
 
