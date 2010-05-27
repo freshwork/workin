@@ -32,7 +32,7 @@ public abstract class GenericAjaxActionSupport<T> extends AbstractActionSupport 
 
 	/**
 	 * 
-	 * Build request List constants.
+	 * Build result List constants.
 	 * 
 	 * User must implements this abstract method.
 	 * 

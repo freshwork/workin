@@ -13,14 +13,13 @@ import org.workin.mail.MailService;
  */
 public class MailServiceTest extends SpringContextTestCase {
 	
-	@Autowired(required=true)
+	@Autowired
 	private MailService mimeMailService;
 	
 	public void setMimeMailService(MailService mimeMailService) {
 		this.mimeMailService = mimeMailService;
 	}
 
-	
 	@Test
 	public void mimeMailServiceSendMailTest() {
 		MailPackage mailPackage = new MailPackage("G.Lee");
