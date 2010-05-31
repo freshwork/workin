@@ -30,6 +30,7 @@ import org.workin.core.persistence.support.PaginationSupport;
 import org.workin.core.persistence.support.PropertyFilter;
 import org.workin.core.persistence.support.PropertyFilter.LikeMatchPatten;
 import org.workin.core.persistence.support.PropertyFilter.MatchType;
+import org.workin.core.persistence.support.PropertyFilter.PropertyType;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
 import org.workin.util.ReflectionUtils;
@@ -1332,7 +1333,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		Collection result = new LinkedHashSet(getAll(entityClass));
 		return new ArrayList(result);
 	}
-
+	
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
@@ -1357,7 +1358,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 
-				String queryString = buildQueryString(true, entityClass, propertyName).toString();
+				String queryString = buildQueryString(true, entityClass, propertyName);
 
 				Query query = em.createQuery(queryString);
 				query.setParameter(1, value);
@@ -1389,7 +1390,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				String queryString = buildQueryStringWithNamedParams(true, entityClass, params).toString();
+				String queryString = buildQueryStringWithNamedParams(true, entityClass, params);
 				Query query = em.createQuery(queryString);
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
@@ -1472,7 +1473,28 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
+	
+	/**
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @return
+	 * 
+	 */
+	@Override
+	public int countByPropertyFilter(final Class<T> targetClass, final List<PropertyFilter> filters) {
+		
+		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				String countOfQuery = buildQueryStringWithPropertyFilters(true, targetClass, filters);
+				Query query = em.createQuery(countOfQuery);
+				return Integer.valueOf(String.valueOf(query.getSingleResult()));
+			}
+
+		});
+	}
+	
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -2094,6 +2116,47 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.findByCriteriaQuery(targetClass, filters, false);
 	}
+	
+	@Override
+	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
+			final List<PropertyFilter> filters, final int start, final int maxRows) {
+		
+		return (PaginationSupport)getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+				CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(targetClass);
+
+				Root<T> entity = criteriaQuery.from(targetClass);
+				EntityType<T> entityType = entity.getModel();
+
+				criteriaQuery.select(entity);
+
+				Predicate predicates[] = buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
+						entity, entityType, true, filters);
+				
+				if(!ArrayUtils.isEmpty(predicates)) {
+					criteriaQuery.where(predicates);
+				} else {
+					criteriaQuery.where(criteriaBuilder.conjunction());
+				}
+				
+				TypedQuery<T> finalCriteriaQuery = em.createQuery(criteriaQuery);
+				
+				int tmpStart = start > 0 ? start : 0;
+				int tmpMaxRows = maxRows > 0 ? maxRows : 1;
+				Integer count = countByPropertyFilter(targetClass, filters);
+				
+				if (tmpMaxRows >= 0) {
+					finalCriteriaQuery.setMaxResults(maxRows);
+				}
+				if (tmpStart >= 0) {
+					finalCriteriaQuery.setFirstResult(start);
+				}
+				return new PaginationSupport(finalCriteriaQuery.getResultList(), count, tmpStart, tmpMaxRows);
+			}
+		});
+	}
+	
 
 	/**
 	 * 
@@ -2128,13 +2191,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				} else {
 					criteriaQuery.where(criteriaBuilder.conjunction());
 				}
-
+				
 				TypedQuery<T> finalCriteriaQuery = em.createQuery(criteriaQuery);
 				return (List<T>) finalCriteriaQuery.getResultList();
 			}
 		});
 	}
-
+	
 	/**
 	 * ===Private================================================= 
 	 * Some private method for: -support public method
@@ -2310,7 +2373,95 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		logger.info(" Build Query String With NamedParams: {}", queryBuilder.toString());
 		return queryBuilder.toString();
 	}
-
+	
+	/**
+	 * 
+	 * Build Query String by class and propertyFilter.
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @return
+	 * 
+	 */
+	private String buildQueryStringWithPropertyFilters(final boolean isCount, final Class<T> targetClass, final List<PropertyFilter> filters) {
+		
+		StringBuilder queryBuilder = buildQueryString(targetClass, isCount);
+		
+		if(!CollectionUtils.isEmpty(filters)) {
+			queryBuilder.append(" where ");
+			
+			for(PropertyFilter filter : filters) {
+				if(filter.isMultiProperty()) {
+					queryBuilder.append("(");
+					for(String propertyName : filter.getPropertyNames()) {
+						buildQueryStringWithPropertyFilter(filter, propertyName, queryBuilder);
+						queryBuilder.append(" or ");
+					}
+					if (queryBuilder.lastIndexOf(" or ") == (queryBuilder.length() - 4)) {
+						queryBuilder.delete(queryBuilder.length() - 4, queryBuilder.length());
+					}
+					queryBuilder.append(")");
+				} else {
+					buildQueryStringWithPropertyFilter(filter, filter.getPropertyName(), queryBuilder);
+				}
+				queryBuilder.append(" and ");
+			}
+			
+			if (queryBuilder.lastIndexOf(" and ") == (queryBuilder.length() - 5)) {
+				queryBuilder.delete(queryBuilder.length() - 5, queryBuilder.length());
+			}
+			
+			logger.info(" Build Query String With PropertyFilter: {}", queryBuilder.toString());
+		}
+		
+		return queryBuilder.toString();
+	}
+	
+	/**
+	 * 
+	 * @param filter
+	 * @param propertyName
+	 * @param queryBuilder
+	 * 
+	 */
+	private void buildQueryStringWithPropertyFilter(final PropertyFilter filter, String propertyName, StringBuilder queryBuilder) {
+		MatchType matchType = filter.getMatchType();
+		LikeMatchPatten likeMatchPatten = filter.getLikeMatchPatten();
+		Object propertyValue = filter.getPropertyValue();
+		
+		queryBuilder.append(propertyName);
+		if (MatchType.EQ.equals(matchType)) {
+			queryBuilder.append(" = ");
+		} else if (MatchType.LIKE.equals(matchType)) {
+			queryBuilder.append(" like ");
+			StringBuffer sbPatten = new StringBuffer();
+			if(LikeMatchPatten.ALL.equals(likeMatchPatten)) {
+				sbPatten.append("%").append(propertyValue).append("%");
+			} else if(LikeMatchPatten.P.equals(likeMatchPatten)) {
+				sbPatten.append("%").append(propertyValue);
+			} else if(LikeMatchPatten.S.equals(likeMatchPatten)) {
+				sbPatten.append(propertyValue).append("%");
+			}
+			propertyValue = sbPatten.toString();
+		} else if (MatchType.LE.equals(matchType)) {
+			queryBuilder.append(" <= ");
+		} else if (MatchType.LT.equals(matchType)) {
+			queryBuilder.append(" < ");
+		} else if (MatchType.GE.equals(matchType)) {
+			queryBuilder.append(" >= ");
+		} else if (MatchType.GT.equals(matchType)) {
+			queryBuilder.append(" > ");
+		}
+		
+		if(PropertyType.S.getValue().equals(filter.getPropertyType())) {
+			queryBuilder.append("'");
+			queryBuilder.append(propertyValue);
+			queryBuilder.append("'");
+		} else {
+			queryBuilder.append(propertyValue);
+		}
+	}
+	
 	// JpaPersistenceImpl logger
 	private static final transient Logger logger = LoggerFactory.getLogger(JpaPersistenceImpl.class);
 

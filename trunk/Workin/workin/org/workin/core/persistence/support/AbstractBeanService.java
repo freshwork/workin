@@ -102,6 +102,12 @@ public abstract class AbstractBeanService<T, PK extends Serializable> implements
 		return this.persistenceService.findByCriteriaQuery(targetClass, filters);
 	}
 	
+	@Override
+	@Profiled
+	public PaginationSupport<T> findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
+			final List<PropertyFilter> filters, final int start, final int maxRows) {
+		return this.persistenceService.findPaginationSupportByCriteriaQuery(targetClass, filters, start, maxRows);
+	}
 	
 	@Override
 	@Profiled

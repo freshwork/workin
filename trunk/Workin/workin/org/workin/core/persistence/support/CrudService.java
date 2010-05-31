@@ -129,6 +129,18 @@ public interface CrudService<T, PK extends Serializable> {
 	 * 
 	 * @param targetClass
 	 * @param filters
+	 * @param start
+	 * @param maxRows
+	 * @return
+	 * 
+	 */
+	public PaginationSupport<T> findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
+			final List<PropertyFilter> filters, final int start, final int maxRows);
+	
+	/**
+	 * 
+	 * @param targetClass
+	 * @param filters
 	 * @param isDistinct
 	 * @return
 	 * 

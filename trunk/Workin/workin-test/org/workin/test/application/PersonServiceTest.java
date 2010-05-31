@@ -67,12 +67,12 @@ public class PersonServiceTest extends SpringTxTestCase {
 		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
 		PropertyFilter filter_name = new PropertyFilter("EQS_name_OR_sex", NEW_USER_NAME);
 		filters.add(filter_name);
-//		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
-//		filters.add(filter_sex);
+		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
+		filters.add(filter_sex);
 		PropertyFilter filter_version = new PropertyFilter("GEL_version", "0");
 		filters.add(filter_version);
 
-		List<Person> personList = personService.findByCriteriaQuery(filters);
+		List<Person> personList = personService.findByCriteriaQuery(Person.class, filters);
 		assertTrue(personList.size() == 1);
 
 		for (Person person : personList) {
@@ -80,7 +80,27 @@ public class PersonServiceTest extends SpringTxTestCase {
 			assertEquals(NEW_USER_SEX, person.getSex());
 		}
 	}
+	
+	@Test
+	public void findPaginationSupportByCriteriaQuery() {
+		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
+		PropertyFilter filter_name = new PropertyFilter("EQS_name_OR_sex", NEW_USER_NAME);
+		filters.add(filter_name);
+		PropertyFilter filter_sex = new PropertyFilter("LIKES_sex", "male");
+		filters.add(filter_sex);
+		PropertyFilter filter_version = new PropertyFilter("GEL_version", "0");
+		filters.add(filter_version);
 
+		PaginationSupport<Person> ps = personService.findPaginationSupportByCriteriaQuery(Person.class, filters, 0, 5);
+		assertTrue(ps.getResult().size() == 1);
+		
+		for (Person person : ps.getResult()) {
+			assertEquals(NEW_USER_NAME, person.getName());
+			assertEquals(NEW_USER_SEX, person.getSex());
+		}
+	}
+	
+	
 	// test for get all person successful
 	@Test
 	public void getAllPerson() {

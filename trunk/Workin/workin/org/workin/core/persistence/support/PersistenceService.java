@@ -1000,6 +1000,24 @@ public interface PersistenceService<T, PK extends Serializable> {
 	
 	/**
 	 * 
+	 * Execute a SELECT query and return the count.
+	 * 
+	 * Note:
+	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 
+	 * @param entityClass
+	 * @param filters
+	 * 
+	 * @return int
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
+	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
+	 * 
+	 */
+	public int countByPropertyFilter(final Class<T> targetClass, final List<PropertyFilter> filters);
+	
+	/**
+	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
@@ -1552,6 +1570,19 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
+	
+	/**
+	 * 
+	 * Use JPA2.0 Criteria(BETA, Not recommended).
+	 * Find all results by CriteriaQuery and PropertyFilter.
+	 * 
+	 * @param targetClass
+	 * @param filters
+	 * @return
+	 * 
+	 */
+	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
+			final List<PropertyFilter> filters, final int start, final int maxRows);
 	
 	/**
 	 * Use JPA2.0 Criteria(BETA, Not recommended).

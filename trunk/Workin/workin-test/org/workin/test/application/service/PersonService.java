@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.workin.core.persistence.support.CrudService;
 import org.workin.core.persistence.support.PaginationSupport;
-import org.workin.core.persistence.support.PropertyFilter;
 import org.workin.test.application.entity.Person;
 
 /**
@@ -32,8 +31,6 @@ public interface PersonService extends CrudService {
 	public int persistByNativeQuery(final String queryString);
 	
 	public int persistByNativeQuery(final String queryString, final Object... values);
-	
-	public List<Person> findByCriteriaQuery(List<PropertyFilter> filters);
 	
 	public List find(final String queryString, final Object... values);
 	
