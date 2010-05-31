@@ -351,7 +351,12 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	public int countByQueryString(String queryString, Object... values) {
 		return this.jpaPersistence.countByQueryString(queryString, values);
 	}
-
+	
+	@Override
+	public int countByPropertyFilter(final Class<T> targetClass, final List<PropertyFilter> filters) {
+		return this.jpaPersistence.countByPropertyFilter(targetClass, filters);
+	}
+	
 	@Override
 	public List find(String queryString) {
 		return this.jpaPersistence.find(queryString);
@@ -385,6 +390,12 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	@Override
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.jpaPersistence.findByCriteriaQuery(targetClass, filters);
+	}
+	
+	@Override
+	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
+			final List<PropertyFilter> filters, final int start, final int maxRows) {
+		return this.jpaPersistence.findPaginationSupportByCriteriaQuery(targetClass, filters, start, maxRows);
 	}
 	
 	@Override

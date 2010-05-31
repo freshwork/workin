@@ -181,49 +181,38 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	
 	/**
 	 * 
-	 * Get Start Index.
+	 * Get start index for request's parameter('pageNo').
 	 * 
-	 * @param page
 	 * @return
 	 * 
 	 */
-	@Deprecated
-	public int getStartIndex(String displayTableId) {
-		String pageIndexName = new ParamEncoder(displayTableId).encodeParameterName(TableTagParameters.PARAMETER_PAGE);
-		int currentPageNo = StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : (Integer.parseInt(getParameter(pageIndexName)) - 1);
-		return currentPageNo * this.getPageSize();
+	public int getStartIndex() {
+		return getStartIndexWithPageNo(getPageNoWithParameterKey(WebConstants.PAGE_NUMBER));
 	}
 	
 	/**
 	 * 
-	 * Get page number.
+	 * Get start index for request's parameter('parameterKey').
 	 * 
-	 * @param usingKey
-	 * 			1) Display table Id.	
-	 * 		or	  
-	 * 			2) Parameter WebConstants.PAGE_NUMBER's value.
-	 *        
+	 * @param parameterKey
+	 * @return
+	 * 
+	 * 
+	 */
+	public int getStartIndexWithKey(final String parameterKey) {
+		return getStartIndexWithPageNo(getPageNoWithParameterKey(parameterKey));
+	}
+	
+	/**
+	 * 
+	 * Get start index for display tag.
+	 * 
+	 * @param displayTagId
 	 * @return
 	 * 
 	 */
-	public int getPageNo(String usingKey) {
-		int pageNumber = 0;
-		
-		if(WebConstants.PAGE_NUMBER.equals(usingKey)) {
-			String parameterPageNumber = this.getParameter(WebConstants.PAGE_NUMBER);
-			if(parameterPageNumber != null){
-				try {
-					pageNumber = Integer.parseInt(this.getParameter(WebConstants.PAGE_NUMBER));	
-				} catch (Exception ex) {
-					ThrowableHandler.handle("Paramber PageNo invalid!", ex, logger);
-				}
-			}
-		} else {
-			String pageIndexName = new ParamEncoder(usingKey).encodeParameterName(TableTagParameters.PARAMETER_PAGE);
-			pageNumber = StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : (Integer.parseInt(getParameter(pageIndexName)) - 1);
-		}
-		
-		return pageNumber;
+	public int getStartIndexWithId(final String displayTagId) {
+		return getStartIndexWithPageNo(getPageNoWithDisplayTagId(displayTagId));
 	}
 	
 	/**
@@ -235,6 +224,50 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 */
 	public void setPageResultSizeAttribute(int totalCount) {
 		this.setAttribute(WebConstants.PAGE_RESULT_SIZE, totalCount);
+	}
+	
+	/**
+	 * 
+	 * Calculate Start Index With Page number.
+	 * 
+	 * @param pageNo
+	 * @return
+	 * 
+	 */
+	private int getStartIndexWithPageNo(int pageNo) {
+		return (pageNo > 0)? (pageNo-1) * this.getPageSize() : 0;
+	}
+	
+	/**
+	 * 
+	 * @param parameterKey
+	 * @return
+	 * 
+	 */
+	private int getPageNoWithParameterKey(final String parameterKey) {
+		int pageNumber = 0;
+		String parameterPageNumber = this.getParameter(parameterKey);
+		
+		if(parameterPageNumber != null){
+			try {
+				pageNumber = Integer.parseInt(parameterPageNumber);	
+			} catch (Exception ex) {
+				ThrowableHandler.handle("Paramber PageNo invalid!", ex, logger);
+			}
+		}
+		
+		return pageNumber;
+	}
+	
+	/**
+	 * 
+	 * @param displayTagId
+	 * @return
+	 * 
+	 */
+	private int getPageNoWithDisplayTagId(final String displayTagId) {
+		String pageIndexName = new ParamEncoder(displayTagId).encodeParameterName(TableTagParameters.PARAMETER_PAGE);
+		return StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : Integer.parseInt(getParameter(pageIndexName));
 	}
 	
 	// for all sub action

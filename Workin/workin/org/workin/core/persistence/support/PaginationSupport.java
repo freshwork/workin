@@ -30,22 +30,6 @@ public class PaginationSupport<T> implements Serializable {
 	private List<T> result = Lists.newArrayList();
 
 	// For search filter.
-	
-	public PaginationSupport() {
-		setPageSize(PAGESIZE);
-		setStartIndex(0);
-	}
-	
-	public PaginationSupport(final int pageNumber) {
-		setPageSize(pageSize);
-		setStartIndex((pageNumber - 1) * PAGESIZE);
-	}
-	
-	public PaginationSupport(final int pageNumber, final int pageSize) {
-		setPageSize(pageSize);
-		setStartIndex((pageNumber - 1) * pageSize);
-	}
-	
 	public PaginationSupport(final List<T> result, int totalCount) {
 		setPageSize(PAGESIZE);
 		setTotalCount(totalCount);
