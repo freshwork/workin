@@ -72,8 +72,11 @@ public interface WebConstants {
 	// Define parameter client response cache exprires sencond.
 	public static final String PARAM_EXPIRES_SECOND = "expiresSeconds";
 	
-	// Define page number.
-	public static final String PAGE_NUMBER = "pageNo";
+	// Define default request parameter - page number.
+	public static final String RES_PARAM_PAGE_NUMBER = "pageNo";
+	// Define default display table - id.
+	public static final String DISPLAYTABLE_ID = "displayId";
+	
 	// Define pagination key
 	public static final String PAGE_RESULT_SIZE = "resultSize";
 }
