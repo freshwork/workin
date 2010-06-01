@@ -13,13 +13,11 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaCallback;
@@ -28,12 +26,9 @@ import org.springframework.stereotype.Repository;
 import org.workin.core.constant.Constants;
 import org.workin.core.persistence.support.PaginationSupport;
 import org.workin.core.persistence.support.PropertyFilter;
-import org.workin.core.persistence.support.PropertyFilter.LikeMatchPatten;
-import org.workin.core.persistence.support.PropertyFilter.MatchType;
-import org.workin.core.persistence.support.PropertyFilter.PropertyType;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
-import org.workin.util.ReflectionUtils;
+import org.workin.util.PersistenceUtils;
 
 /**
  * 
@@ -567,7 +562,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query query = em.createQuery(buildQueryString(false, entityClass, propertyName));
+				Query query = em.createQuery(PersistenceUtils.buildQueryString(false, entityClass, propertyName));
 
 				query.setParameter(1, value);
 
@@ -599,7 +594,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query query = em.createQuery(buildQueryStringWithNamedParams(false, entityClass, params));
+				Query query = em.createQuery(PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params));
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
@@ -1082,7 +1077,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value) {
-		return (List<T>) getJpaTemplate().find(buildQueryString(false, entityClass, propertyName), value);
+		return (List<T>) getJpaTemplate().find(PersistenceUtils.buildQueryString(false, entityClass, propertyName), value);
 	}
 
 	/**
@@ -1114,7 +1109,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				String queryString = buildQueryString(false, entityClass, propertyName).toString();
+				String queryString = PersistenceUtils.buildQueryString(false, entityClass, propertyName).toString();
 				Query query = em.createQuery(queryString);
 
 				query.setParameter(1, value);
@@ -1193,7 +1188,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query query = em.createQuery(buildQueryStringWithNamedParams(false, entityClass, params));
+				Query query = em.createQuery(PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params));
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
@@ -1233,7 +1228,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				String queryString = buildQueryStringWithNamedParams(false, entityClass, params).toString();
+				String queryString = PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params).toString();
 				Query query = em.createQuery(queryString);
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
@@ -1309,7 +1304,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public List<T> getAll(final Class<T> entityClass) {
-		return this.getJpaTemplate().find(buildQueryString(false, entityClass).toString());
+		return this.getJpaTemplate().find(PersistenceUtils.buildQueryString(false, entityClass).toString());
 	}
 
 	/**
@@ -1358,7 +1353,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 
-				String queryString = buildQueryString(true, entityClass, propertyName);
+				String queryString = PersistenceUtils.buildQueryString(true, entityClass, propertyName);
 
 				Query query = em.createQuery(queryString);
 				query.setParameter(1, value);
@@ -1390,7 +1385,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				String queryString = buildQueryStringWithNamedParams(true, entityClass, params);
+				String queryString = PersistenceUtils.buildQueryStringWithNamedParams(true, entityClass, params);
 				Query query = em.createQuery(queryString);
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
@@ -1487,7 +1482,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				String countOfQuery = buildQueryStringWithPropertyFilters(true, targetClass, filters);
+				String countOfQuery = PersistenceUtils.buildQueryStringWithPropertyFilters(true, targetClass, filters);
 				Query query = em.createQuery(countOfQuery);
 				return Integer.valueOf(String.valueOf(query.getSingleResult()));
 			}
@@ -2117,6 +2112,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		return this.findByCriteriaQuery(targetClass, filters, false);
 	}
 	
+	
 	@Override
 	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
 			final List<PropertyFilter> filters, final int start, final int maxRows) {
@@ -2131,7 +2127,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 				criteriaQuery.select(entity);
 
-				Predicate predicates[] = buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
+				Predicate predicates[] = PersistenceUtils.buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
 						entity, entityType, true, filters);
 				
 				if(!ArrayUtils.isEmpty(predicates)) {
@@ -2183,7 +2179,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				criteriaQuery.select(entity);
 				criteriaQuery.distinct(isDistinct);
 
-				Predicate predicates[] = buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
+				Predicate predicates[] = PersistenceUtils.buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
 						entity, entityType, isDistinct, filters);
 				
 				if(!ArrayUtils.isEmpty(predicates)) {
@@ -2196,270 +2192,6 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				return (List<T>) finalCriteriaQuery.getResultList();
 			}
 		});
-	}
-	
-	/**
-	 * ===Private================================================= 
-	 * Some private method for: -support public method
-	 * ================================================================
-	 */
-
-	/**
-	 * 
-	 * @param targetClass
-	 * @param criteriaBuilder
-	 * @param criteriaQuery
-	 * @param entity
-	 * @param entityType
-	 * @param isDistinct
-	 * @param filters
-	 * @return
-	 * 
-	 */
-	private Predicate[] buildPropertyFilterPredicates(final Class<T> targetClass,
-			final CriteriaBuilder criteriaBuilder, final CriteriaQuery<T> criteriaQuery, final Root<T> entity,
-			EntityType<T> entityType, final boolean isDistinct, final List<PropertyFilter> filters) {
-
-		List<Predicate> predicateList = new ArrayList<Predicate>();
-		
-		for (PropertyFilter filter : filters) {
-			if (!filter.isMultiProperty()) { 
-				Predicate predicate = buildPropertyFilterPredicate(targetClass, criteriaBuilder, criteriaQuery, entity,
-						entityType, isDistinct, filter.getPropertyName(), filter.getPropertyValue(), filter.getMatchType(), filter.getLikeMatchPatten());
-				predicateList.add(criteriaBuilder.and(predicate));
-			} else {
-				List<Predicate> multiPropertiesPredicateList = new ArrayList<Predicate>();
-				for (String param : filter.getPropertyNames()) {
-					Predicate predicate = buildPropertyFilterPredicate(targetClass, criteriaBuilder, criteriaQuery, entity,
-							entityType, isDistinct, param, filter.getPropertyValue(), filter.getMatchType(), filter.getLikeMatchPatten());
-					multiPropertiesPredicateList.add(predicate);
-				}
-				predicateList.add(criteriaBuilder.or(multiPropertiesPredicateList.toArray(new Predicate[multiPropertiesPredicateList.size()])));
-			}
-		}
-
-		return predicateList.toArray(new Predicate[predicateList.size()]);
-	}
-
-	/**
-	 * 
-	 * @param targetClass
-	 * @param criteriaBuilder
-	 * @param criteriaQuery
-	 * @param entity
-	 * @param entityType
-	 * @param isDistinct
-	 * @param propertyName
-	 * @param propertyValue
-	 * @param matchType
-	 * @return
-	 * 
-	 */
-	private Predicate buildPropertyFilterPredicate(final Class<T> targetClass, final CriteriaBuilder criteriaBuilder,
-			final CriteriaQuery<T> criteriaQuery, final Root<T> entity, EntityType<T> entityType,
-			final boolean isDistinct, final String propertyName, final Object propertyValue, final MatchType matchType, 
-			final LikeMatchPatten likeMatchPatten) {
-
-		Assert.hasText(propertyName, "propertyName cannot be null!");
-		
-		Expression expression = (Expression) entity.get(entityType.getSingularAttribute(propertyName));
-	
-		Predicate predicate = null;
-		try {
-			if (MatchType.EQ.equals(matchType)) {
-				predicate = criteriaBuilder.equal(expression, propertyValue);
-			} else if (MatchType.LIKE.equals(matchType)) {
-				StringBuffer sbPatten = new StringBuffer();
-				if(LikeMatchPatten.ALL.equals(likeMatchPatten)) {
-					sbPatten.append("%").append(propertyValue).append("%");
-				} else if(LikeMatchPatten.P.equals(likeMatchPatten)) {
-					sbPatten.append("%").append(propertyValue);
-				} else if(LikeMatchPatten.S.equals(likeMatchPatten)) {
-					sbPatten.append(propertyValue).append("%");
-				}
-				predicate = criteriaBuilder.like(expression, sbPatten.toString());
-			} else if (MatchType.LE.equals(matchType)) {
-				predicate = criteriaBuilder.le(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
-			} else if (MatchType.LT.equals(matchType)) {
-				predicate = criteriaBuilder.lt(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
-			} else if (MatchType.GE.equals(matchType)) {
-				predicate = criteriaBuilder.ge(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
-			} else if (MatchType.GT.equals(matchType)) {
-				predicate = criteriaBuilder.gt(expression, NumberUtils.createNumber(String.valueOf(propertyValue)));
-			}
-		} catch (Exception e) {
-			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
-		}
-
-		return predicate;
-	}
-
-	/**
-	 * 
-	 * Build Query String by class only.
-	 * 
-	 * @param clazz
-	 * 
-	 * @return string
-	 * 
-	 */
-	private StringBuilder buildQueryString(final Class<?> clazz, final boolean isCount) {
-		StringBuilder queryBuilder = new StringBuilder();
-
-		if (isCount)
-			queryBuilder.append("SELECT COUNT(*) as totalCount FROM ");
-		else
-			queryBuilder.append("SELECT obj FROM ");
-
-		queryBuilder.append(clazz.getName());
-		queryBuilder.append(" obj");
-
-		return queryBuilder;
-	}
-
-	/**
-	 * 
-	 * Build Query String by class and values of parameters.
-	 * 
-	 * @param clazz
-	 * @param values
-	 * 
-	 * @return string
-	 * 
-	 */
-	private String buildQueryString(final boolean isCount, final Class<?> clazz, final String... values) {
-		StringBuilder queryBuilder = buildQueryString(clazz, isCount);
-
-		if (values != null && values.length > 0) {
-			queryBuilder.append(" where ");
-			for (String value : values) {
-				queryBuilder.append(value).append(" = ? and ");
-			}
-
-			if (queryBuilder.lastIndexOf(" and ") == (queryBuilder.length() - 5)) {
-				queryBuilder.delete(queryBuilder.length() - 5, queryBuilder.length());
-			}
-		}
-
-		return queryBuilder.toString();
-	}
-
-	/**
-	 * 
-	 * Build Query String by class and values of parameters.
-	 * 
-	 * @param clazz
-	 * @param params
-	 * 
-	 * @return string
-	 * 
-	 */
-	private String buildQueryStringWithNamedParams(final boolean isCount, final Class<?> clazz,
-			final Map<String, ?> params) {
-		StringBuilder queryBuilder = buildQueryString(clazz, isCount);
-
-		if (!CollectionUtils.isEmpty(params)) {
-			queryBuilder.append(" where ");
-
-			for (Map.Entry<String, ?> entry : params.entrySet()) {
-				queryBuilder.append(entry.getKey()).append(" = :").append(entry.getKey()).append(" and ");
-			}
-
-			if (queryBuilder.lastIndexOf(" and ") == (queryBuilder.length() - 5)) {
-				queryBuilder.delete(queryBuilder.length() - 5, queryBuilder.length());
-			}
-		}
-
-		logger.info(" Build Query String With NamedParams: {}", queryBuilder.toString());
-		return queryBuilder.toString();
-	}
-	
-	/**
-	 * 
-	 * Build Query String by class and propertyFilter.
-	 * 
-	 * @param targetClass
-	 * @param filters
-	 * @return
-	 * 
-	 */
-	private String buildQueryStringWithPropertyFilters(final boolean isCount, final Class<T> targetClass, final List<PropertyFilter> filters) {
-		
-		StringBuilder queryBuilder = buildQueryString(targetClass, isCount);
-		
-		if(!CollectionUtils.isEmpty(filters)) {
-			queryBuilder.append(" where ");
-			
-			for(PropertyFilter filter : filters) {
-				if(filter.isMultiProperty()) {
-					queryBuilder.append("(");
-					for(String propertyName : filter.getPropertyNames()) {
-						buildQueryStringWithPropertyFilter(filter, propertyName, queryBuilder);
-						queryBuilder.append(" or ");
-					}
-					if (queryBuilder.lastIndexOf(" or ") == (queryBuilder.length() - 4)) {
-						queryBuilder.delete(queryBuilder.length() - 4, queryBuilder.length());
-					}
-					queryBuilder.append(")");
-				} else {
-					buildQueryStringWithPropertyFilter(filter, filter.getPropertyName(), queryBuilder);
-				}
-				queryBuilder.append(" and ");
-			}
-			
-			if (queryBuilder.lastIndexOf(" and ") == (queryBuilder.length() - 5)) {
-				queryBuilder.delete(queryBuilder.length() - 5, queryBuilder.length());
-			}
-			
-			logger.info(" Build Query String With PropertyFilter: {}", queryBuilder.toString());
-		}
-		
-		return queryBuilder.toString();
-	}
-	
-	/**
-	 * 
-	 * @param filter
-	 * @param propertyName
-	 * @param queryBuilder
-	 * 
-	 */
-	private void buildQueryStringWithPropertyFilter(final PropertyFilter filter, String propertyName, StringBuilder queryBuilder) {
-		MatchType matchType = filter.getMatchType();
-		LikeMatchPatten likeMatchPatten = filter.getLikeMatchPatten();
-		Object propertyValue = filter.getPropertyValue();
-		
-		queryBuilder.append(propertyName);
-		if (MatchType.EQ.equals(matchType)) {
-			queryBuilder.append(" = ");
-		} else if (MatchType.LIKE.equals(matchType)) {
-			queryBuilder.append(" like ");
-			StringBuffer sbPatten = new StringBuffer();
-			if(LikeMatchPatten.ALL.equals(likeMatchPatten)) {
-				sbPatten.append("%").append(propertyValue).append("%");
-			} else if(LikeMatchPatten.P.equals(likeMatchPatten)) {
-				sbPatten.append("%").append(propertyValue);
-			} else if(LikeMatchPatten.S.equals(likeMatchPatten)) {
-				sbPatten.append(propertyValue).append("%");
-			}
-			propertyValue = sbPatten.toString();
-		} else if (MatchType.LE.equals(matchType)) {
-			queryBuilder.append(" <= ");
-		} else if (MatchType.LT.equals(matchType)) {
-			queryBuilder.append(" < ");
-		} else if (MatchType.GE.equals(matchType)) {
-			queryBuilder.append(" >= ");
-		} else if (MatchType.GT.equals(matchType)) {
-			queryBuilder.append(" > ");
-		}
-		
-		if(PropertyType.S.getValue().equals(filter.getPropertyType())) {
-			queryBuilder.append("'");
-			queryBuilder.append(propertyValue);
-			queryBuilder.append("'");
-		} else {
-			queryBuilder.append(propertyValue);
-		}
 	}
 	
 	// JpaPersistenceImpl logger
