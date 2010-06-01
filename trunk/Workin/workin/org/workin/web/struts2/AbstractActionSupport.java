@@ -181,37 +181,48 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	
 	/**
 	 * 
-	 * Get start index for request's parameter('pageNo').
+	 * Get start index, Using request's parameter('pageNo').
 	 * 
 	 * @return
 	 * 
 	 */
-	public int getStartIndex() {
-		return getStartIndexWithPageNo(getPageNoWithParameterKey(WebConstants.PAGE_NUMBER));
+	public int getStartIndexUsingKey() {
+		return getStartIndexWithPageNo(getPageNoWithParameterKey(WebConstants.RES_PARAM_PAGE_NUMBER));
 	}
 	
 	/**
 	 * 
-	 * Get start index for request's parameter('parameterKey').
+	 * Get start index, Using request's parameter('parameterKey').
 	 * 
 	 * @param parameterKey
 	 * @return
 	 * 
 	 * 
 	 */
-	public int getStartIndexWithKey(final String parameterKey) {
+	public int getStartIndexUsingKey(final String parameterKey) {
 		return getStartIndexWithPageNo(getPageNoWithParameterKey(parameterKey));
 	}
 	
 	/**
 	 * 
-	 * Get start index for display tag.
+	 * Get start index, Using default displaytag Id.
+	 * 
+	 * @return
+	 * 
+	 */
+	public int getStartIndexUsingId() {
+		return getStartIndexWithPageNo(getPageNoWithDisplayTagId(WebConstants.DISPLAYTABLE_ID));
+	}
+	
+	/**
+	 * 
+	 * Get start index, Using displaytag Id.
 	 * 
 	 * @param displayTagId
 	 * @return
 	 * 
 	 */
-	public int getStartIndexWithId(final String displayTagId) {
+	public int getStartIndexUsingId(final String displayTagId) {
 		return getStartIndexWithPageNo(getPageNoWithDisplayTagId(displayTagId));
 	}
 	
