@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+
+  <link rel="StyleSheet" href="style/irongridStyle.css" type="text/css" media="screen">
+
+  <title>Getting Started with the @PRODNAE@ User Interface</title>
+
+</head>
+
+<body  background="images/backgrnd.gif">
+
+<!-- Begin Header -->
+
+<table width="165" border="0" align="right" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23"
+    border="0" alt="TOC"> </a></td>
+    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
+    border="0" alt="PREV"> </a></td>
+    <!--td><a href="????.html"><img src="images/navnext.gif" width="81" height="23"
+    border="0" alt="NEXT"> </a></td>
+    <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23"
+    border="0" alt="INDEX"> </a></td-->
+  </tr>
+</table>
+
+<p><img src="images/IronGridlogo.gif"> </p>
+<hr align="left">
+
+<!-- End Header -->
+
+<!-- Begin Content -->
+
+<a name="getting_started"></a>
+
+<h1>Getting Started with the IronTrack SQL User Interface</h1>
+
+<p>After you have installed and configured IronTrack SQL, you can begin using the graphical user interface to manage the performance of the SQL statements in your development environment. This document is intended to give you a general understanding of the basic features of the IronTrack SQL user interface.</p>
+
+<p>From this document, you can access the following information:</p>
+
+<ul>
+        <li><a href="getting_started.html#getting_started_start_UI">Starting the IronTrack SQL User Interface</a></li>
+        <li><a href="getting_started.html#getting_started_menu_area">Using the Menu Area</a></li>
+        <li><a href="getting_started.html#getting_started_command_area">Using the Command Area</a></li>
+        <li><a href="getting_started.html#getting_started_work_area">Using the Work Area</a></li>
+        <li><a href="getting_started.html#getting_started_status_area">Using the Status Area</a></li>
+        <li><a href="getting_started.html#getting_started_connecting">Connecting to the IronTrack SQL Server</a></li>
+        <li><a href="getting_started.html#getting_started_disconnecting">Disconnecting from the IronTrack SQL Server</a></li>
+        <li><a href="getting_started.html#getting_started_exporting">Exporting Datasets</a></li>
+        <li><a href="getting_started.html#getting_started_importing">Importing a Dataset</a></li>
+        <li><a href="getting_started.html#getting_started_purging_data">Purging Data </a></li>
+        <li><a href="getting_started.html#getting_started_embedding">Testing Performance during Application Development</a></li>
+</ul>
+
+<a name="getting_started_start_UI"></a>
+
+<h2>Starting the IronTrack SQL User Interface</h2>
+
+<p>If the IronTrack SQL client is not currently running, you can start it now by double-clicking on the IronTrack SQL shortcut to display the IronTrack SQL user interface.</p>
+
+<p><img src="images/clientViewText.jpg" alt="" border="0"></p>
+
+<p>IronTrack SQL starts and attempts to connect to your server. You can launch IronTrack SQL, while the server is not running, but you cannot load data into the application until you start the server.</p>
+
+<p>The IronTrack SQL user interface displays the following areas:</p>
+
+<ul>
+  <li>Menu area &mdash; Contains the menu options for performing IronTrack SQL operations.</li>
+  <li>Command area &mdash; Contains command buttons for quickly accessing many of the commonly used IronTrack SQL operations.</li>
+  <li>Work area &mdash; Displays the status of the SQL statements your application generates.</li>
+  <li>Status area &mdash; Displays the status of the last IronTrack SQL you executed.</li>
+</ul>
+
+<a name="getting_started_menu_area"></a>
+
+<h2>Using the Menu Area</h2>
+
+<p>The menu area includes all of the operations that can be performed in the IronTrack SQL user interface. Which menu options appear is determined by whether you are using IronEye&trade; SQL or IronTrack SQL&trade;.</p>
+
+<a name="getting_started_command_area"></a>
+
+<h2>Using the Command Area</h2>
+
+<p>The command area of the IronTrack SQL user interface includes the following command buttons:</p>
+
+<ul>
+  <li><b>Connect</b> &mdash; Connects the user interface to the application server you specified during installation.</li>
+  <li><b>Disconnect</b> &mdash; Disconnects the user interface from your application server.</li>
+  <li><b>Config</b> &mdash; Displays the <b>Configuration</b> dialog, which provides a way for you to change the following values:
+  <ul>
+    <li><b>Host Name</b> &mdash; Name of the application server.</li>
+    <li><b>Port</b> &mdash; Port number on which IronTrack SQL listens. (Must be the same as the value defined in the <b>monitorport</b> property defined in the <b>spy.properties</b> file.</li>
+    <li><b>Refresh Interval</b> &mdash; Refresh rate in milliseconds.</li>
+  </ul></li>
+  <li><b>Purge</b> &mdash; Deletes all SQL statements in the user interface and from the IronTrack SQL server.</li>
+  <li><b>Import</b> &mdash; Displays a dialog that provides a way for you to specify a a file name from which to import the dataset.</li>
+  <li><b>Export</b> &mdash; Displays the <b>Export Dataset</b> dialog, which provides a way for you to specify a dataset to export and a file name to which to export the dataset.</li>
+  <li><b>About</b> &mdash; Displays the <b>About IronTrack SQL</b> dialog, which lists the copyrights associated with IronTrack SQL.</li>
+  <!--p class="comment">6-27 Should there be an Import button?</p-->
+</ul>
+
+<a name="getting_started_work_area"></a>
+
+<h2>Using the Work Area</h2>
+
+<p>If you are using IronTrack SQL, you will see two tabs in the work area representing the following work areas:</p>
+
+<ul>
+  <li><b>SQL Monitoring</b></li>
+  <li><b>Graphing</b></li>
+</ul>
+
+<p>You can double-click on an SQL statement in either tab to take you to the location of same statement in the other tab.</p>
+
+<p>If you are using IronEye SQL, you will see only the Monitoring section.</p>
+
+<p>From the work area, you can view the performance of your SQL statements, make adjustments to them, and compare the differences between datasets.</p>
+
+<a name="getting_started_status_area"></a>
+
+<h2>Using the Status Area</h2> 
+
+<p>The status area displays the status of the last operation performed in the lower left-hand corner of the interface. The status area displays the current connection status in the lower right-hand corner of the interface. The drop-down menu in the status area provides a way for you to select among the available datasets to show in the interface. (Default is <b>current live data</b>.) If you have imported multiple datasets, use the down arrow to select which among datasets to display in the work area.</p>
+
+<a name="getting_started_connecting"></a>
+
+<h2>Connecting to the IronTrack SQL Server</h2>
+
+<p>If you have started the application server with which IronTrack SQL is configured, the IronTrack SQL user interface automatically connects, when it starts up.</p>
+
+<p>If you have not yet started the application server, to connect IronTrack SQL</p>
+
+<ol>
+  <li>Start the application server.</li>
+  <li>From the IronTrack SQL user interface, click on the <b>Connect</b> button.</li>
+</ol>
+
+<p>The status area in the lower left-hand corner of the user interface indicates that you are connected to the server.</p>
+
+<!--p>To change the server to which you will connect, click <b>Connect</b> from the menu bar.</p>
+
+<p class="comment">6-27 The previous doesn't work the way the doc says. Is there a way to do this? Or should I just delete the sentence?</p-->
+
+<a name="getting_started_disconnecting"></a>
+
+<h2>Disconnecting from the Server</h2>
+
+<p>To disconnect from your server, click <b>Disconnect</b> in the command area. </p>
+
+<p>The connection status displays in the status bar.</p>
+
+<a name="getting_started_exporting"></a>
+
+<h2>Exporting Datasets</h2>
+
+<p>IronTrack SQL enables you to easily export datasets that you have collected to an HTML, a CSV, or an XML file. Exporting datasets enables you to take a snapshot of a particular session of data, or allows you to view data in your browser or in spreadsheet form.</p>
+
+<p>To export the current data displayed in the IronTrack SQL user interface</p>
+
+<ol>
+  <li>Click on the <b>Export</b> button to display the <b>Export Dataset</b> dialog.
+  <p><img src="images/export.jpg" alt="" border="0"></p></li>
+  <li>In the <b>Dataset version</b> field, enter a tag string that identifies the dataset.
+  <li>In the <b>Export file</b> field, select a file or create a new file in which to save the data.</li>
+</ol>
+
+<p>The details of the export operation display in the status bar at the base of the IronTrack SQL interface.</p>
+
+<p><b>Note</b>: The export operation ignores any filtering you have performed and save the entire dataset.</p>
+
+<a name="getting_started_importing"></a>
+
+<h2>Importing a Dataset</h2>
+
+<p>After you have exported datasets to individual files, you can import them into the user interface and view their contents.</p>
+
+<p>To import an existing dataset from a file</p>
+
+<ol>
+  <li>Click on the <b>Import</b> button to display the <b>Open</b> dialog.</li>
+  <li>Navigate to the directory in which the file to import resides.</li>
+  <li>In the <b>Files of Type</b> field, use the down arrow to select the type of file to import. (Can be CSV, HTML, or XML.)</li>
+  <li>Click on the file to add it to the <b>File Name</b> field.</li>
+  <li>Click on the <b>Open</b> button to import the file and return to the user interface.</li>
+</ol>
+
+<p><b>Note</b>: You can select the dataset to view by using the down arrow in the status area.</p>
+
+<a name="getting_started_purging_data"></a>
+
+<h2>Purging Data</h2>
+
+<p>You can periodically purge data from IronTrack SQL. For example, you may want to clear out all of the SQL statements on both the interface and server, so you can begin evaluating another set of SQL statements. You could first purge existing data, then trigger your application to generate some database activity. Purging data deletes the contents of the <b>spy.log</b> file. Triggering SQL statement begins adding data back to the <b>spy.log</b> file.</p>
+
+<p>To purge data from the client and server, complete the following steps:</p>
+
+<ol>
+  <li>Click <b>Purge</b>.</li>
+  <li>Click <b>Yes</b> in the <b>Confirm</b> window.</li>
+</ol>
+
+<p>The status of the purge operation displays in the status bar in the lower left-hand corner of the user interface.</p>
+
+<a name="getting_started_embedding"></a>
+
+<h2>Testing Performance during Application Development</h2>
+
+<p>After you have become familiar with the IronTrack SQL user interface, you can begin testing application performance on an incremental basis.</p>
+
+<p>To begin testing the performance of your SQL statements</p>
+
+<ol>
+  <li>Ensure that your application is running on the application server.</li>
+  <li>Ensure that IronTrack SQL is running and connected to the application.</li>
+  <li>Exercise the parts of the application that make SQL queries.</li>
+</ol>
+
+<p>Results of the queries will begin to appear in the IronTrack SQL user interface. At this point, you can begin monitoring and managing your queries with IronTrack SQL.</p>
+
+<!-- End Content -->
+
+<!-- Begin Footer -->
+
+<hr>
+
+
+
+<table width="165" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23" border="0"
+    alt="TOC"> </a></td>
+    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
+    border="0" alt="PREV"> </a></td>
+    <!--td><a href="????.html"><img src="images/navnext.gif" width="81" height="23" border="0"
+    alt="NEXT"> </a></td>
+    <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23" border="0"
+    alt="INDEX"> </a></td-->
+  </tr>
+</table>
+
+<!-- End Footer -->
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

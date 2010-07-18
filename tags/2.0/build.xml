@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+
+<!--  @author <a href="mailto:goingmm@gmail.com">G.Lee</a> -->
+
+<project name="Workin" default="executer" basedir=".">
+	<property file="build.properties"/>
+	
+	<!-- Define global path rule with pattern -->
+	<patternset id="java.files.pattern" includes="**/*.java" />
+
+	<path id="classpath">
+		<pathelement location="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Init System build entironment -->
+	<target name="init">
+		<echo message="Begin init the project: ${project.name}" />
+		<tstamp />
+	</target>
+
+
+	<!-- compile for all work source codes -->
+	<target name="compile.work">
+		<javac verbose="on" listfiles="true" srcdir="${target.codes.workin}" excludes="*" classpathref="classpath" destdir="${build.dir}" />
+		<echo message="Project: ${project.name}, compiling... workin codes tasks done." />
+	</target>
+
+	<!-- compile for all test source codes -->
+	<target name="complie.test" depends="compile.work">
+		<javac verbose="on" listfiles="true" srcdir="${target.codes.test}" excludes="*" classpathref="classpath" destdir="${build.dir}" />
+		<echo message="Project: ${project.name}, compiling... test codes tasks done." />
+	</target>
+
+	<!-- compile for all source codes -->
+	<target name="complie" depends="compile.work, complie.test">
+		<echo message="Project: ${project.name}, compiling... all tasks done." />
+	</target>
+
+	<!-- test for... -->
+	<target name="test" depends="complie">
+		<echo message="Project: ${project.name}, testing... all case." />
+		<junit printsummary="yes" haltonerror="yes" haltonfailure="yes" fork="yes">
+			<formatter type="plain" usefile="flase" />
+			<formatter type="xml" />
+
+			<batchtest todir="${target.report.dir}">
+				<fileset dir="${target.codes.test}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+
+			<classpath refid="classpath" />
+		</junit>
+		<echo message="Project: ${project.name}, testing... all case done." />
+	</target>
+
+	<target name="test.report" depends="test">
+		<echo message="Project: ${project.name}, reporting all testcase results." />
+		<mkdir dir="${target.report.dir}/html" />
+		<junitreport todir="${target.report.dir}">
+			<fileset dir="${target.report.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report todir="${target.report.dir}/html" />
+		</junitreport>
+	</target>
+
+
+	<!-- for Jar workin commons -->
+	<target name="commonsJar" depends="complie">
+		<mkdir dir="${target.jars.dir}" />
+		<jar jarfile="${target.jars.dir}\org.workin.commons.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/util/**" />
+				<include name="org/workin/exception/**" />
+				<include name="org/workin/log/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.commons.${workin.version}.jar... OK!" />
+	</target>
+
+	<!-- for Jar workin core -->
+	<target name="coreJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.core.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/core/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.core.${workin.version}.jar OK!" />
+	</target>
+
+	<!-- for Jar workin mail -->
+	<target name="mailJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.mail.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/mail/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.mail.${workin.version}.jar OK!" />
+	</target>
+	
+	<!-- for Jar workin trace -->
+	<target name="traceJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.trace.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/trace/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.trace.${workin.version}.jar OK!" />
+	</target>
+	
+	<!-- for Jar workin jms -->
+	<target name="jmsJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.jms.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/jms/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.jms.${workin.version}.jar OK!" />
+	</target>
+	
+	
+	<!-- for Jar workin spring -->
+	<target name="springJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.spring.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/spring/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.spring.${workin.version}.jar OK!" />
+	</target>
+		
+	<!-- for Jar workin fortest -->
+	<target name="fortestJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.fortest.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/fortest/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.fortest.${workin.version}.jar OK!" />
+	</target>
+	
+	<!-- for Jar workin rss -->
+	<target name="rssJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.rss.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/rss/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.rss.${workin.version}.jar OK!" />
+	</target>
+
+	<!-- for Jar workin xml -->
+	<target name="xmlJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.xml.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/xml/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.xml.${workin.version}.jar OK!" />
+	</target>
+
+	<!-- for Jar workin web -->
+	<target name="webJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.web.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/web/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.web.${workin.version}.jar OK!" />
+	</target>
+
+	
+	<!-- for Jar workin ws -->
+	<target name="wsJar" depends="complie">
+		<jar jarfile="${target.jars.dir}\org.workin.ws.${workin.version}.jar">
+			<fileset dir="${build.dir}">
+				<include name="org/workin/ws/**" />
+			</fileset>
+		</jar>
+		<echo message="Project: ${project.name}, Jar org.workin.ws.${workin.version}.jar OK!" />
+	</target>
+	
+	<!-- for workin style check -->
+	<target name="checkstyle">
+		<property name="checkstyle.data.dir" location="${target.checkstyle.dir}" />
+		<property name="checkstyle.data.file" location="${checkstyle.data.dir}/checkstyle-report.xml" />
+		<property name="checkstyle.report.file" location="${checkstyle.data.dir}/checkstyle-report.html" />
+		<property name="checkstyle.xsl.file" location="${basedir}/tools/checkstyle/checkstyle-noframes.xsl" />
+
+		<mkdir dir="${checkstyle.data.dir}" />
+
+		<taskdef resource="checkstyletask.properties" classpath="${basedir}/tools/checkstyle/checkstyle-all-5.0.jar" />
+
+		<checkstyle config="${basedir}/tools/checkstyle/workin_checks.xml" failOnViolation="false" failureProperty="checkstyle.failure">
+
+			<fileset dir="workin">
+				<patternset refid="java.files.pattern" />
+			</fileset>
+			<!--fileset dir="workin-test">
+				<patternset refid="java.files.pattern" />
+			</fileset-->
+
+			<formatter type="xml" toFile="${checkstyle.data.file}" />
+		</checkstyle>
+
+		<xslt in="${checkstyle.data.file}" out="${checkstyle.report.file}" style="${checkstyle.xsl.file}" />
+		<echo>checkstyle tasks done.</echo>
+	</target>
+
+
+	<!-- For build java docs -->
+	<target name="javadoc">
+		<deltree dir="${target.javadoc.dir}" />
+		<mkdir dir="${target.javadoc.dir}" />
+		<javadoc destdir="${target.javadoc.dir}" 
+				windowtitle="Workin API Docs"
+				use="yes" 
+				linksource="no" 
+				splitindex="yes" >
+			
+            <classpath refid="classpath">  
+            </classpath> 
+                 	
+			<fileset dir="${basedir}\workin\org" defaultexcludes="yes">
+				<include name="**/*.java" />
+			</fileset> 
+		</javadoc>
+	</target>
+	
+	<target name="releaseJarsToDevTeam">
+		<copy todir="${target.jars.dir}\release" preservelastmodified="true">
+			<fileset dir="${target.jars.dir}\">
+				<include name="org.workin.commons.${workin.version}.jar" />
+				<include name="org.workin.core.${workin.version}.jar" />
+				<include name="org.workin.web.${workin.version}.jar" />
+				<include name="org.workin.mail.${workin.version}.jar" />
+				<include name="org.workin.trace.${workin.version}.jar" />
+				<include name="org.workin.jms.${workin.version}.jar" />
+				<include name="org.workin.spring.${workin.version}.jar" />
+				<include name="org.workin.ws.${workin.version}.jar" />
+				<include name="org.workin.fortest.${workin.version}.jar" />
+			</fileset>
+		</copy>
+		<echo message="Project: ${project.name}, copied release jars to Dev team release... OK!" />
+	</target>
+	
+	<!-- executer for all tasks -->
+	<target name="executer" depends="init, complie, test, commonsJar, coreJar, webJar, mailJar, jmsJar, jmsJar, springJar, fortestJar, rssJar, xmlJar, wsJar, releaseJarsToDevTeam">
+		<echo message="Project: ${project.name}, Executer all tasks done." />
+	</target>
+</project>

@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+
+  <link rel="StyleSheet" href="style/irongridStyle.css" type="text/css" media="screen">
+
+  <title></title>
+
+</head>
+
+<body  background="images/backgrnd.gif">
+
+<!-- Begin Header -->
+
+<table width="165" border="0" align="right" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23"
+    border="0" alt="TOC"> </a></td>
+    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
+    border="0" alt="PREV"> </a></td>
+    <!--td><a href="copyright.html"><img src="images/navnext.gif" width="81" height="23"
+    border="0" alt="NEXT"> </a></td>
+    <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23"
+    border="0" alt="INDEX"> </a></td-->
+  </tr>
+</table>
+
+<p><img src="images/IronGridlogo.gif"> </p>
+<hr align="left">
+
+<!-- End Header -->
+
+<!-- Begin Content -->
+
+<a name="troubleshooting"></a>
+
+<h1>Troubleshooting</h1>
+
+<p>If you encounter problems with your application, first refer to the troubleshooting suggestions in this chapter before contacting Customer Support.</p>
+
+<a name="troubleshooting_errors"></a>
+
+<h2>Errors</h2>
+
+<p>You may experience one of the following errors during installation or use of the application. </p>
+
+<a name="troubleshooting_errors_cant_start_app_server"></a>
+
+<h3>Unable to Successfully Start the Application Server</h3>
+
+<p>If the application server does not start properly, the <b>irontracksql.jar</b> or <b>spy.properties</b> are most likely not in the class path. If you are using JBoss, look at the JBoss log file for problem indications. For example, a message such as the following indicates the <b>irontracksql.jar</b> file is not found. </p>
+
+<p class="code">[JDBC provider] Initializing<br>
+[Service Control] Could not initialize DefaultDomain:service=JdbcProvider</p>
+
+<p>You may see that the driver is loaded, but a message appears indicating that the <b>spy.properties</b> file is not found and lists all of the directories searched. In this case, move the <b>spy.properties</b> file to one of the searched directories listed.</p>
+
+<a name="troubleshooting_errors_prop_file_not_found"></a>
+
+<h3>Properties File Not Found</h3>
+
+<p>You may receive an error message indicating that the <b>spy.properties</b> file cannot be found. Often, application servers have their own class path and disregard the standard Java class path. Be sure the <b>spy.properties</b> file is in the class path. </p>
+
+<p><b>Note</b>: The error message includes the class path that P6Spy is searching for the <b>spy.properties</b> file.</p>
+
+<a name="troubleshooting_errors_log_file_not_found"></a>
+
+<h3>Log File Not Found</h3>
+
+<p>If you receive an error indicating that the <b>spy.log</b> file is not written, search your entire drive for <b>spy.log</b>. You can specify the default location using the <b>spy.properties</b> file. Refer to the common property file settings as described in <a href="configure.html#configure">Advanced Configuration of IronTrack SQL</a>.</p>
+
+<a name="troubleshooting_errors_logging_disabled"></a>
+
+<h3>Logging Disabled</h3>
+
+<p>P6Spy has the ability to print debug statements that are helpful when determining why the driver is not working. However, you must enable the log file for these statements to appear. If the <b>spy.log</b> file is generated but nothing is logged, enable the debug statements.</p>
+
+<p>To enable the log file, follow these steps:</p>
+
+<ol>
+  <li>Open the <b>spy.options</b> file.</li>
+  <li>Remove the debug category and the info category from the <b>excludecategories</b> list. </li>
+  <li>Ensure your wrapped driver is registered correctly.</li>
+  <ol type="a">
+    <li>Set <b>useprefix=true</b> in your <b>spy.properties</b> file.</li>
+    <li>Include <b>p6spy:</b> as a prefix for your connection URL for the P6Spy driver in your application server configuration. P6SpyDriver will fail if this prefix is not present.</li>
+  </ol>
+  <li>Be sure you are connecting to the correct server and port. Refer to <a href="configure.html#configure">Advanced Configuration of IronTrack SQL</a> for instructions on setting or changing your configuration.</li>
+</ol>
+
+<a name="troubleshooting_errors_p6spy_invoked_illegally"></a>
+
+<h3>P6Spy Invoked Illegally</h3>
+
+<p>If P6Spy is illegally invoked, you likely specified an illegal P6Spy driver in your application configuration. Specify <b>com.p6spy.engine.spy.SpyDriver</b> as the driver to register in your application configuration. Specifying another class that extends P6SpyDriver is an illegal action.</p>
+
+<a name="troubleshooting_errors_bound_variables_dont_display"></a>
+
+<h3>Bound Variables Do Not Display</h3>
+
+<p>If the bound variables do not display values, add the following line to your <b>spy.properties</b> file and restart the server:</p>
+
+<p class="code">showboundvariables=true</p>
+
+<a name="troubleshooting_logfile"></a>
+
+<h2>Log File</h2>
+
+<p>If IronTrack SQL is unable to complete a function, it records the error in the <b>spy.log</b> file. </p>
+
+<p>To change the default name of the log file, refer to the configuration options in <a href="configure.html#configure">Advanced Configuration of IronTrack SQL</a>.</p>
+
+<p>Following is the log file format of <b>spy.log</b>:</p>
+
+<p class="code">current time|execution time|category|statement SQL String|effective SQL string</p>
+
+<p>The following table describes each of the properties in the log file:</p>
+
+<table cellspacing="2" cellpadding="2" border="1" frame="box">
+<tr>
+    <th valign="bottom">Property</th>
+    <th valign="bottom">Description</th>
+</tr>
+<tr>
+    <td valign="top">current time</td>
+    <td valign="top">The time at which the statement was entered in the log file. The current time is obtained through <b>System.getCurrentTimeMillis()</b> and represents the number of milliseconds that have passed since January 1, 1970 00:00:00.000 GMT. (Refer to the J2SE documentation for further details about <b>System.getCurrentTimeMillis()</b>.) You can change this to a different format using the <b>dateformat</b> property. Refer to the common property file settings as described in <a href="configure.html#configure">Advanced Configuration of IronTrack SQL</a>.</td>
+</tr>
+<tr>
+    <td valign="top">execution time</td>
+    <td valign="top">The time it takes for a particular method to execute. (This is not the total cost for the SQL statement.) For example, a statement <b>SELECT * FROM MYTABLE WHERE THISCOL = ?</b> might be executed as a prepared statement, in which the <b>.execute()</b> function will be measured. This is recorded as the statement category. Further, as you call <b>.next()</b> on the <b>ResultSet</b>, each <b>.next()</b> call is recorded in the result category.</td>
+</tr>
+<tr>
+    <td valign="top">category</td>
+    <td valign="top">You can manage your log by including and excluding categories. List of categories to include or exclude: <b>error</b>, <b>info</b>, <b>batch</b>, <b>debug</b>, <b>statement</b>, <b>commit</b>, <b>rollback</b>, and <b>result</b>. Refer to the common property file settings as described in <a href="configure.html#configure">Advanced Configuration of IronTrack SQL</a>.</td>
+</tr>
+<tr>
+    <td valign="top">statement SQL string</td>
+    <td valign="top">The SQL string passed to the statement object. If it is a prepared statement, it will be the prepared statement as it was prior to the parameters being set. To view the complete statement, refer to the effective SQL string property.</td>
+</tr>
+<tr>
+    <td valign="top">effective SQL string</td>
+    <td valign="top">If you are not using a prepared statement, this property contains no value. Otherwise, it includes the values of the prepared statement so you can see the effective SQL statement that is passed to the database. The database still sees the prepared statement, but this string provides a convenient way to view the actual values being sent to the database.</td>
+</tr>
+</table>
+
+<p>You can periodically clean up the log file for the best performance.</p>
+
+<a name="troubleshooting_contact_support"></a>
+
+<h2>Contacting Customer Support</h2>
+
+<p>If you have problems using our products, or would like to make a suggestion, you can contact IronGrid Customer Support in any of the following ways:</p>
+
+<table cellspacing="2" cellpadding="2" border="1" frame="box">
+<tr align="left">
+    <td valign="top">e-mail</td>
+    <td valign="top"><a href="mailto:support@irongrid.com">support@irongrid.com</a></td>
+</tr>
+<tr align="left">
+    <td valign="top">Internet</td>
+    <td valign="top"><a href="http://www.irongrid.com/catalog/support.php" target= "_new" >www.irongrid.com/catalog/support.php</a></td>
+</tr>
+<tr align="left">
+    <td valign="top">telephone</td>
+    <td valign="top">512-474-7400<br>866-314-4766</td>
+</tr>
+<tr align="left">
+    <td valign="top">fax</td>
+    <td valign="top">512-474-7409</td>
+</tr>
+<tr align="left">
+    <td valign="top">postal mail</td>
+    <td valign="top">IronGrid, Inc.<br>205 Brazos, Suite A<br>Austin, Texas 78701</td>
+</tr>
+</table>
+
+<!-- End Content -->
+
+<!-- Begin Footer -->
+
+<hr>
+
+
+
+<table width="165" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23" border="0"
+    alt="TOC"> </a></td>
+    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23" border="0"
+    alt="PREV"> </a></td>
+    <!--td><a href="copyright.html"><img src="images/navnext.gif" width="81" height="23" border="0"
+    alt="NEXT"> </a></td>
+    <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23" border="0"
+    alt="INDEX"> </a></td-->
+  </tr>
+</table>
+
+<!-- End Footer -->
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+
+</html>

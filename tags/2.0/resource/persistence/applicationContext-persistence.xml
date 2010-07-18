@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<!--bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close"
+		p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}" p:username="${jdbc.username}"
+		p:password="${jdbc.password}"/ -->
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+	
+	<!-- JPA EntityManagerFactory -->
+	<!--bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+			p:dataSource-ref="dataSource">
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" p:database="${jpa.database}" p:showSql="${jpa.showSql}" p:generateDdl="${jpa.generateDdl}"
+					p:databasePlatform="${jpa.databasePlatform}" />
+		</property>
+	</bean-->
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+       p:dataSource-ref="dataSource"
+       p:jpaVendorAdapter-ref="jpaAdapter">
+       <property name="loadTimeWeaver">
+          <bean
+             class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+       </property>
+       <property name="persistenceUnitName" value="Workin"/>
+    </bean>
+    
+	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" 
+		p:database="${jpa.database}" 
+		p:showSql="${jpa.showSql}" 
+		p:generateDdl="${jpa.generateDdl}"
+		p:databasePlatform="${jpa.databasePlatform}"/>
+					
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:ibatis/iBatisConfig.xml"/>
+	</bean>
+	
+	<bean id="sqlExecutor" class="org.workin.core.persistence.ibatis.plugin.LimitSqlExecutor"> 
+		<property name="dialect"> 
+			<bean class="org.workin.core.persistence.dialect.MySQLDialect" /> 
+		</property> 
+	</bean> 
+	
+	<bean id="jpaPersistence" class="org.workin.core.persistence.jpa.JpaPersistenceImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+    
+	<bean id="sqlMapPersistence" class="org.workin.core.persistence.ibatis.SqlMapPersistenceImpl">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+		<property name="sqlExecutor" ref="sqlExecutor"/>
+	</bean>
+	
+	
+	<bean id="persistenceService" class="org.workin.core.persistence.support.PersistenceServiceProvider">
+		<constructor-arg ref="jpaPersistence"></constructor-arg>
+		<constructor-arg ref="sqlMapPersistence"></constructor-arg>
+	</bean>
+    
+    <!-- 
+	    <aop:aspectj-autoproxy proxy-target-class="true"/>
+	    <bean id="timingAspect" class="org.perf4j.log4j.aop.TimingAspect" /> 
+     -->
+</beans>

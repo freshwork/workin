@@ -1,0 +1,166 @@
+<html>
+<head>
+
+	<link href="style/irongridStyle.css" rel="stylesheet" type="text/css">
+	
+
+<style>
+#headeritem {cursor:pointer; cursor:hand; font-size:12px; list-style-image:url(images/closedbook.gif)}
+#nestedlist {font-size:12px; list-style-image:url(images/topic.gif)}
+</style>
+
+<script language="JavaScript1.2">
+var ns6 = document.getElementById && !document.all;
+var ie4 = !ns6;
+if (ie4) document.write("<style>#nestedlist {margin-left:10px}</style>");
+else document.write("<style>#nestedlist {margin-left:-14px}</style>");
+document.onclick = checkcontained;
+
+function checkcontained(e)
+{
+var iscontained=0;
+curitem=ns6 ? e.target : event.srcElement;
+while ((ns6 && curitem.parentNode) || (ie4 && curitem.parentElement))
+  {
+  if (curitem.id=="headeritem" || curitem.id=="nestedlist")
+    {
+    iscontained=(curitem.id=="headeritem") ? 1 : 0;
+    break;
+    }
+  curitem=ns6 ? curitem.parentNode : curitem.parentElement;
+  }
+
+if (iscontained)
+  {
+  var itemcontent=ns6 ? curitem.nextSibling.nextSibling : curitem.all.tags("UL")[0];
+  if (itemcontent.style.display=="none")
+    {
+    itemcontent.style.display="";
+    curitem.style.listStyleImage="url(images/openbook.gif)";
+    }
+  else
+    {
+    itemcontent.style.display="none";
+    curitem.style.listStyleImage="url(images/closedbook.gif)";
+    }
+  }
+} //end of function
+
+</script>
+
+<base target="topics">
+
+</head>
+
+<body  background="images/backgrnd.gif">
+<p><a href="http://www.irongrid.com" target="_blank"><img src="images/IronGridlogo.gif" width="104" height="18" alt="" border="0"></a></p>
+
+<!-- Begin Content -->
+
+<p class="fineprint"><a href="contact.html">Contact Info</a></p>
+<ul>
+  <li id="headeritem">IronTrack SQL&#153; Online Help</li>
+  <ul id="nestedlist" style="display:''">
+    <!--li id="headeritem"><a href="toctrack.html">Table of Contents</a></li-->
+    <li id="headeritem"><a href="overview.html">Introducing IronTrack SQL</a></li>
+     <ul id="nestedlist" style="display:none">
+        <li><a href="overview.html#overview_analyzing">Analyzing and Optimizing Performance</a></li>
+        <li><a href="overview.html#overview_visibility">IronTrack SQL Approach</a></li>
+        <li><a href="overview.html#overview_benefits">IronTrack SQL Benefits</a></li>
+      </ul>
+    <li id="headeritem"><a href="install.html">Installing IronTrack SQL</a></li>
+     <ul id="nestedlist" style="display:none">
+        <li><a href="install.html#install_process">The Installation Process</a></li>
+        <li><a href="install.html#install_running">Initiating IronTrack SQL Installation</a></li>
+        <li><a href="install.html#install_start_client">Starting the IronTrack SQL Client</a></li>
+        <li><a href="install.html#install_preinstall">Pre-Installation for the IronTrack SQL Server Component</a></li>
+        <li><a href="install.html#install_unspecified">Installing IronTrack SQL on an Unspecified Application Server</a></li>
+        <li><a href="install.html#install_jboss2x">Installing IronTrack SQL on JBoss 2.x</a></li>
+        <li><a href="install.html#install_jboss3x">Installing IronTrack SQL on JBoss 3.x</a></li>
+        <li><a href="install.html#install_oracle9iAS">Installing IronTrack SQL on Oracle9iAS Container for J2EE</a></li>
+        <li><a href="install.html#install_tomcat">Installing IronTrack SQL on Jakarta Tomcat</a></li>
+        <li><a href="install.html#install_jonas_ejb">Installing IronTrack SQL on JOnAS EJB </a></li>
+        <li><a href="install.html#install_bea_portal40">Installing IronTrack SQL on BEA WebLogic Portal 4.0</a></li>
+        <li><a href="install.html#install_bea51">Installing IronTrack SQL on BEA WebLogic 5.1</a></li>
+        <li><a href="install.html#install_bea_server61">Installing IronTrack SQL on BEA WebLogic Server 6.1</a></li>
+        <li><a href="install.html#install_bea_server70">Installing IronTrack SQL on BEA WebLogic Server 7.0</a></li>
+        <li><a href="install.html#install_atg">Installing IronTrack SQL on ATG Dynamo</a></li>
+        <li><a href="install.html#install_sun">Installing IronTrack SQL on Sun iPlanet</a></li>
+        <li><a href="install.html#install_ibm">Installing IronTrack SQL on IBM WebSphere</a></li>
+        <li><a href="install.html#install_caucho">Installing IronTrack SQL on Caucho Resin</a></li>
+        <li><a href="install.html#install_uninstall">Uninstalling IronTrack SQL</a></li>
+        <li><a href="install.html#install_upgrade">Upgrading IronTrack SQL</a></li>
+        <li><a href="install.html#install_upgrade_appserver">Upgrading a Current IronTrack SQL Server Installation</a></li>
+      </ul>
+	  <li id="headeritem"><a href="getting_started.html">Getting Started with the IronTrack SQL User Interface</a></li>
+      <ul id="nestedlist" style="display:none">
+        <li><a href="getting_started.html#getting_started_start_UI">Starting the IronTrack SQL User Interface</a></li>
+        <li><a href="getting_started.html#getting_started_menu_area">Using the Menu Area</a></li>
+        <li><a href="getting_started.html#getting_started_command_area">Using the Command Area</a></li>
+        <li><a href="getting_started.html#getting_started_work_area">Using the Work Area</a></li>
+        <li><a href="getting_started.html#getting_started_status_area">Using the Status Area</a></li>
+        <li><a href="getting_started.html#getting_started_connecting">Connecting to the IronTrack SQL Server</a></li>
+        <li><a href="getting_started.html#getting_started_disconnecting">Disconnecting from the IronTrack SQL Server</a></li>
+        <li><a href="getting_started.html#getting_started_exporting">Exporting Datasets</a></li>
+        <li><a href="getting_started.html#getting_started_importing">Importing a Dataset</a></li>
+        <li><a href="getting_started.html#getting_started_purging_data">Purging Data </a></li>
+        <li><a href="getting_started.html#getting_started_embedding">Testing Performance during Application Development</a></li>
+      </ul>
+	  <li id="headeritem"><a href="manage.html">Using the SQL Monitoring Section</a></li>
+      <ul id="nestedlist" style="display:none">
+        <li><a href="manage.html#manage_interface">Interface Elements of the SQL Monitor Section</a></li>
+        <li><a href="manage.html#manage_filtering_data">Filtering the List of SQL Statements </a></li>
+        <li><a href="manage.html#manage_analyze">Analyzing SQL Statement Performance with the Monitoring Section </a></li>
+      </ul>
+	  <li id="headeritem"><a href="ibeam.html">Using the Graphing Section</a></li>
+      <ul id="nestedlist" style="display:none">
+        <li><a href="ibeam.html#graphing_interface">Interface Elements of the Graphing Section</a></li>
+        <li><a href="ibeam.html#graphing_datasets">Managing Datasets</a></li>
+        <li><a href="ibeam.html#graphing_manage">Analyzing SQL Performance with the Graphing Section</a></li>
+      </ul>
+    <li id="headeritem"><a href="ant_integration.html">Ant Integration</a></li>
+      <ul id="nestedlist" style="display:none">
+        <li><a href="ant_integration.html#ant_task">The Task Process</a></li>
+        <li><a href="ant_integration.html#ant_setup">Setting up Ant</a></li>
+        <li><a href="ant_integration.html#ant_igunit">The igunit Task</a></li>
+        <li><a href="ant_integration.html#ant_eye_module">The IronEye SQL Module</a></li>
+        <li><a href="ant_integration.html#ant_track_module">The IronTrack SQL Module</a></li>
+      </ul>
+    <li id="headeritem"><a href="configure.html">Advanced Configuration of IronTrack SQL</a></li>
+     <ul id="nestedlist" style="display:none">
+        <li><a href="configure.html#configure_modules">Modules</a></li>
+        <li><a href="configure.html#configure_setting_port">Setting the Port</a></li>
+        <li><a href="configure.html#configure_showing_bound_variables">Showing Bound Variables</a></li>
+        <li><a href="configure.html#configure_realdriver">The realdriver Property</a></li>
+        <li><a href="configure.html#configure_dergisterdrivers">The derigisterdrivers Property</a></li>
+        <li><a href="configure.html#configure_executionthreshold">The executionthreshold Property</a></li>
+        <li><a href="configure.html#configure_common">Common Properties</a></li>
+        <li><a href="configure.html#configure_autoflush">The autoflush Property</a></li>
+        <li><a href="configure.html#configure_dateformat">The dateformat Property</a></li>
+        <li><a href="configure.html#configure_includecategories">The includecategories Property</a></li>
+        <li><a href="configure.html#configure_excludecategories">The excludecategories Property</a></li>
+        <li><a href="configure.html#configure_stringmatcher">The stringmatcher Property (Custom Filtering)</a></li>
+        <li><a href="configure.html#configure_stacktrace">The stacktrace Property</a></li>
+        <li><a href="configure.html#configure_stacktraceclass">The stacktraceclass Property</a></li>
+        <li><a href="configure.html#configure_reload">The reloadroperties and reloadpropertiesinterval Properties</a></li>
+        <li><a href="configure.html#configure_useprefix">The useprefix Property</a></li>
+        <li><a href="configure.html#configure_appender">The appender Property</a></li>
+        <li><a href="configure.html#configure_data_source_replacements">Data Source Replacement</a></li>
+        <li><a href="configure.html#configure_datasource_properties">Data Source Properties</a></li>
+        <li><a href="configure.html#configure_lookup">JNDI Data Source Lookup</a></li>
+        <li><a href="configure.html#configure_CLI_options">Java Command Line Options</a></li>
+        <li><a href="configure.html#configure_configuring_driver_specific_JDBC_methods">Configuring Driver-Specific JDBC Methods</a></li>
+      </ul>
+	  <li id="headeritem"><a href="troubleshooting.html">Troubleshooting</a></li>
+      <ul id="nestedlist" style="display:none">
+        <li><a href="troubleshooting.html#troubleshooting_errors">Errors</a></li>
+        <li><a href="troubleshooting.html#troubleshooting_logfile">Log File</a></li>
+        <li><a href="troubleshooting.html#troubleshooting_contact_support">Contacting Customer Support</a></li>
+      </ul>
+    </ul>
+  </ul>
+</ul>
+<p class="fineprint"><a href="copyright.html">Copyrights &amp; Trademarks</a></p>
+<!--/font-->
+</body>
+</html>
