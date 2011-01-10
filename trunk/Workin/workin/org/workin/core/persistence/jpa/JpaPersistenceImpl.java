@@ -1,8 +1,13 @@
 package org.workin.core.persistence.jpa;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +23,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaCallback;
@@ -25,10 +31,15 @@ import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.workin.core.constant.Constants;
 import org.workin.core.persistence.support.PaginationSupport;
+import org.workin.core.persistence.support.ProcedureParameter;
 import org.workin.core.persistence.support.PropertyFilter;
+import org.workin.exception.ThrowableHandler;
 import org.workin.util.Assert;
 import org.workin.util.CollectionUtils;
 import org.workin.util.PersistenceUtils;
+import org.workin.util.StringUtils;
+
+import com.google.common.collect.Maps;
 
 /**
  * 
@@ -107,11 +118,10 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public void batchPersist(final List objectsToSave) {
-		Assert
-				.isTrue(!CollectionUtils.isEmpty(objectsToSave),
-						"List objectToSave cannot be null, when batchPersist...");
+		Assert.isTrue(!CollectionUtils.isEmpty(objectsToSave), "List objectToSave cannot be null, when batchPersist...");
 
 		getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				int max = objectsToSave.size();
 				for (int i = 0; i < max; i++) {
@@ -182,6 +192,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				"List objectsToMerge cannot be null, when batchMerge...");
 
 		getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				int max = objectsToMerge.size();
 				for (int i = 0; i < max; i++) {
@@ -306,6 +317,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				"List ObjectsToRemove cannot be null, when batchRemove...");
 
 		getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				int max = objectsToRemove.size();
 				for (int i = 0; i < max; i++) {
@@ -362,6 +374,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	@Override
 	public void clear() {
 		getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				em.clear();
 				return null;
@@ -482,6 +495,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (T) this.getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (values != null) {
@@ -527,6 +541,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (T) this.getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (!CollectionUtils.isEmpty(params)) {
@@ -561,6 +576,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createQuery(PersistenceUtils.buildQueryString(false, entityClass, propertyName));
 
@@ -593,8 +609,10 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query query = em.createQuery(PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params));
+				Query query = em.createQuery(PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass,
+						params));
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
@@ -807,6 +825,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in JpaPersistenceImpl.find()");
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createQuery(queryString);
 				if (values != null) {
@@ -910,6 +929,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int executeNamedOfQuery(final String queryName, final Object... values) {
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 
@@ -948,6 +968,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int executeNamedOfQuery(final String queryName, final Map<String, ?> nameAndValue) {
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createNamedQuery(queryName);
 				if (!CollectionUtils.isEmpty(nameAndValue)) {
@@ -1007,6 +1028,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int execute(final String queryString, final Object... values) {
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createQuery(queryString);
 
@@ -1045,6 +1067,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int execute(final String queryString, final Map<String, ?> nameAndValue) {
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query queryObject = em.createQuery(queryString);
 				if (!CollectionUtils.isEmpty(nameAndValue)) {
@@ -1077,7 +1100,8 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value) {
-		return (List<T>) getJpaTemplate().find(PersistenceUtils.buildQueryString(false, entityClass, propertyName), value);
+		return (List<T>) getJpaTemplate().find(PersistenceUtils.buildQueryString(false, entityClass, propertyName),
+				value);
 	}
 
 	/**
@@ -1108,6 +1132,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				String queryString = PersistenceUtils.buildQueryString(false, entityClass, propertyName).toString();
 				Query query = em.createQuery(queryString);
@@ -1187,8 +1212,10 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				Query query = em.createQuery(PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params));
+				Query query = em.createQuery(PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass,
+						params));
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
 					query.setParameter(entry.getKey(), entry.getValue());
@@ -1227,8 +1254,10 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				String queryString = PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params).toString();
+				String queryString = PersistenceUtils.buildQueryStringWithNamedParams(false, entityClass, params)
+						.toString();
 				Query query = em.createQuery(queryString);
 
 				for (Map.Entry<String, ?> entry : params.entrySet()) {
@@ -1328,7 +1357,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		Collection result = new LinkedHashSet(getAll(entityClass));
 		return new ArrayList(result);
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
@@ -1351,6 +1380,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 
 				String queryString = PersistenceUtils.buildQueryString(true, entityClass, propertyName);
@@ -1384,6 +1414,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				String queryString = PersistenceUtils.buildQueryStringWithNamedParams(true, entityClass, params);
 				Query query = em.createQuery(queryString);
@@ -1448,6 +1479,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int countByQueryString(final String queryString, final Object... values) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 
 				StringBuffer prefixCountOfQuery = new StringBuffer("SELECT COUNT(*) ");
@@ -1468,7 +1500,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * @param targetClass
@@ -1478,9 +1510,10 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	 */
 	@Override
 	public int countByPropertyFilter(final Class<T> targetClass, final List<PropertyFilter> filters) {
-		
+
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				String countOfQuery = PersistenceUtils.buildQueryStringWithPropertyFilters(true, targetClass, filters);
 				Query query = em.createQuery(countOfQuery);
@@ -1489,7 +1522,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		});
 	}
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -1517,6 +1550,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				return em.createNativeQuery(queryString).getResultList();
 			}
@@ -1552,6 +1586,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1597,6 +1632,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1646,6 +1682,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1693,6 +1730,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1735,6 +1773,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1776,6 +1815,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1822,6 +1862,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -1870,6 +1911,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1916,6 +1958,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return getJpaTemplate().executeFind(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -1964,6 +2007,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 		return (T) getJpaTemplate().execute(new JpaCallback() {
 
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString, returnClass);
 
@@ -2007,6 +2051,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int persistByNativeQuery(final String queryString) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				return em.createNativeQuery(queryString).executeUpdate();
 			}
@@ -2044,6 +2089,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int persistByNativeQuery(final String queryString, final Map<String, ?> params) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -2086,6 +2132,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public int persistByNativeQuery(final String queryString, final Object... values) {
 
 		return (Integer) getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				Query query = em.createNativeQuery(queryString);
 
@@ -2111,13 +2158,13 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters) {
 		return this.findByCriteriaQuery(targetClass, filters, false);
 	}
-	
-	
+
 	@Override
 	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
 			final List<PropertyFilter> filters, final int start, final int maxRows) {
-		
-		return (PaginationSupport)getJpaTemplate().execute(new JpaCallback() {
+
+		return (PaginationSupport) getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 				CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(targetClass);
@@ -2127,21 +2174,21 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 
 				criteriaQuery.select(entity);
 
-				Predicate predicates[] = PersistenceUtils.buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
-						entity, entityType, true, filters);
-				
-				if(!ArrayUtils.isEmpty(predicates)) {
+				Predicate predicates[] = PersistenceUtils.buildPropertyFilterPredicates(targetClass, criteriaBuilder,
+						criteriaQuery, entity, entityType, true, filters);
+
+				if (!ArrayUtils.isEmpty(predicates)) {
 					criteriaQuery.where(predicates);
 				} else {
 					criteriaQuery.where(criteriaBuilder.conjunction());
 				}
-				
+
 				TypedQuery<T> finalCriteriaQuery = em.createQuery(criteriaQuery);
-				
+
 				int tmpStart = start > 0 ? start : 0;
 				int tmpMaxRows = maxRows > 0 ? maxRows : 1;
 				Integer count = countByPropertyFilter(targetClass, filters);
-				
+
 				if (tmpMaxRows >= 0) {
 					finalCriteriaQuery.setMaxResults(maxRows);
 				}
@@ -2152,7 +2199,6 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			}
 		});
 	}
-	
 
 	/**
 	 * 
@@ -2169,6 +2215,7 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 			final boolean isDistinct) {
 
 		return (List<T>) getJpaTemplate().execute(new JpaCallback() {
+			@Override
 			public Object doInJpa(EntityManager em) throws PersistenceException {
 				CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 				CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(targetClass);
@@ -2179,24 +2226,107 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 				criteriaQuery.select(entity);
 				criteriaQuery.distinct(isDistinct);
 
-				Predicate predicates[] = PersistenceUtils.buildPropertyFilterPredicates(targetClass, criteriaBuilder, criteriaQuery,
-						entity, entityType, isDistinct, filters);
-				
-				if(!ArrayUtils.isEmpty(predicates)) {
+				Predicate predicates[] = PersistenceUtils.buildPropertyFilterPredicates(targetClass, criteriaBuilder,
+						criteriaQuery, entity, entityType, isDistinct, filters);
+
+				if (!ArrayUtils.isEmpty(predicates)) {
 					criteriaQuery.where(predicates);
 				} else {
 					criteriaQuery.where(criteriaBuilder.conjunction());
 				}
-				
+
 				TypedQuery<T> finalCriteriaQuery = em.createQuery(criteriaQuery);
 				return (List<T>) finalCriteriaQuery.getResultList();
 			}
 		});
 	}
-	
+
+	@Override
+	public Map<String, Object> executeProcedure(final String procedureName,
+			final List<ProcedureParameter> procedureParams) {
+		final Map<String, Object> result = Maps.newHashMap();
+		Assert.notNull(procedureName, "Procedure Name can not be null when do executeProcedure method...");
+		StringBuilder statTemp = new StringBuilder("{call ").append(procedureName).append("(");
+		if (!CollectionUtils.isEmpty(procedureParams)) {
+			int paramSize = procedureParams.size();
+			for (int i = 0; i < paramSize - 1; i++) {
+				statTemp.append("?,");
+			}
+			statTemp.append("?");
+		}
+		statTemp.append(") }");
+		final String callStat = statTemp.toString();
+		logger.debug("--> Build callable statment: {}", callStat);
+		return (Map<String, Object>) getJpaTemplate().execute(new JpaCallback() {
+			@Override
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				Session session = (Session) em.getDelegate();
+				Connection connection = session.connection();
+				try {
+					CallableStatement stat = connection.prepareCall(callStat);
+					if (!CollectionUtils.isEmpty(procedureParams)) {
+						for (int i = 0; i < procedureParams.size(); i++) {
+							ProcedureParameter procParam = procedureParams.get(i);
+							String paramName = procParam.getParamName();
+							Object paramValue = procParam.getParamValue();
+							if (paramValue != null && Types.DATE == procParam.getParamType()) {
+								paramValue = new java.sql.Date(((Date) paramValue).getTime());
+							}
+							switch (procParam.getInOut()) {
+							case ProcedureParameter.IN:
+								if (StringUtils.hasText(paramName)) {
+									stat.setObject(paramName, paramValue, procParam.getParamType());
+								} else {
+									stat.setObject(i, paramValue, procParam.getParamType());
+								}
+								break;
+							case ProcedureParameter.OUT:
+								if (StringUtils.hasText(paramName)) {
+									stat.registerOutParameter(paramName, procParam.getParamType());
+								} else {
+									stat.registerOutParameter(i, procParam.getParamType());
+								}
+								break;
+							case ProcedureParameter.INOUT:
+								if (StringUtils.hasText(paramName)) {
+									stat.registerOutParameter(paramName, procParam.getParamType());
+								} else {
+									stat.registerOutParameter(i, procParam.getParamType());
+								}
+								break;
+							}
+						}
+					}
+					logger.info("--> Start to execute procedure.");
+					stat.execute();
+					logger.info("--> Executed procedure successfully.");
+
+					//get the output parameter
+					Object value = null;
+					if (!CollectionUtils.isEmpty(procedureParams)) {
+						for (ProcedureParameter procParam : procedureParams) {
+							String paramName = procParam.getParamName();
+							if (ProcedureParameter.OUT == procParam.getParamType()
+									|| ProcedureParameter.INOUT == procParam.getParamType()) {
+								if (StringUtils.hasText(paramName)) {
+									value = stat.getObject(paramName);
+									result.put(paramName, value);
+								}
+							}
+						}
+					}
+				} catch (SQLException e) {
+					ThrowableHandler.handleThrow("--> Exceptions occured when execute procedure", e);
+				}
+				return result;
+			}
+		});
+	}
+
 	// JpaPersistenceImpl logger
-	private static final transient Logger logger = LoggerFactory.getLogger(JpaPersistenceImpl.class);
+	public static final transient Logger logger = LoggerFactory.getLogger(JpaPersistenceImpl.class);
 
 	// Allowed batch objects record size
 	protected static final int DEFAULT_BATCH_SIZE = Constants.DEFAULT_BATCH_SIZE;
+
 }
