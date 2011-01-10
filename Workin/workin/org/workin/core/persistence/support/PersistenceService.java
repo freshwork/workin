@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-
-
 /**
  * 
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
@@ -16,20 +14,19 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public interface PersistenceService<T, PK extends Serializable> {
 
-	
 	/**
 	 * 
 	 * Make an objectToSave instance managed and persistent.
 	 * 
 	 * Throws:
-     *		EntityExistsException 		 
-     *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
-     *		IllegalStateException 		 
-     *			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 	 
-     *			- if not an entity 
-     *		TransactionRequiredException 
-     *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
+	 *		EntityExistsException 		 
+	 *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
+	 *		IllegalStateException 		 
+	 *			- if this EntityManager has been closed. 
+	 *		IllegalArgumentException 	 
+	 *			- if not an entity 
+	 *		TransactionRequiredException 
+	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -42,20 +39,20 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public T persist(final T objectToSave);
-	
+
 	/**
 	 * 
 	 * Make an objectsToSave(batch) instance managed and persistent.
 	 * 
 	 * Throws:
-     *		EntityExistsException 		 
-     *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
-     *		IllegalStateException 		 
-     *			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 	 
-     *			- if not an entity 
-     *		TransactionRequiredException 
-     *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
+	 *		EntityExistsException 		 
+	 *			- if the entity already exists. (The EntityExistsException may be thrown when the persist operation is invoked, or the EntityExistsException or another PersistenceException may be thrown at flush or commit time.) 
+	 *		IllegalStateException 		 
+	 *			- if this EntityManager has been closed. 
+	 *		IllegalArgumentException 	 
+	 *			- if not an entity 
+	 *		TransactionRequiredException 
+	 *			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction.
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -68,7 +65,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public void batchPersist(final List objectsToSave);
-	
+
 	/**
 	 * 
 	 * Merge the state of the given entity into the current persistence context.
@@ -93,7 +90,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public T merge(final T objectToMerge);
-	
+
 	/**
 	 * 
 	 * Merge(Batch) the state of the given entitys into the current persistence context.
@@ -117,33 +114,33 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public void batchMerge(final List objectsToMerge);
-	
-   /**
-    * 
-    * Refresh the state of the instance from the database, overwriting changes made to the entity, if any.
-    * 
-    * Throws:
-    * 	   	IllegalStateException 
-    * 			- if this EntityManager has been closed. 
-    * 		IllegalArgumentException 
-    * 			- if not an entity or entity is not managed. 
-    * 		TransactionRequiredException 
-    * 			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction. 
-    * 		EntityNotFoundException 
-    * 			- if the entity no longer exists in the database.
-    * 
-    * Note:
+
+	/**
+	 * 
+	 * Refresh the state of the instance from the database, overwriting changes made to the entity, if any.
+	 * 
+	 * Throws:
+	 * 	   	IllegalStateException 
+	 * 			- if this EntityManager has been closed. 
+	 * 		IllegalArgumentException 
+	 * 			- if not an entity or entity is not managed. 
+	 * 		TransactionRequiredException 
+	 * 			- if invoked on a container-managed entity manager of type PersistenceContextType.TRANSACTION and there is no transaction. 
+	 * 		EntityNotFoundException 
+	 * 			- if the entity no longer exists in the database.
+	 * 
+	 * Note:
 	* 		All exceptions Will be converted to DataAccessException's subclass and throw
 	* 
-    * @param   objectToRefresh
-    * @return  void
-    * 
-    * @throws org.springframework.dao.DataAccessException
+	 * @param   objectToRefresh
+	 * @return  void
+	 * 
+	 * @throws org.springframework.dao.DataAccessException
 	* 		   - If an error occurs.but usually throws DataAccessException's subclass
 	* 
-    */
+	 */
 	public void refresh(final T objectToRefresh);
-	
+
 	/**
 	 * 
 	 * Remove the entity instance.
@@ -166,7 +163,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public void remove(final T objectToRemove);
-   
+
 	/**
 	 * 
 	 * 1) Find entity by Object's PK. 
@@ -192,7 +189,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *  
 	 */
 	public void remove(final Class<T> entityClass, final PK id);
-	
+
 	/**
 	 * 
 	 * Remove(Batch) the entitys instance.
@@ -214,19 +211,19 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
 	public void batchRemove(final List objectsToRemove);
-	
+
 	/**
 	 * 
 	 * Synchronize the persistence context to the underlying database.
 	 * 
 	 * Throws:
-     *  	IllegalStateException 
-     *  		- if this EntityManager has been closed. 
-     *   	TransactionRequiredException 
-     *   		- if there is no transaction 
-     *   	PersistenceException 
-     *   		- if the flush fails
-     *
+	 *  	IllegalStateException 
+	 *  		- if this EntityManager has been closed. 
+	 *   	TransactionRequiredException 
+	 *   		- if there is no transaction 
+	 *   	PersistenceException 
+	 *   		- if the flush fails
+	 *
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
@@ -234,17 +231,17 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
 	public void flush();
-	
+
 	/**
 	 * 
 	 * Clear the persistence context, causing all managed entities to become detached. 
 	 * Changes made to entities that have not been flushed to the database will not be persisted.
 	 * 
 	 * Throws:
-     *  	IllegalStateException 
-     *  		- if this EntityManager has been closed.
-     *
-     *
+	 *  	IllegalStateException 
+	 *  		- if this EntityManager has been closed.
+	 *
+	 *
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
@@ -252,7 +249,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
 	public void clear();
-	
+
 	/**
 	 * 
 	 * Check if the instance belongs to the current persistence context.
@@ -260,8 +257,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Throws:
 	 * 		IllegalStateException 
 	 * 			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 
-     *			- if not an entity		
+	 *		IllegalArgumentException 
+	 *			- if not an entity		
 	 *
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -274,7 +271,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 *  
 	 */
 	public boolean contains(final T entity);
-	
+
 	/**
 	 * 
 	 * 1) Find entity by Object's PK. 
@@ -283,11 +280,11 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Throws:
 	 * 		IllegalStateException 
 	 * 			- if this EntityManager has been closed. 
-     *		IllegalArgumentException 
-     *			- if not an entity	
+	 *		IllegalArgumentException 
+	 *			- if not an entity	
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
-     *
+	 *
 	 * @param 	entityClass
 	 * @param 	id
 	 * @return 	boolean
@@ -297,7 +294,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public boolean contains(final Class<T> entityClass, final PK id);
-	
+
 	/**
 	 * 
 	 * Find entity by Object's PK. 
@@ -321,7 +318,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public T findById(final Class<T> entityClass, final PK id);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
@@ -331,12 +328,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 			- if a query has not been defined with the given name
 	 *		NoResultException 		 
 	 *			- if there is no result 
-     *		NonUniqueResultException 
-     *			- if more than one result 
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *		NonUniqueResultException 
+	 *			- if more than one result 
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -352,7 +349,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public T findUniqueByNamedOfQuery(final String queryName, final Object... values);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
@@ -362,11 +359,11 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 			- if a query has not been defined with the given name
 	 *		NoResultException 		 
 	 *			- if there is no result 
-     *		NonUniqueResultException 
-     *			- if more than one result 
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *		NonUniqueResultException 
+	 *			- if more than one result 
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -382,13 +379,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public T findUniqueByNamedOfQuery(final String queryName, final Map<String, ?> params);
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -402,13 +398,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public T findUniqueByProperty(final Class<T> entityClass, final String propertyName, final Object value);
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -420,9 +415,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public T findUniqueByPropertys(final Class<T> entityClass, final Map<String, ?> params);   
-   
-	
+	public T findUniqueByPropertys(final Class<T> entityClass, final Map<String, ?> params);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -430,10 +424,10 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Throws:
 	 * 		IllegalArgumentException 
 	 * 			- if a query has not been defined with the given name
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -449,7 +443,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List findByNamedOfQuery(final String queryName, final Object... values);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -457,10 +451,10 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Throws:
 	 * 		IllegalArgumentException 
 	 * 			- if a query has not been defined with the given name
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -475,7 +469,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List findByNamedOfQuery(final String queryName);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -483,10 +477,10 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * Throws:
 	 * 		IllegalArgumentException 
 	 * 			- if a query has not been defined with the given name
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -502,7 +496,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List findByNamedOfQuery(final String queryName, final Map nameAndValue);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -520,7 +514,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List find(final String queryString);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -540,7 +534,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List find(final String queryString, final int start, final int maxRows);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
@@ -560,7 +554,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public PaginationSupport findPaginationSupport(final String queryString, final int start, final int maxRows);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -579,7 +573,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List find(final String queryString, final Object... values);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -600,7 +594,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List find(final int start, final int maxRows, final String queryString, final Object... values);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
@@ -620,9 +614,9 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values);
-	
-	
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString,
+			final Object... values);
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
@@ -644,7 +638,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int countByQueryString(final String queryString);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query that returns a single result.
@@ -667,7 +661,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int countByQueryString(final String queryString, final Object... values);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -688,7 +682,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int executeNamedOfQuery(final String queryName);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -710,8 +704,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int executeNamedOfQuery(final String queryName, final Object... values);
-	
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -733,7 +726,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int executeNamedOfQuery(final String queryName, final Map<String, ?> nameAndValue);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -752,7 +745,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int execute(final String queryString);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -774,7 +767,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int execute(final String queryString, final Object... values);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement and return a int value.
@@ -796,12 +789,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int execute(final String queryString, final Map<String, ?> nameAndValue);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -815,12 +808,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value);
-   
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -836,14 +829,14 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, 
-			final Object value, final int start, final int maxRows);
-	
+	public List<T> findByProperty(final Class<T> entityClass, final String propertyName, final Object value,
+			final int start, final int maxRows);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -859,14 +852,14 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport<T> findPaginatedByProperty(final Class<T> entityClass, final String propertyName, 
+	public PaginationSupport<T> findPaginatedByProperty(final Class<T> entityClass, final String propertyName,
 			final Object value, final int start, final int maxRows);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
@@ -878,13 +871,13 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params); 
-	
+	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
@@ -899,14 +892,14 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params,  
-			final int start, final int maxRows); 
-	
+	public List<T> findByPropertys(final Class<T> entityClass, final Map<String, ?> params, final int start,
+			final int maxRows);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a PaginationSupport.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
@@ -921,15 +914,15 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport<T> findPaginatedByPropertys(final Class<T> entityClass, final Map<String, ?> params, 
+	public PaginationSupport<T> findPaginatedByPropertys(final Class<T> entityClass, final Map<String, ?> params,
 			final int start, final int maxRows);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     *
-     * Note:
+	 *
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
@@ -941,13 +934,13 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> getAll(final Class<T> entityClass);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 
-     *
-     * Note:
+	 *
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param 	entityClass
@@ -959,13 +952,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> getAllDistinct(final Class<T> entityClass);
-	
 
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -979,12 +971,12 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int countByProperty(final Class<?> entityClass, final String propertyName, final Object value);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
 	 * 
-     * Note:
+	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param entityClass
@@ -996,8 +988,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public int countByPropertys(final Class<?> entityClass,  final Map<String, ?> params);
-	
+	public int countByPropertys(final Class<?> entityClass, final Map<String, ?> params);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
@@ -1015,16 +1007,16 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int countByPropertyFilter(final Class<T> targetClass, final List<PropertyFilter> filters);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1039,17 +1031,16 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<?> findByNativeQuery(final String queryString);
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1065,17 +1056,16 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<?> findByNativeQuery(final String queryString, final Object... values);
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1092,19 +1082,18 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows, 
+	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows,
 			final Object... values);
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1120,19 +1109,17 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, 
-			final Object... values);
-	
-	
+	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1150,19 +1137,18 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, 
-			final int start, final int maxRows, final Object... values);
-	
-	
+	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final int start,
+			final int maxRows, final Object... values);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a Entity.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1178,19 +1164,17 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, 
-			final Object... values) ;
-	
-	
+	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1206,17 +1190,16 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<?> findByNativeQuery(final String queryString, final Map<String, ?> params);
-	
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1233,18 +1216,18 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows, 
+	public List<?> findByNativeQuery(final String queryString, final int start, final int maxRows,
 			final Map<String, ?> params);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1260,18 +1243,17 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, 
-			final Map<String, ?> params);
-	
+	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a list.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1289,18 +1271,18 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, 
-			final int start, final int maxRows, final Map<String, ?> params);
-	
+	public List<T> findByNativeQuery(final Class<T> returnClass, final String queryString, final int start,
+			final int maxRows, final Map<String, ?> params);
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a Entity.
 	 * 	
 	 * Throws:
-     *	    IllegalStateException 	 
-     *			- if this EntityManager has been closed
-     *			- if called for a Java Persistence query language UPDATE or DELETE statement
-     *			
+	 *	    IllegalStateException 	 
+	 *			- if this EntityManager has been closed
+	 *			- if called for a Java Persistence query language UPDATE or DELETE statement
+	 *			
 	 * 
 	 * Note:
 	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
@@ -1316,9 +1298,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, 
-			final Map<String, ?> params);
-	
+	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params);
+
 	/**
 	 * 
 	 * Execute an update or delete statement.
@@ -1346,7 +1327,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement.
@@ -1375,7 +1356,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString, final Map<String, ?> params);
-	
+
 	/**
 	 * 
 	 * Execute an update or delete statement.
@@ -1404,8 +1385,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public int persistByNativeQuery(final String queryString, final Object... values);
-	
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -1427,8 +1407,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List findListBySqlMap(String sqlMapId, Object parameterObject);
-	
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -1454,7 +1433,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public Map findMapBySqlMap(String sqlMapId, Object parameterObject, String key);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -1481,7 +1460,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public Map findMapBySqlMap(String sqlMapId, Object parameterObject, String key, String value);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -1503,7 +1482,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public Object findObjectBySqlMap(String sqlMapId, Object parameterObject);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -1527,7 +1506,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data a number of result.
@@ -1541,8 +1520,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * @throws org.springframework.dao.DataAccessException
 	 *            -If an error occurs.but usually throws DataAccessException's subclass
 	 */
-	public long getTotalCountBySqlMap(String selectStatementId); 
-	
+	public long getTotalCountBySqlMap(String selectStatementId);
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data a number of result.
@@ -1557,8 +1536,8 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * @throws org.springframework.dao.DataAccessException
 	 *            -If an error occurs.but usually throws DataAccessException's subclass
 	 */
-	public long getTotalCountBySqlMap(String selectStatementId, Object parameterObject); 
-	
+	public long getTotalCountBySqlMap(String selectStatementId, Object parameterObject);
+
 	/**
 	 * 
 	 * Use JPA2.0 Criteria(BETA, Not recommended).
@@ -1570,7 +1549,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
-	
+
 	/**
 	 * 
 	 * Use JPA2.0 Criteria(BETA, Not recommended).
@@ -1583,7 +1562,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 */
 	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
 			final List<PropertyFilter> filters, final int start, final int maxRows);
-	
+
 	/**
 	 * Use JPA2.0 Criteria(BETA, Not recommended).
 	 * 
@@ -1595,5 +1574,16 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * @return
 	 * 
 	 */
-	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters, final boolean isDistinct);
+	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters,
+			final boolean isDistinct);
+
+	/**
+	 * Execute stored procedure by Hibernate JPA implementation
+	 * @param procedureName
+	 * @param procedureParams
+	 * @return
+	 */
+	public Map<String, Object> executeProcedure(final String procedureName,
+			final List<ProcedureParameter> procedureParams);
+
 }

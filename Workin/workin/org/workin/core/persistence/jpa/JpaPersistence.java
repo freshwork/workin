@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.workin.core.persistence.support.PaginationSupport;
+import org.workin.core.persistence.support.ProcedureParameter;
 import org.workin.core.persistence.support.PropertyFilter;
 
 /**
@@ -14,7 +15,6 @@ import org.workin.core.persistence.support.PropertyFilter;
  * @param <T>
  * @param <PK>
  */
-@SuppressWarnings("unchecked")
 public interface JpaPersistence<T, PK extends Serializable> {
 
 	/**
@@ -992,7 +992,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 */
 	public int countByPropertys(final Class<?> entityClass, final Map<String, ?> params);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the count.
@@ -1010,7 +1010,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 */
 	public int countByPropertyFilter(final Class<T> targetClass, final List<PropertyFilter> filters);
-	
+
 	/**
 	 * 
 	 * Execute a SELECT query and return the query results as a List.
@@ -1399,7 +1399,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 */
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters);
-	
+
 	/**
 	 * 
 	 * Find all results by CriteriaQuery and PropertyFilter.
@@ -1426,4 +1426,13 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 */
 	public List<T> findByCriteriaQuery(final Class<T> targetClass, final List<PropertyFilter> filters,
 			final boolean isDistinct);
+
+	/**
+	 * Execute stored procedure by Hibernate JPA implementation
+	 * @param procedureName
+	 * @param procedureParams
+	 * @return
+	 */
+	public Map<String, Object> executeProcedure(final String procedureName,
+			final List<ProcedureParameter> procedureParams);
 }
