@@ -1,11 +1,11 @@
 package org.workin.test.application.service;
 
-
 import java.util.List;
 import java.util.Map;
 
 import org.workin.core.persistence.support.CrudService;
 import org.workin.core.persistence.support.PaginationSupport;
+import org.workin.core.persistence.support.ProcedureParameter;
 import org.workin.test.application.entity.Person;
 
 /**
@@ -15,24 +15,28 @@ import org.workin.test.application.entity.Person;
  */
 @SuppressWarnings("unchecked")
 public interface PersonService extends CrudService {
-	
+
 	public List findPersonsBySqlMap(String sqlMapId, Person person);
-	
+
 	public PaginationSupport findPersonsBySqlMap(String sqlMapId, Person person, int offset, int maxRows);
-	
+
 	public List findPersonsByNamedQuery(String namedOfQuery, Map nameAndValue);
-	
+
 	public List findPersonsByProperty(String propertyName, Object value);
-	
+
 	public List findPersonsByPropertys(Map nameAndValue);
-	
+
 	public int executeNamedOfQuery(String queryName, Object... values);
-	
+
 	public int persistByNativeQuery(final String queryString);
-	
+
 	public int persistByNativeQuery(final String queryString, final Object... values);
-	
+
 	public List find(final String queryString, final Object... values);
-	
-	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString, final Object... values);
-}	
+
+	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString,
+			final Object... values);
+
+	public Map<String, Object> executeProcedure(String procName, List<ProcedureParameter> procParams);
+
+}
