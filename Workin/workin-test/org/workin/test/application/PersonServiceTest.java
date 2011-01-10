@@ -33,7 +33,7 @@ import org.workin.util.CollectionUtils;
 public class PersonServiceTest extends SpringTxTestCase {
 
 	@Autowired
-	private PersonService personService; 
+	private PersonService personService;
 
 	// first init db data
 	@Test
@@ -80,7 +80,7 @@ public class PersonServiceTest extends SpringTxTestCase {
 			assertEquals(NEW_USER_SEX, person.getSex());
 		}
 	}
-	
+
 	@Test
 	public void findPaginationSupportByCriteriaQuery() {
 		List<PropertyFilter> filters = new ArrayList<PropertyFilter>();
@@ -93,14 +93,13 @@ public class PersonServiceTest extends SpringTxTestCase {
 
 		PaginationSupport<Person> ps = personService.findPaginationSupportByCriteriaQuery(Person.class, filters, 0, 5);
 		assertTrue(ps.getResult().size() == 1);
-		
+
 		for (Person person : ps.getResult()) {
 			assertEquals(NEW_USER_NAME, person.getName());
 			assertEquals(NEW_USER_SEX, person.getSex());
 		}
 	}
-	
-	
+
 	// test for get all person successful
 	@Test
 	public void getAllPerson() {
@@ -179,14 +178,13 @@ public class PersonServiceTest extends SpringTxTestCase {
 			assertEquals(NEW_USER_NAME_CHANGE_AGAIN, person.getName());
 		}
 	}
-	
 
 	@Test
 	@Rollback(false)
 	public void secondInitPersonsInDB() {
 		clearDBPersons();
 	}
-	
+
 	@Test
 	@Rollback(false)
 	public void executeNamedOfQueryUpdate() {
@@ -199,15 +197,13 @@ public class PersonServiceTest extends SpringTxTestCase {
 	public void executeNamedOfQueryDel() {
 		personService.executeNamedOfQuery("del_Person", NEW_USER_NAME_CHANGE);
 	}
-	
-	
+
 	@Test
 	@Rollback(false)
 	public void thirdInitPersonsInDB() {
 		clearDBPersons();
 	}
-	
-	
+
 	@Test
 	@Rollback(false)
 	@Repeat(30)
@@ -225,30 +221,33 @@ public class PersonServiceTest extends SpringTxTestCase {
 		List<Person> personList = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person);
 		assertPersonList(personList);
 	}
-	
+
 	@Test
 	public void findPersonsByQueryString() {
 		List personList = this.personService.find(QUERY_STRING_GET_PERONS_BY_NAME_SEX, NEW_USER_NAME, NEW_USER_SEX);
 		assertPersonList(personList);
 	}
-	
+
 	@Test
 	public void findPaginationSupportPersonsByQueryString() {
 		int dynamicSize = 3;
-		PaginationSupport personList = this.personService.findPaginationSupport(dynamicSize, PAGINATIONSUPPORT_SIZE, QUERY_STRING_GET_PERONS_BY_NAME_SEX, NEW_USER_NAME, NEW_USER_SEX);
+		PaginationSupport personList = this.personService.findPaginationSupport(dynamicSize, PAGINATIONSUPPORT_SIZE,
+				QUERY_STRING_GET_PERONS_BY_NAME_SEX, NEW_USER_NAME, NEW_USER_SEX);
 		assertPersonList(personList, PAGINATIONSUPPORT_SIZE);
 	}
-	
+
 	@Test
 	public void findPaginationSupportPersonsBySqlMap() {
 		Person person = new Person();
 		person.setName(NEW_USER_NAME);
 
 		int dynamicSize = 3;
-		PaginationSupport personList = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person, 0, dynamicSize);
+		PaginationSupport personList = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person, 0,
+				dynamicSize);
 		assertPersonList(personList, dynamicSize);
-		
-		PaginationSupport personList2 = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person, dynamicSize, PAGINATIONSUPPORT_SIZE);
+
+		PaginationSupport personList2 = this.personService.findPersonsBySqlMap(SQLMAP_ID_GET_PERONS, person,
+				dynamicSize, PAGINATIONSUPPORT_SIZE);
 		assertPersonList(personList2, PAGINATIONSUPPORT_SIZE);
 	}
 
@@ -257,9 +256,27 @@ public class PersonServiceTest extends SpringTxTestCase {
 	public void finalInitDb() {
 		clearDBPersons();
 	}
-	
-	
-	
+
+	/*@Test
+	@Rollback(true)
+	public void executeProcedure() {
+		List<ProcedureParameter> paramList = Lists.newArrayList();
+		paramList.add(new ProcedureParameter("P_INVH_REF_TXN_CODE", "INV", ProcedureParameter.INOUT, Types.VARCHAR));
+		paramList.add(new ProcedureParameter("P_COMP_CODE", "001", ProcedureParameter.IN, Types.VARCHAR));
+		paramList.add(new ProcedureParameter("P_INVH_REF_FROM", "IN", ProcedureParameter.IN, Types.VARCHAR));
+		paramList.add(new ProcedureParameter("P_INVH_REF_SYS_ID", null, ProcedureParameter.OUT, Types.NUMERIC));
+		paramList.add(new ProcedureParameter("P_INVH_REF_FROM_NUM", 11, ProcedureParameter.IN, Types.NUMERIC));
+		paramList.add(new ProcedureParameter("P_INVH_REF_NO", 112, ProcedureParameter.INOUT, Types.NUMERIC));
+		paramList.add(new ProcedureParameter("P_M_UOMMODYN_NUM", 1, ProcedureParameter.IN, Types.NUMERIC));
+		paramList.add(new ProcedureParameter("P_INVH_TXN_CODE", "INV", ProcedureParameter.IN, Types.VARCHAR));
+		paramList.add(new ProcedureParameter("P_INVH_REF_DEL_DT", new Date(), ProcedureParameter.INOUT, Types.DATE));
+		paramList.add(new ProcedureParameter("P_M_PRICECHGYN_NUM", 1, ProcedureParameter.OUT, Types.NUMERIC));
+		paramList.add(new ProcedureParameter("P_ERR_TYPE", null, ProcedureParameter.OUT, Types.VARCHAR));
+		paramList.add(new ProcedureParameter("P_ERR_NO", 0, ProcedureParameter.OUT, Types.NUMERIC));
+		Map<String, Object> result = this.personService.executeProcedure("O_DVAL_OT_INV_HEAD_INVH_REFTXN", paramList);
+		System.out.println("----> ");
+	}*/
+
 	/**
 	 * 
 	 * @param personList
@@ -268,8 +285,7 @@ public class PersonServiceTest extends SpringTxTestCase {
 		assertNotNull(personList);
 		assertTrue(personList.size() == 30);
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param personList
@@ -283,14 +299,13 @@ public class PersonServiceTest extends SpringTxTestCase {
 		List persionList = (List) personList.getResult();
 		assertTrue(persionList.size() == dynamicSize);
 	}
-	
-	
+
 	private void clearDBPersons() {
 		List personList = personService.getAll(Person.class);
 		if (!CollectionUtils.isEmpty(personList))
 			personService.batchRemove(personService.getAll(Person.class));
 	}
-	
+
 	private Idable newPerson() {
 		Person person = new Person();
 		person.setName(NEW_USER_NAME);
