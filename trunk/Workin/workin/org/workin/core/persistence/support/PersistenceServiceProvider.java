@@ -1,6 +1,7 @@
 package org.workin.core.persistence.support;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -403,4 +404,10 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 	public Map<String, Object> executeProcedure(String procedureName, List<ProcedureParameter> procedureParams) {
 		return this.jpaPersistence.executeProcedure(procedureName, procedureParams);
 	}
+
+	@Override
+	public Connection getJdbcConnection() {
+		return this.jpaPersistence.getJdbcConnection();
+	}
+
 }

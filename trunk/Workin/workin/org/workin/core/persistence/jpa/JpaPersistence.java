@@ -1,6 +1,7 @@
 package org.workin.core.persistence.jpa;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -1435,4 +1436,11 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 */
 	public Map<String, Object> executeProcedure(final String procedureName,
 			final List<ProcedureParameter> procedureParams);
+
+	/**
+	 * Return JDBC connection
+	 * @return
+	 */
+	public Connection getJdbcConnection();
+
 }
