@@ -2323,6 +2323,23 @@ public class JpaPersistenceImpl<T, PK extends Serializable> extends JpaDaoSuppor
 		});
 	}
 
+	@Override
+	public Connection getJdbcConnection() {
+		EntityManager entityManager = (EntityManager) getJpaTemplate().execute(new JpaCallback<Object>() {
+			@Override
+			public Object doInJpa(EntityManager em) throws PersistenceException {
+				return em;
+			}
+		});
+		Connection connection = null;
+		try {
+			connection = getJpaTemplate().getJpaDialect().getJdbcConnection(entityManager, false).getConnection();
+		} catch (Throwable e) {
+			ThrowableHandler.handleThrow(e, logger);
+		}
+		return connection;
+	}
+
 	// JpaPersistenceImpl logger
 	public static final transient Logger logger = LoggerFactory.getLogger(JpaPersistenceImpl.class);
 
