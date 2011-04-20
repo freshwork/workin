@@ -4,30 +4,33 @@
 
 <head>
 
-  <link rel="StyleSheet" href="style/irongridStyle.css" type="text/css" media="screen">
+<link rel="StyleSheet" href="style/irongridStyle.css" type="text/css"
+	media="screen">
 
-  <title>Advanced Configuration of IronTrack SQL</title>
+<title>Advanced Configuration of IronTrack SQL</title>
 
 </head>
 
-<body  background="images/backgrnd.gif">
+<body background="images/backgrnd.gif">
 
 <!-- Begin Header -->
 
-<table width="165" border="0" align="right" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23"
-    border="0" alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
-    border="0" alt="PREV"> </a></td>
-    <!--td><a href="manage.html"><img src="images/navnext.gif" width="81" height="23"
+<table width="165" border="0" align="right" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="manage.html"><img src="images/navnext.gif" width="81" height="23"
     border="0" alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23"
     border="0" alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 
-<p><img src="images/IronGridlogo.gif"> </p>
+<p><img src="images/IronGridlogo.gif"></p>
 <hr align="left">
 
 <!-- End Header -->
@@ -38,66 +41,138 @@
 
 <h1>Advanced Configuration of IronTrack SQL</h1>
 
-<p>IronTrack SQL is built on an open source application called P6Spy. IronTrack SQL and P6Spy both use the <b>spy.properties</b> file for their configuration. The <b>spy.properties</b> file itself is well documented with explanatory text and applicable examples. This document is intended to complement the reference information provided in <b>spy.properties</b> and other advanced configuration features offered by P6Spy.</p>
+<p>IronTrack SQL is built on an open source application called
+P6Spy. IronTrack SQL and P6Spy both use the <b>spy.properties</b> file
+for their configuration. The <b>spy.properties</b> file itself is well
+documented with explanatory text and applicable examples. This document
+is intended to complement the reference information provided in <b>spy.properties</b>
+and other advanced configuration features offered by P6Spy.</p>
 
-<p>After wrapping the database driver and setting the port for the client, you should be somewhat familiar with the <b>spy.properties</b> file. Using advanced configuration, you can set the properties that you need and not set those you do not. For example, you may want to set a time condition on logging with the <b>executionthreshold</b> property or replace a datasource with the <b>realdatasource</b> property. Other properties in the <b>spy.properties</b> file can be manipulated from the IronTrack SQL user interface. </p>
+<p>After wrapping the database driver and setting the port for the
+client, you should be somewhat familiar with the <b>spy.properties</b>
+file. Using advanced configuration, you can set the properties that you
+need and not set those you do not. For example, you may want to set a
+time condition on logging with the <b>executionthreshold</b> property or
+replace a datasource with the <b>realdatasource</b> property. Other
+properties in the <b>spy.properties</b> file can be manipulated from the
+IronTrack SQL user interface.</p>
 
-<p>P6Spy also offers you the ability to configure driver-specific JDBC methods with the <b>getJDBC()</b> method and set P6Spy properties using the <b>-D</b> option of the <b>java</b> command.</p>
+<p>P6Spy also offers you the ability to configure driver-specific
+JDBC methods with the <b>getJDBC()</b> method and set P6Spy properties
+using the <b>-D</b> option of the <b>java</b> command.</p>
 
-<p>From this document, you can access information about the following:</p>
+<p>From this document, you can access information about the
+following:</p>
 
 <ul>
-        <li><a href="configure.html#configure_modules">Modules</a></li>
-        <li><a href="configure.html#configure_setting_port">Setting the Port</a></li>
-        <li><a href="configure.html#configure_showing_bound_variables">Showing Bound Variables</a></li>
-        <li><a href="configure.html#configure_realdriver">The realdriver Property</a></li>
-        <li><a href="configure.html#configure_dergisterdrivers">The derigisterdrivers Property</a></li>
-        <li><a href="configure.html#configure_executionthreshold">The executionthreshold Property</a></li>
-        <li><a href="configure.html#configure_common">Common Properties</a></li>
-        <li><a href="configure.html#configure_autoflush">The autoflush Property</a></li>
-        <li><a href="configure.html#configure_dateformat">The dateformat Property</a></li>
-        <li><a href="configure.html#configure_includecategories">The includecategories Property</a></li>
-        <li><a href="configure.html#configure_excludecategories">The excludecategories Property</a></li>
-        <li><a href="configure.html#configure_stringmatcher">The stringmatcher Property (Custom Filtering)</a></li>
-        <li><a href="configure.html#configure_stacktrace">The stacktrace Property</a></li>
-        <li><a href="configure.html#configure_stacktraceclass">The stacktraceclass Property</a></li>
-        <li><a href="configure.html#configure_reload">The reloadroperties and reloadpropertiesinterval Properties</a></li>
-        <li><a href="configure.html#configure_useprefix">The useprefix Property</a></li>
-        <li><a href="configure.html#configure_appender">The appender Property</a></li>
-        <li><a href="configure.html#configure_data_source_replacements">Data Source Replacement</a></li>
-        <li><a href="configure.html#configure_datasource_properties">Data Source Properties</a></li>
-        <li><a href="configure.html#configure_lookup">JNDI Data Source Lookup</a></li>
-        <li><a href="configure.html#configure_CLI_options">Java Command Line Options</a></li>
-        <li><a href="configure.html#configure_configuring_driver_specific_JDBC_methods">Configuring Driver-Specific JDBC Methods</a></li>
+	<li><a href="configure.html#configure_modules">Modules</a></li>
+	<li><a href="configure.html#configure_setting_port">Setting
+	the Port</a></li>
+	<li><a href="configure.html#configure_showing_bound_variables">Showing
+	Bound Variables</a></li>
+	<li><a href="configure.html#configure_realdriver">The
+	realdriver Property</a></li>
+	<li><a href="configure.html#configure_dergisterdrivers">The
+	derigisterdrivers Property</a></li>
+	<li><a href="configure.html#configure_executionthreshold">The
+	executionthreshold Property</a></li>
+	<li><a href="configure.html#configure_common">Common
+	Properties</a></li>
+	<li><a href="configure.html#configure_autoflush">The autoflush
+	Property</a></li>
+	<li><a href="configure.html#configure_dateformat">The
+	dateformat Property</a></li>
+	<li><a href="configure.html#configure_includecategories">The
+	includecategories Property</a></li>
+	<li><a href="configure.html#configure_excludecategories">The
+	excludecategories Property</a></li>
+	<li><a href="configure.html#configure_stringmatcher">The
+	stringmatcher Property (Custom Filtering)</a></li>
+	<li><a href="configure.html#configure_stacktrace">The
+	stacktrace Property</a></li>
+	<li><a href="configure.html#configure_stacktraceclass">The
+	stacktraceclass Property</a></li>
+	<li><a href="configure.html#configure_reload">The
+	reloadroperties and reloadpropertiesinterval Properties</a></li>
+	<li><a href="configure.html#configure_useprefix">The useprefix
+	Property</a></li>
+	<li><a href="configure.html#configure_appender">The appender
+	Property</a></li>
+	<li><a href="configure.html#configure_data_source_replacements">Data
+	Source Replacement</a></li>
+	<li><a href="configure.html#configure_datasource_properties">Data
+	Source Properties</a></li>
+	<li><a href="configure.html#configure_lookup">JNDI Data Source
+	Lookup</a></li>
+	<li><a href="configure.html#configure_CLI_options">Java
+	Command Line Options</a></li>
+	<li><a
+		href="configure.html#configure_configuring_driver_specific_JDBC_methods">Configuring
+	Driver-Specific JDBC Methods</a></li>
 </ul>
 
 <a name="configure_modules"></a>
 
-<h2>Modules</h2> 
- 
-<p>Modules provide the P6Spy functionality. P6Spy consists of two modules that provide various types of functionality that can be modified to suit your needs. These modules, P6Log and P6Outage, are described in this document. Though they have distinct functions, they share some common property file settings that provide a way for you to specify the tables to log, the log file name, the log file location, whether to show the stacktrace (where the JDBC statement is being executed), and more. If a module, such as <b>module_log</b> is commented out, that functionality will not be available. If it is not commented out (if it is active), the functionality will be active.</p> 
- 
+<h2>Modules</h2>
+
+<p>Modules provide the P6Spy functionality. P6Spy consists of two
+modules that provide various types of functionality that can be modified
+to suit your needs. These modules, P6Log and P6Outage, are described in
+this document. Though they have distinct functions, they share some
+common property file settings that provide a way for you to specify the
+tables to log, the log file name, the log file location, whether to show
+the stacktrace (where the JDBC statement is being executed), and more.
+If a module, such as <b>module_log</b> is commented out, that
+functionality will not be available. If it is not commented out (if it
+is active), the functionality will be active.</p>
+
 <h3>P6Log</h3>
 
-<p>P6Log is an open-source application included in the P6Spy distribution that intercepts and logs the database statements of any application that uses JDBC. This application monitors the SQL statements produced by EJB servers, enabling developers to write code that achieves maximum efficiency on the server. The P6Log module is enabled by default. Disable or enable the P6Log module by editing the spy.properties configuration file. If the module is commented out, it is not loaded, and the functionality is not available. If the module is not commented out, the functionality is available. For example:</p> 
+<p>P6Log is an open-source application included in the P6Spy
+distribution that intercepts and logs the database statements of any
+application that uses JDBC. This application monitors the SQL statements
+produced by EJB servers, enabling developers to write code that achieves
+maximum efficiency on the server. The P6Log module is enabled by
+default. Disable or enable the P6Log module by editing the
+spy.properties configuration file. If the module is commented out, it is
+not loaded, and the functionality is not available. If the module is not
+commented out, the functionality is available. For example:</p>
 
 <p class="code">module.log=com.p6spy.engine.logging.P6LogSpyDriver</p>
 
 <h3>P6Outage</h3>
 
-<p>P6Outage is an open-source application included in the P6Spy distribution. P6Outage minimizes any logging performance overhead by logging only long-running statements. The P6Outage module is disabled by default. Disable or enable the P6Outage module by editing the spy.properties configuration file. If the module is commented out, it is not loaded, and the functionality is not available. If the module is not commented out, the functionality is available. For example:</p>
+<p>P6Outage is an open-source application included in the P6Spy
+distribution. P6Outage minimizes any logging performance overhead by
+logging only long-running statements. The P6Outage module is disabled by
+default. Disable or enable the P6Outage module by editing the
+spy.properties configuration file. If the module is commented out, it is
+not loaded, and the functionality is not available. If the module is not
+commented out, the functionality is available. For example:</p>
 
 <p class="code">module.outage=com.p6spy.engine.outage.P6OutageSpyDriver</p>
 
-<h4> Outage Detection</h4>
+<h4>Outage Detection</h4>
 
-<p>This feature detects long-running statements that may be indicative of a database outage problem. If this feature is turned on, it will log any statement that surpasses the configurable time boundary during its execution. When this feature is enabled, no other statements are logged except the long running statements. The <b>interval</b> property is the boundary time set in seconds. For example, if this is set to 2, then any statement requiring at least 2 seconds will be logged. Note that the same statement will continue to be logged for as long as it executes. So if the interval is set to 2, and the query takes 11 seconds, it will be logged 5 times (at the 2, 4, 6, 8, 10 second intervals). For example</p>
+<p>This feature detects long-running statements that may be
+indicative of a database outage problem. If this feature is turned on,
+it will log any statement that surpasses the configurable time boundary
+during its execution. When this feature is enabled, no other statements
+are logged except the long running statements. The <b>interval</b>
+property is the boundary time set in seconds. For example, if this is
+set to 2, then any statement requiring at least 2 seconds will be
+logged. Note that the same statement will continue to be logged for as
+long as it executes. So if the interval is set to 2, and the query takes
+11 seconds, it will be logged 5 times (at the 2, 4, 6, 8, 10 second
+intervals). For example</p>
 
 <p class="code">outagedetection=true<br>
 outagedetectioninterval=<i>integerTime</i> (seconds)</p>
 
-<p>Values set in modules cannot be reloaded using the <b>reloadproperties</b> variable. Once they are loaded, they remain in memory until the application is restarted. If all modules are commented out, then nothing except the wrapped database driver is loaded.
-</p>
+<p>Values set in modules cannot be reloaded using the <b>reloadproperties</b>
+variable. Once they are loaded, they remain in memory until the
+application is restarted. If all modules are commented out, then nothing
+except the wrapped database driver is loaded.</p>
 
 <p>The following modules are currently supported:</p>
 
@@ -108,42 +183,68 @@ module.outage=com.p6spy.engine.outage.P6OutageFactory</p>
 
 <h2>Setting the Port</h2>
 
-<p>The monitorport=2000 specifies the port number on which the sserver listens.</p>
+<p>The monitorport=2000 specifies the port number on which the
+sserver listens.</p>
 
 <a name="configure_showing_bound_variables"></a>
 
 <h2>Showing Bound Variables</h2>
 
-<p>The <b>showboundvariables=false</b> property affects how prepared statements appear.  If set to <b>false</b>, the default, prepared statements appear with question marks for the bound variables. For example:</p>
+<p>The <b>showboundvariables=false</b> property affects how prepared
+statements appear. If set to <b>false</b>, the default, prepared
+statements appear with question marks for the bound variables. For
+example:</p>
 
 <p class="code">select * from user where id = ?</p>
 
-<p>If set to <b>true</b>, each invocation of a prepared statement is listed, with the question marks replaced by the values of the bound variables. For example:</p>
+<p>If set to <b>true</b>, each invocation of a prepared statement is
+listed, with the question marks replaced by the values of the bound
+variables. For example:</p>
 
 <p class="code">select * from user where id = 1<br>
 select * from user where id = 400<br>
 select * from user where id = 53</p>
 
-<p>This property is turned off by default. </p>
+<p>This property is turned off by default.</p>
 
 <a name="configure_realdriver"></a>
 
-<h2>The realdriver Property</h2> 
- 
-<p>In your application server configuration file, replace the driver name with <b>com.p6spy.engine.spy.P6SpyDriver</b>. Then, in the <b>spy.properties</b> file, use the <b>realdriver</b> property to specify  the wrapped database driver. This is where you put the name of the real database driver, so P6Spy can find and register your real driver to do the database work.  </p>
- 
-<p>If your application uses several drivers, specify them in <b>realdriver2</b> and <b>realdriver3</b>.</p> 
- 
-<p>Values set in realdriver(2,3) cannot be reloaded using the <b>reloadproperties</b> variable. Once they are loaded, they remain in memory until the application is restarted. For example:</p> 
+<h2>The realdriver Property</h2>
+
+<p>In your application server configuration file, replace the driver
+name with <b>com.p6spy.engine.spy.P6SpyDriver</b>. Then, in the <b>spy.properties</b>
+file, use the <b>realdriver</b> property to specify the wrapped database
+driver. This is where you put the name of the real database driver, so
+P6Spy can find and register your real driver to do the database work.</p>
+
+<p>If your application uses several drivers, specify them in <b>realdriver2</b>
+and <b>realdriver3</b>.</p>
+
+<p>Values set in realdriver(2,3) cannot be reloaded using the <b>reloadproperties</b>
+variable. Once they are loaded, they remain in memory until the
+application is restarted. For example:</p>
 
 <p class="code"># mysql Connector/J driver<br>
 realdriver=com.mysql.jdbc.Driver</p>
 
-<p>P6Spy wraps around your existing driver, intercepts the incoming database requests, and outputs them to a log file. To achieve this without requiring any code changes, the P6Spy driver is listed with your application as the primary driver. P6Spy then intercepts and logs the requests, and passes the requests to realdriver, where it is processed as usual.</p>
+<p>P6Spy wraps around your existing driver, intercepts the incoming
+database requests, and outputs them to a log file. To achieve this
+without requiring any code changes, the P6Spy driver is listed with your
+application as the primary driver. P6Spy then intercepts and logs the
+requests, and passes the requests to realdriver, where it is processed
+as usual.</p>
 
 <h3>The realdriver2 and realdriver3 Properties</h3>
 
-<p>If you have multiple database drivers, you need a way to specify those drivers. If you are using the same database driver with multiple connection strings, you only need to specify the driver once. For example, if you have two MySQL databases, <b>mydb</b> and <b>testdb</b>, you need to connect to both databases and log their activity. Specify <b>com.p6spy.engine.spy.P6SpyDriver</b> as the database driver for both of these and set <b>realdriver</b> to the real MySQL JDBC driver name. The <b>realdriver2</b> and <b>realdriver3</b> properties are only intended for use when you are connecting with two different drivers, for example Oracle versus MySQL.</p>
+<p>If you have multiple database drivers, you need a way to specify
+those drivers. If you are using the same database driver with multiple
+connection strings, you only need to specify the driver once. For
+example, if you have two MySQL databases, <b>mydb</b> and <b>testdb</b>,
+you need to connect to both databases and log their activity. Specify <b>com.p6spy.engine.spy.P6SpyDriver</b>
+as the database driver for both of these and set <b>realdriver</b> to
+the real MySQL JDBC driver name. The <b>realdriver2</b> and <b>realdriver3</b>
+properties are only intended for use when you are connecting with two
+different drivers, for example Oracle versus MySQL.</p>
 
 <p class="code"># Specifies another driver to use<br>
 realdriver2=<br>
@@ -154,9 +255,12 @@ realdriver3=</p>
 
 <h2>The deregisterdrivers Property</h2>
 
-<p>The DriverManager class sequentially tries every driver that is registered to find the right driver. In some instances, it is possible to
-load the real driver before the P6Spy driver, in which case your connections will not get wrapped as the real driver will acquire the connection before
-p6spy sees it. Set the following property to <b>true</b> to cause P6Spy to explicitly deregister the real drivers.</p>
+<p>The DriverManager class sequentially tries every driver that is
+registered to find the right driver. In some instances, it is possible
+to load the real driver before the P6Spy driver, in which case your
+connections will not get wrapped as the real driver will acquire the
+connection before p6spy sees it. Set the following property to <b>true</b>
+to cause P6Spy to explicitly deregister the real drivers.</p>
 
 <p class="code">deregisterdrivers=false</p>
 
@@ -164,7 +268,13 @@ p6spy sees it. Set the following property to <b>true</b> to cause P6Spy to expli
 
 <h2>The executionthreshold Property</h2>
 
-<p>The <b>executionthreshold</b> property applies to the standard logging of P6Spy. While standard logging logs every statement, regardless of its execution time, the <b>executionthreshold</b> property puts a time condition on that logging. Only statements that have taken longer than the time specified (in milliseconds) will be logged. This way, it is possible to see only statements that have exceeded some high limit. This time is reloadable. For example:</p>
+<p>The <b>executionthreshold</b> property applies to the standard
+logging of P6Spy. While standard logging logs every statement,
+regardless of its execution time, the <b>executionthreshold</b> property
+puts a time condition on that logging. Only statements that have taken
+longer than the time specified (in milliseconds) will be logged. This
+way, it is possible to see only statements that have exceeded some high
+limit. This time is reloadable. For example:</p>
 
 <p class="code">executionthreshold=<i>integerTime</i> (milliseconds)</p>
 
@@ -172,27 +282,36 @@ p6spy sees it. Set the following property to <b>true</b> to cause P6Spy to expli
 
 <h2>Common Properties</h2>
 
-<p>The following sections describe how to use the common properties defined in <b>spy.properties</b>.</p>
+<p>The following sections describe how to use the common properties
+defined in <b>spy.properties</b>.</p>
 
 <h3>The filter Property</h3>
 
-<p>P6Spy provides a way for you to monitor specific tables or specific statement types. By setting <b>filter = true</b>, P6Spy will perform string matching on each statement to determine if it should be written to the log file.</p>
+<p>P6Spy provides a way for you to monitor specific tables or
+specific statement types. By setting <b>filter = true</b>, P6Spy will
+perform string matching on each statement to determine if it should be
+written to the log file.</p>
 
 <h3>The include and exclude Properties</h3>
 
-<p>The <b>include</b> property accepts a comma-delimited list of expressions, which is required to appear in a statement before it can appear in the log. For example:</p>
+<p>The <b>include</b> property accepts a comma-delimited list of
+expressions, which is required to appear in a statement before it can
+appear in the log. For example:</p>
 
 <p class="code">include = <i>expression1, expression2, . . .</i></p>
 
-<p>The <b>exclude</b> property accepts a comma-delimited list to exclude. For example:</p>
+<p>The <b>exclude</b> property accepts a comma-delimited list to
+exclude. For example:</p>
 
 <p class="code">exclude = <i>expression1, expression2, . . .</i></p>
 
-<p><b>Note</b>: Exclusion overrides inclusion, so that a statement matching both an include string and an exclude string is excluded.</p>
+<p><b>Note</b>: Exclusion overrides inclusion, so that a statement
+matching both an include string and an exclude string is excluded.</p>
 
 <h3>Examples Using the filter, include, and exclude Properties</h3>
 
-<p>An example showing capture of all select statements, except the orders table follows:</p>
+<p>An example showing capture of all select statements, except the
+orders table follows:</p>
 
 <p class="code">filter = true<br>
 # comma separated list of tables to include<br>
@@ -200,7 +319,8 @@ include = select<br>
 # comma separated list of tables to exclude<br>
 exclude = orders</p>
 
-<p>An example showing only capture statements against <b>order</b>, <b>order_details</b>, <b>price</b>, and <b>price_history</b> follows:</p>
+<p>An example showing only capture statements against <b>order</b>,
+<b>order_details</b>, <b>price</b>, and <b>price_history</b> follows:</p>
 
 <p class="code">filter = true<br>
 # comma separated list of tables to include<br>
@@ -208,7 +328,8 @@ include = order,order_details,price,price_history<br>
 # comma separated list of tables to exclude<br>
 exclude =</p>
 
-<p>An example showing the capture of all statements, except statements against the order table follows:</p>
+<p>An example showing the capture of all statements, except
+statements against the order table follows:</p>
 
 <p class="code">filter = false<br>
 # comma separated list of tables to include<br>
@@ -218,24 +339,33 @@ exclude = order</p>
 
 <h3>The sqlexpression Property</h3>
 
-<p>By default, string matching is performed using a basic sub-string match. However, regular expression matching can also be used (see The stringmatcher Property - Custom Filtering). </p>
+<p>By default, string matching is performed using a basic sub-string
+match. However, regular expression matching can also be used (see The
+stringmatcher Property - Custom Filtering).</p>
 
 <p class="code">sqlexpression = <i>yourExpression</i></p>
 
 <h3>Example Using the filter and sqlexpression Properties</h3>
 
-<p>If you plan on using a RegExp engine, a simple alternative to exclude and include is to use sqlexpression. An example follows:</p>
+<p>If you plan on using a RegExp engine, a simple alternative to
+exclude and include is to use sqlexpression. An example follows:</p>
 
 <p class="code">filter = true<br>
 sqlexpression = <i>yourExpression</i></p>
 
-<p>If your expression matches the SQL string, it is logged. If the expression does not match, it is not logged. If you use sqlexpression, any values set in include and exclude are ignored.</p>
+<p>If your expression matches the SQL string, it is logged. If the
+expression does not match, it is not logged. If you use sqlexpression,
+any values set in include and exclude are ignored.</p>
 
 <a name="configure_autoflush"></a>
 
 <h2>The autoflush Property</h2>
 
-<p>For standard development, set the autoflush value to true. When set to true, every time a statement is intercepted, it is immediately written to the log file. In some cases, however, instant feedback on every statement is not a requirement. In those cases, the system performs slightly faster with autoflush set to false. For example:</p>
+<p>For standard development, set the autoflush value to true. When
+set to true, every time a statement is intercepted, it is immediately
+written to the log file. In some cases, however, instant feedback on
+every statement is not a requirement. In those cases, the system
+performs slightly faster with autoflush set to false. For example:</p>
 
 <p class="code">autoflush = true</p>
 
@@ -243,7 +373,12 @@ sqlexpression = <i>yourExpression</i></p>
 
 <h2>The dateformat Property</h2>
 
-<p>Setting a value for <b>dateformat</b> changes the date format value printed in the log file. No value prints the current time in milliseconds, a useful feature for parsing the log. The date format engine is Java's <b>SimpleDateFormat</b> class. Refer to the <b>SimpleDateFormat</b> class in the JavaDocs for information on setting this value. An example follows:</p> 
+<p>Setting a value for <b>dateformat</b> changes the date format
+value printed in the log file. No value prints the current time in
+milliseconds, a useful feature for parsing the log. The date format
+engine is Java's <b>SimpleDateFormat</b> class. Refer to the <b>SimpleDateFormat</b>
+class in the JavaDocs for information on setting this value. An example
+follows:</p>
 
 <p class="code">dateformat=MM-dd-yy HH:mm:ss:SS</p>
 
@@ -251,7 +386,10 @@ sqlexpression = <i>yourExpression</i></p>
 
 <h2>The includecategories Property</h2>
 
-<p>The <b>includecategories</b> property includes category information that describes the type of statement. This property is a comma-delimited list of categories to include. See The excludecategories Property for a valid list of categories. For example:</p>
+<p>The <b>includecategories</b> property includes category
+information that describes the type of statement. This property is a
+comma-delimited list of categories to include. See The excludecategories
+Property for a valid list of categories. For example:</p>
 
 <p class="code">includcategories = info, debug, result, error</p>
 
@@ -259,44 +397,71 @@ sqlexpression = <i>yourExpression</i></p>
 
 <h2>The excludecategories Property</h2>
 
-<p>The log includes category information that describes the type of statement. This property excludes the listed categories. Valid options include the following:</p>
+<p>The log includes category information that describes the type of
+statement. This property excludes the listed categories. Valid options
+include the following:</p>
 
 <ul>
-  <li><b>error</b> &mdash; Includes P6Spy errors. (It is recommended that you include this category.) </li>
-  <li><b>info</b> &mdash; Includes driver startup information and property file information.</li>
-  <li><b>debug</b> &mdash; Is only intended for use when you cannot get your driver to work properly, because it writes everything.</li>
-  <li><b>statement</b> &mdash; Includes statements, prepared statements, and callable statements. </li>
-  <li><b>batch</b> &mdash; Includes calls made to the <b>addBatch()</b> JDBC API.</li>
-  <li><b>commit</b> &mdash; Includes calls made to the <b>commit()</b> JDBC API.</li>
-  <li><b>rollback</b> &mdash; Includes calls made to the <b>rollback()</b> JDBC API. </li>
-  <li><b>result</b> &mdash; Includes statements generated by <b>ResultSet</b>. </li>
+	<li><b>error</b> &mdash; Includes P6Spy errors. (It is recommended
+	that you include this category.)</li>
+	<li><b>info</b> &mdash; Includes driver startup information and
+	property file information.</li>
+	<li><b>debug</b> &mdash; Is only intended for use when you cannot
+	get your driver to work properly, because it writes everything.</li>
+	<li><b>statement</b> &mdash; Includes statements, prepared
+	statements, and callable statements.</li>
+	<li><b>batch</b> &mdash; Includes calls made to the <b>addBatch()</b>
+	JDBC API.</li>
+	<li><b>commit</b> &mdash; Includes calls made to the <b>commit()</b>
+	JDBC API.</li>
+	<li><b>rollback</b> &mdash; Includes calls made to the <b>rollback()</b>
+	JDBC API.</li>
+	<li><b>result</b> &mdash; Includes statements generated by <b>ResultSet</b>.
+	</li>
 </ul>
 
-<p>Enter a comma-delimited list of categories to exclude from your log file. For example:</p>
+<p>Enter a comma-delimited list of categories to exclude from your
+log file. For example:</p>
 
 <p class="code">excludecategories=info,debug,result,batch</p>
 
-<p>See the <b>filter</b>, <b>include</b>, <b>exclude</b> properties for more details on how this process works.</p>
+<p>See the <b>filter</b>, <b>include</b>, <b>exclude</b> properties
+for more details on how this process works.</p>
 
 <a name="configure_stringmatcher"></a>
 
 <h2>The stringmatcher Property (Custom Filtering)</h2>
 
-<p>To apply more intelligence to what is logged or not logged by P6Spy, you can specify a custom matching engine. P6Spy comes with support for several RegExp engines, though it is trivial to introduce another engine by implementing the <b>stringmatcher</b> interface. If a <b>stringmatcher</b> engine is specified, P6Spy will pass each statement to the class specified to determine if that statement should be logged.</p>
+<p>To apply more intelligence to what is logged or not logged by
+P6Spy, you can specify a custom matching engine. P6Spy comes with
+support for several RegExp engines, though it is trivial to introduce
+another engine by implementing the <b>stringmatcher</b> interface. If a
+<b>stringmatcher</b> engine is specified, P6Spy will pass each statement
+to the class specified to determine if that statement should be logged.</p>
 
-<p>Using GNU RegExp—P6Spy comes with support for a regular expression matcher based on the GNU RegExp library. In order to do this, download the GNU Java RexExp library and add it to your classpath so that P6Spy can find it. The following is an example of the implementation:</p> 
+<p>Using GNU RegExpï¿½P6Spy comes with support for a regular
+expression matcher based on the GNU RegExp library. In order to do this,
+download the GNU Java RexExp library and add it to your classpath so
+that P6Spy can find it. The following is an example of the
+implementation:</p>
 
-<p class="code">stringmatcher =com.p6spy.engine.common.GnuRegexMatcher</p>
+<p class="code">stringmatcher
+=com.p6spy.engine.common.GnuRegexMatcher</p>
 
-<p>Using Jakarta RegExp—P6Spy also includes support for the Apache Jakarta RegExp library. To do this, download the Apache Jarkarta RegExp library and add it to your classpath so that P6Spy can find it. The following is an example of the implementation:</p>
+<p>Using Jakarta RegExpï¿½P6Spy also includes support for the Apache
+Jakarta RegExp library. To do this, download the Apache Jarkarta RegExp
+library and add it to your classpath so that P6Spy can find it. The
+following is an example of the implementation:</p>
 
-<p class="code">stringmatcher = com.p6spy.engine.common.JakartaRegexMatcher</p>
+<p class="code">stringmatcher =
+com.p6spy.engine.common.JakartaRegexMatcher</p>
 
 <a name="configure_stacktrace"></a>
 
 <h2>The stacktrace Property</h2>
 
-<p>If stacktrace is set, the log prints out the stack trace for each SQL statement logged. For example</p>
+<p>If stacktrace is set, the log prints out the stack trace for each
+SQL statement logged. For example</p>
 
 <p class="code">stacktrace=true</p>
 
@@ -304,23 +469,38 @@ sqlexpression = <i>yourExpression</i></p>
 
 <h2>The stacktraceclass Property</h2>
 
-<p>Limits the stack traces printed to those that contain the value set in stacktraceclass. For example, specifying stacktraceclass=com.mycompany.myclass limits the printing of stack traces to the specified class value. The stack trace is converted to a String and string.indexOf(stacktraceclass) is performed.</p>
+<p>Limits the stack traces printed to those that contain the value
+set in stacktraceclass. For example, specifying
+stacktraceclass=com.mycompany.myclass limits the printing of stack
+traces to the specified class value. The stack trace is converted to a
+String and string.indexOf(stacktraceclass) is performed.</p>
 
 <a name="configure_reload"></a>
 
 <h2>The reloadproperties and reloadpropertiesinterval Properties</h2>
 
-<p>If <b>reloadproperties</b> is set to true, the property file is reloaded every <i>n</i> seconds, where <i>n</i> is defined by the value set by <b>reloadpropertiesinterval</b>. For example, if <b>reloadproperties=true</b> and <b>reloadpropertiesinterval=10</b>, the system checks the <b>File.lastModified()</b> property of the property file every 10 seconds, and if the file has been modified, it will be reloaded.</p>
+<p>If <b>reloadproperties</b> is set to true, the property file is
+reloaded every <i>n</i> seconds, where <i>n</i> is defined by the value
+set by <b>reloadpropertiesinterval</b>. For example, if <b>reloadproperties=true</b>
+and <b>reloadpropertiesinterval=10</b>, the system checks the <b>File.lastModified()</b>
+property of the property file every 10 seconds, and if the file has been
+modified, it will be reloaded.</p>
 
-<p>If you set <b>append=true</b>, the log will be suddenly truncated when you change your properties. This is because using <b>reloadproperties</b> is intended to be the equivalent of restarting your application server. Restarting your application server truncates your log file.</p>
+<p>If you set <b>append=true</b>, the log will be suddenly truncated
+when you change your properties. This is because using <b>reloadproperties</b>
+is intended to be the equivalent of restarting your application server.
+Restarting your application server truncates your log file.</p>
 
-<p>The <b>reloadproperties</b> property will not reload any driver information (such as <b>realdriver</b>, <b>realdriver2</b>, and <b>realdriver3</b>) and will not change the modules that are in memory.</p>
+<p>The <b>reloadproperties</b> property will not reload any driver
+information (such as <b>realdriver</b>, <b>realdriver2</b>, and <b>realdriver3</b>)
+and will not change the modules that are in memory.</p>
 
 <a name="configure_useprefix"></a>
 
 <h2>The useprefix Property</h2>
 
-<p>Setting <b>useprefix</b> to <b>true</b> requires you to prefix your URLs with P6Spy:. The default setting is <b>false</b>. For example:</p>
+<p>Setting <b>useprefix</b> to <b>true</b> requires you to prefix
+your URLs with P6Spy:. The default setting is <b>false</b>. For example:</p>
 
 <p class="code">useprefix=false</p>
 
@@ -328,28 +508,40 @@ sqlexpression = <i>yourExpression</i></p>
 
 <h2>The appender Property</h2>
 
-<p>Appenders allow you to specify where and how log information is output. Appenders are a flexible architecture allowing you to write your own output class for P6Spy. To use an appender, specify the classname of the appender to use. The current release comes with three options which are <b>log4j</b>, <b>stdout</b>, and logging to a CSV text file (default).</p>
+<p>Appenders allow you to specify where and how log information is
+output. Appenders are a flexible architecture allowing you to write your
+own output class for P6Spy. To use an appender, specify the classname of
+the appender to use. The current release comes with three options which
+are <b>log4j</b>, <b>stdout</b>, and logging to a CSV text file
+(default).</p>
 
-<p>Using a CSV File—To output to a file, uncomment the <b>FileLogger</b> appender and specify a logfile and whether or not to append to the file or to clear the file each time:</p> 
+<p>Using a CSV Fileï¿½To output to a file, uncomment the <b>FileLogger</b>
+appender and specify a logfile and whether or not to append to the file
+or to clear the file each time:</p>
 
 <p class="code">#appender=com.p6spy.engine.logging.appender.Log4jLogger<br>
 #appender=com.p6spy.engine.logging.appender.StdoutLogger<br>
 appender=com.p6spy.engine.logging.appender.FileLogger</p>
 
-<p class="code"># name of logfile to use, note Windows users should make sure to use forward slashes in their pathname(e:/test/spy.log) (used for file logger only)<br>
+<p class="code"># name of logfile to use, note Windows users should
+make sure to use forward slashes in their pathname(e:/test/spy.log)
+(used for file logger only)<br>
 logfile = spy.log</p>
 
-<p class="code"># append to the p6spy log file. if this is set to false the<br>
+<p class="code"># append to the p6spy log file. if this is set to
+false the<br>
 # log file is truncated every time. (file logger only)<br>
 append=true</p>
 
-<p>Using StdOut—Uncomment the StdoutLogger as follows and all output will be sent to stdout in a CSV format: </p>
+<p>Using StdOutï¿½Uncomment the StdoutLogger as follows and all output
+will be sent to stdout in a CSV format:</p>
 
 <p class="code">#appender=com.p6spy.engine.logging.appender.Log4jLogger<br>
 appender=com.p6spy.engine.logging.appender.StdoutLogger<br>
 #appender=com.p6spy.engine.logging.appender.FileLogger</p>
 
-<p>Using Log4J—To output to log4j, make sure log4j is in your path, uncomment the log4j appender, and specify the desired log4j settings: </p>
+<p>Using Log4Jï¿½To output to log4j, make sure log4j is in your path,
+uncomment the log4j appender, and specify the desired log4j settings:</p>
 
 <p class="code">appender=com.p6spy.engine.logging.appender.Log4jLogger<br>
 #appender=com.p6spy.engine.logging.appender.StdoutLogger<br>
@@ -367,41 +559,59 @@ log4j.appender.STDOUT.layout.ConversionPattern=p6spy - %m%n</p>
 
 <p class="code">log4j.logger.p6spy=INFO,STDOUT</p>
 
-<p>If for some reason log4j cannot be initialized, the logging will go to a file called <b>log4jaux.log</b>.</p>
+<p>If for some reason log4j cannot be initialized, the logging will
+go to a file called <b>log4jaux.log</b>.</p>
 
 
 <a name="configure_data_source_replacements"></a>
 
 <h2>Data Source Replacement</h2>
 
-<p>Replace the real data source class in your application server configuration with the name <b>com.p6spy.engine.spy.P6DataSource</b>. Add the JNDI name and class name of the real data source to this value.</p>
+<p>Replace the real data source class in your application server
+configuration with the name <b>com.p6spy.engine.spy.P6DataSource</b>.
+Add the JNDI name and class name of the real data source to this value.</p>
 
-<p>You cannot reload values set in the real data source class using the <b>reloadproperties</b> variable. Once it is loaded, it remains in memory until the application is restarted. </p>
+<p>You cannot reload values set in the real data source class using
+the <b>reloadproperties</b> variable. Once it is loaded, it remains in
+memory until the application is restarted.</p>
 
-<p class="code">realdatasource=/RealMySqlDS realdatasourceclass=com.mysql.jdbc.jdbc2.optional.MysqlDataSource</p>
+<p class="code">realdatasource=/RealMySqlDS
+realdatasourceclass=com.mysql.jdbc.jdbc2.optional.MysqlDataSource</p>
 
 <a name="configure_datasource_properties"></a>
 
 <h2>Data Source Properties</h2>
- 
-<p>If you are using the DataSource support to intercept calls  to a DataSource that requires properties for proper setup, define those properties here. Use name value pairs, separate the name and value with a semicolon, and separate the pairs with commas. </p>
- 
+
+<p>If you are using the DataSource support to intercept calls to a
+DataSource that requires properties for proper setup, define those
+properties here. Use name value pairs, separate the name and value with
+a semicolon, and separate the pairs with commas.</p>
+
 <p>The following example is for mysql:</p>
- 
+
 <p class="code">realdatasourceproperties=port;3306,serverName;myhost,databaseName;jbossdb,foo;bar</p>
 
 <a name="configure_lookup"></a>
 
 <h2>JNDI Data Source Lookup</h2>
- 
-<p> If you are using the DataSource support outside of an application server, you will probably need to define the JNDI Context environment. </p>
- 
-<p> If the P6Spy code will be executing inside an application server, do not use these properties, and the DataSource lookup will use the naming context defined by the app server. </p>
- 
-<p>The two standard elements of the naming environment are <b>jndicontextfactory</b> and <b>jndicontextproviderurl</b>. If you need additional elements, use the <b>jndicontextcustom</b> property. You can define multiple properties in <b>jndicontextcustom</b>, in name value pairs. Separate the name and value with a semicolon, and separate the pairs with commas.</p>
- 
-<p>The example shown here is for a standalone program running on a machine that is also running JBoss, so the JDNI context is configured for JBoss (3.0.4).</p>
- 
+
+<p>If you are using the DataSource support outside of an application
+server, you will probably need to define the JNDI Context environment.</p>
+
+<p>If the P6Spy code will be executing inside an application server,
+do not use these properties, and the DataSource lookup will use the
+naming context defined by the app server.</p>
+
+<p>The two standard elements of the naming environment are <b>jndicontextfactory</b>
+and <b>jndicontextproviderurl</b>. If you need additional elements, use
+the <b>jndicontextcustom</b> property. You can define multiple
+properties in <b>jndicontextcustom</b>, in name value pairs. Separate
+the name and value with a semicolon, and separate the pairs with commas.</p>
+
+<p>The example shown here is for a standalone program running on a
+machine that is also running JBoss, so the JDNI context is configured
+for JBoss (3.0.4).</p>
+
 <p class="code">#jndicontextfactory=org.jnp.interfaces.NamingContextFactory<br>
 #jndicontextproviderurl=localhost:1099<br>
 #jndicontextcustom=java.naming.factory.url.pkgs;org.jboss.nameing:org.jnp.interfaces</p>
@@ -415,29 +625,47 @@ log4j.appender.STDOUT.layout.ConversionPattern=p6spy - %m%n</p>
 
 <h2>Java Command Line Options</h2>
 
-<p>Every parameter specified in the property file can be set and overridden at the command line using the <b>-D</b> flag of the <b>java</b> command. For example:</p>
+<p>Every parameter specified in the property file can be set and
+overridden at the command line using the <b>-D</b> flag of the <b>java</b>
+command. For example:</p>
 
 <p class="code">java -Dp6logfile=my.log -Dp6trace=true</p>
 
-<p>In addition, you can set the default directory to look for <b>spy.properties</b>, as shown in the following example:</p>
+<p>In addition, you can set the default directory to look for <b>spy.properties</b>,
+as shown in the following example:</p>
 
 <p class="code">java -Dp6.home=c:\orion\lib</p>
 
-<a name="configure_configuring_driver_specific_JDBC_methods"></a><br>
+<a name="configure_configuring_driver_specific_JDBC_methods"></a>
+<br>
 
 <h2>Configuring Driver-Specific JDBC Methods</h2>
 
-<p>Many drivers provide methods that expose driver specific, non-standard functionality. Although not commonly used, there may be a case in which an application uses these features. </p>
+<p>Many drivers provide methods that expose driver specific,
+non-standard functionality. Although not commonly used, there may be a
+case in which an application uses these features.</p>
 
-<p>For example, the MySQL JDBC drivers allow you to call the auto-increment function as follows: </p>
+<p>For example, the MySQL JDBC drivers allow you to call the
+auto-increment function as follows:</p>
 
 <p class="code">((org.gjt.mm.mysql.PreparedStatement)stmt).getLastInsertId();</p>
 
-<p>That cast fails when the <b>P6SpyDriver</b> is in place, since the class it tries to cast against is P6SpyDriver itself. The P6SpyDriver does not expose that driver-specific method and the P6Spy <b>PreparedStatement</b> class is not a subclass of <b>org.gjt.mm.mysql.PreparedStatement</b>.</p>
+<p>That cast fails when the <b>P6SpyDriver</b> is in place, since
+the class it tries to cast against is P6SpyDriver itself. The
+P6SpyDriver does not expose that driver-specific method and the P6Spy <b>PreparedStatement</b>
+class is not a subclass of <b>org.gjt.mm.mysql.PreparedStatement</b>.</p>
 
-<p>Since IronTrack SQL does not natively support these features, you must modify your application code to use them. Each P6Spy class exposes a method called <b>getJDBC()</b> that returns the real entity of any wrapped class. For example, if you call <b>getJDBC()</b> on a connection, you get the native connection.</p> 
+<p>Since IronTrack SQL does not natively support these features, you
+must modify your application code to use them. Each P6Spy class exposes
+a method called <b>getJDBC()</b> that returns the real entity of any
+wrapped class. For example, if you call <b>getJDBC()</b> on a
+connection, you get the native connection.</p>
 
-<p>With this method, an application can cast a class such as <b>PreparedStatement</b> to <b>P6PreparedStatement</b>, invoke <b>getJDBC()</b>, and then cast the returned value to the native driver class, as in <b>OraclePreparedStatement</b>. In this example, the non-JDBC statement is not logged, but the application will continue to function.</p> 
+<p>With this method, an application can cast a class such as <b>PreparedStatement</b>
+to <b>P6PreparedStatement</b>, invoke <b>getJDBC()</b>, and then cast
+the returned value to the native driver class, as in <b>OraclePreparedStatement</b>.
+In this example, the non-JDBC statement is not logged, but the
+application will continue to function.</p>
 
 <!-- End Content -->
 
@@ -448,16 +676,17 @@ log4j.appender.STDOUT.layout.ConversionPattern=p6spy - %m%n</p>
 
 
 <table width="165" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23" border="0"
-    alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23" border="0"
-    alt="PREV"> </a></td>
-    <!--td><a href="manage.html"><img src="images/navnext.gif" width="81" height="23" border="0"
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="manage.html"><img src="images/navnext.gif" width="81" height="23" border="0"
     alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23" border="0"
     alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 <!-- End Footer -->
 <p>&nbsp;</p>

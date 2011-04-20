@@ -12,7 +12,7 @@ import org.workin.core.entity.Idable;
  *
  */
 public class EntityComparator implements Comparator<Idable> {
-	
+
 	static class EntityComparatorHolder {
 		static EntityComparator instance = new EntityComparator();
 	}
@@ -25,26 +25,23 @@ public class EntityComparator implements Comparator<Idable> {
 	public int compare(Idable entity, Idable nextEntity) {
 
 		int compareResult = 0;
-
 		entity.setDynCompareValue();
 		nextEntity.setDynCompareValue();
 
-		if (entity == null || nextEntity == null) {
-			compareResult = 0;
-		} else if (entity.getDynCompareField() == null) {
+		if (entity.getDynCompareField() == null) {
 			compareResult = 0;
 		} else if (nextEntity.getDynCompareField() == null) {
 			compareResult = -1;
 		} else {
-			if(entity.getDynCompareField() instanceof Number) {
+			if (entity.getDynCompareField() instanceof Number) {
 				Double valueOfEntity = Double.valueOf(String.valueOf(entity.getDynCompareField()));
 				Double valueOfNextEntity = Double.valueOf(String.valueOf(nextEntity.getDynCompareField()));
 				compareResult = NumberUtils.compare(valueOfEntity, valueOfNextEntity);
-			} else if(entity.getDynCompareField() instanceof  Date) {
-				Date date = (Date)entity.getDynCompareField();
-				Date nextDate = (Date)nextEntity.getDynCompareField();
-				
-				if(date.before(nextDate)){
+			} else if (entity.getDynCompareField() instanceof Date) {
+				Date date = (Date) entity.getDynCompareField();
+				Date nextDate = (Date) nextEntity.getDynCompareField();
+
+				if (date.before(nextDate)) {
 					compareResult = -1;
 				} else {
 					compareResult = 1;

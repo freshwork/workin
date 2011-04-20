@@ -27,7 +27,7 @@ import com.ibatis.sqlmap.engine.impl.SqlMapExecutorDelegate;
  */
 
 @Repository
-@SuppressWarnings( { "unchecked", "deprecation" })
+@SuppressWarnings({ "unchecked", "deprecation" })
 public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements SqlMapPersistence {
 
 	private SqlExecutor sqlExecutor;
@@ -76,6 +76,7 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	 *            -If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public List findListBySqlMap(String sqlMapId, Object parameterObject) {
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForList()");
 		List dataList = getSqlMapClientTemplate().queryForList(sqlMapId, parameterObject);
@@ -106,6 +107,7 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	 *             subclass
 	 * 
 	 */
+	@Override
 	public Map findMapBySqlMap(String sqlMapId, Object parameterObject, String key) {
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForMap()");
 		return getSqlMapClientTemplate().queryForMap(sqlMapId, parameterObject, key);
@@ -136,6 +138,7 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	 *             -If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public Map findMapBySqlMap(String sqlMapId, Object parameterObject, String key, String value) {
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForMap()");
 		return getSqlMapClientTemplate().queryForMap(sqlMapId, parameterObject, key, value);
@@ -161,6 +164,7 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	 *             -If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public Object findObjectBySqlMap(String sqlMapId, Object parameterObject) {
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForObject()");
 		return getSqlMapClientTemplate().queryForObject(sqlMapId, parameterObject);
@@ -188,6 +192,7 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 	 *            -If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
+	@Override
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows) {
 		Assert.hasText(sqlMapId, "sqlMapId cannot be null..., in SqlMapPersistenceImpl.queryForList()");
 		Assert.isTrue(maxRows != 0, "maxRows cannot be 0, in SqlMapPersistenceImpl.queryForList()");
@@ -198,7 +203,7 @@ public class SqlMapPersistenceImpl extends SqlMapClientDaoSupport implements Sql
 			logger.info("After the query execution Count the number of records is zero.");
 			return new PaginationSupport(new LinkedList(), count.intValue(), offset, maxRows);
 		}
-		
+
 		int tmpOffset = (offset < 0 ? 0 : offset);
 		int tmpMaxRows = (maxRows <= 0 ? 1 : maxRows);
 

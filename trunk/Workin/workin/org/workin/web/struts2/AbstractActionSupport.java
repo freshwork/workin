@@ -26,16 +26,16 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-@SuppressWarnings({"serial","unchecked"})
+@SuppressWarnings({ "serial" })
 public abstract class AbstractActionSupport extends ActionSupport {
-	
+
 	@Autowired(required = false)
 	protected StoredLogService storedLogService;
-	
+
 	public void setStoredLogService(StoredLogService storedLogService) {
 		this.storedLogService = storedLogService;
 	}
-	
+
 	/**
 	 * 
 	 * <li>
@@ -46,10 +46,10 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 *
 	 * @return HttpServletRequest
 	 */
-	protected HttpServletRequest getRequest(){
-	    return ServletActionContext.getRequest();
+	protected HttpServletRequest getRequest() {
+		return ServletActionContext.getRequest();
 	}
-	
+
 	/**
 	 *
 	 *	<li>
@@ -58,11 +58,10 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 * 
 	 * @return HttpSession
 	 */
-	protected HttpSession getSession(){
-	    return ServletActionContext.getRequest().getSession();
+	protected HttpSession getSession() {
+		return ServletActionContext.getRequest().getSession();
 	}
-	
-	
+
 	/**
 	 * 
 	 * <li>
@@ -77,9 +76,9 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 * @return Serializable
 	 */
 	protected Serializable getAttribute(String attrKey) {
-		return (Serializable)this.getRequest().getAttribute(attrKey);
+		return (Serializable) this.getRequest().getAttribute(attrKey);
 	}
-	
+
 	/**
 	 *	<li>
 	 * 		Get 'ServletContext' object from ServletActionContext.
@@ -91,8 +90,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	protected ServletContext getServletContext() {
 		return ServletActionContext.getServletContext();
 	}
-	
-	
+
 	/**
 	 * 
 	 * <li>
@@ -109,7 +107,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	protected void setAttribute(String attrKey, Serializable attrValue) {
 		this.getRequest().setAttribute(attrKey, attrValue);
 	}
-	
+
 	/**
 	 * 
 	 * 1) Packaging request's getParameter method.
@@ -122,7 +120,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	protected String getParameter(String parameterKey) {
 		return this.getRequest().getParameter(parameterKey);
 	}
-	
+
 	/**
 	 * 
 	 * Packaging request's getParameter method.
@@ -132,7 +130,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	protected Map getParameterMap() {
 		return this.getRequest().getParameterMap();
 	}
-	
+
 	/**
 	 * 
 	 * <li>
@@ -148,8 +146,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	protected void addError(String errorMessageKey) {
 		this.addActionError(this.getText(errorMessageKey));
 	}
-	
-	
+
 	/**
 	 *
 	 * <li>
@@ -165,9 +162,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	protected void addMessage(String messageKey) {
 		this.addActionMessage(this.getText(messageKey));
 	}
-	
-	
-	
+
 	/**
 	 * 
 	 * Get page size from system default define.
@@ -178,7 +173,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	public int getPageSize() {
 		return PaginationSupport.PAGESIZE;
 	}
-	
+
 	/**
 	 * 
 	 * Get start index, Using request's parameter('pageNo').
@@ -189,7 +184,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	public int getStartIndexUsingKey() {
 		return getStartIndexWithPageNo(getPageNoWithParameterKey(WebConstants.RES_PARAM_PAGE_NUMBER));
 	}
-	
+
 	/**
 	 * 
 	 * Get start index, Using request's parameter('parameterKey').
@@ -202,7 +197,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	public int getStartIndexUsingKey(final String parameterKey) {
 		return getStartIndexWithPageNo(getPageNoWithParameterKey(parameterKey));
 	}
-	
+
 	/**
 	 * 
 	 * Get start index, Using default displaytag Id.
@@ -213,7 +208,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	public int getStartIndexUsingId() {
 		return getStartIndexWithPageNo(getPageNoWithDisplayTagId(WebConstants.DISPLAYTABLE_ID));
 	}
-	
+
 	/**
 	 * 
 	 * Get start index, Using displaytag Id.
@@ -225,7 +220,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	public int getStartIndexUsingId(final String displayTagId) {
 		return getStartIndexWithPageNo(getPageNoWithDisplayTagId(displayTagId));
 	}
-	
+
 	/**
 	 * 
 	 * Defalut set Page ResultSize Attribute.
@@ -236,7 +231,7 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	public void setPageResultSizeAttribute(int totalCount) {
 		this.setAttribute(WebConstants.PAGE_RESULT_SIZE, totalCount);
 	}
-	
+
 	/**
 	 * 
 	 * Calculate Start Index With Page number.
@@ -246,9 +241,9 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 * 
 	 */
 	private int getStartIndexWithPageNo(int pageNo) {
-		return (pageNo > 0)? (pageNo-1) * this.getPageSize() : 0;
+		return (pageNo > 0) ? (pageNo - 1) * this.getPageSize() : 0;
 	}
-	
+
 	/**
 	 * 
 	 * @param parameterKey
@@ -258,18 +253,18 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	private int getPageNoWithParameterKey(final String parameterKey) {
 		int pageNumber = 0;
 		String parameterPageNumber = this.getParameter(parameterKey);
-		
-		if(parameterPageNumber != null){
+
+		if (parameterPageNumber != null) {
 			try {
-				pageNumber = Integer.parseInt(parameterPageNumber);	
+				pageNumber = Integer.parseInt(parameterPageNumber);
 			} catch (Exception ex) {
 				ThrowableHandler.handle("Paramber PageNo invalid!", ex, logger);
 			}
 		}
-		
+
 		return pageNumber;
 	}
-	
+
 	/**
 	 * 
 	 * @param displayTagId
@@ -278,9 +273,10 @@ public abstract class AbstractActionSupport extends ActionSupport {
 	 */
 	private int getPageNoWithDisplayTagId(final String displayTagId) {
 		String pageIndexName = new ParamEncoder(displayTagId).encodeParameterName(TableTagParameters.PARAMETER_PAGE);
-		return StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : Integer.parseInt(getParameter(pageIndexName));
+		return StringUtils.isBlankOrNull(getParameter(pageIndexName)) ? 0 : Integer
+				.parseInt(getParameter(pageIndexName));
 	}
-	
+
 	// for all sub action
 	protected transient final Logger logger = LoggerFactory.getLogger(this.getClass());
 }

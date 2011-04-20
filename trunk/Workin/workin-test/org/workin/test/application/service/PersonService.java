@@ -13,7 +13,6 @@ import org.workin.test.application.entity.Person;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-@SuppressWarnings("unchecked")
 public interface PersonService extends CrudService {
 
 	public List findPersonsBySqlMap(String sqlMapId, Person person);

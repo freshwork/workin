@@ -14,5 +14,5 @@
 
 		<property name="minGuarantedStorageDelayInSeconds" value="120" />
 	</bean>
-	
+
 </beans>

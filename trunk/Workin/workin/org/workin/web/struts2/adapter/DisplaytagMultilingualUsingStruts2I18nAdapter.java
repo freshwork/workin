@@ -26,10 +26,10 @@ import com.opensymphony.xwork2.util.ValueStack;
  *
  *
  */
-@SuppressWarnings("unchecked")
 public class DisplaytagMultilingualUsingStruts2I18nAdapter implements LocaleResolver, I18nResourceProvider {
 
-	protected transient final Logger logger = LoggerFactory.getLogger(DisplaytagMultilingualUsingStruts2I18nAdapter.class);
+	protected transient final Logger logger = LoggerFactory
+			.getLogger(DisplaytagMultilingualUsingStruts2I18nAdapter.class);
 
 	// prefix / suffix for missing entries.
 	public static final String UNDEFINED_KEY = "Undefined";
@@ -83,7 +83,7 @@ public class DisplaytagMultilingualUsingStruts2I18nAdapter implements LocaleReso
 				break;
 			}
 		}
-		// if user explicitely added a titleKey we guess this is an error
+		// if user explicitly added a titleKey we guess this is an error
 		if (message == null && resourceKey != null) {
 			logger.debug(Messages.getString("Localization.missingkey", resourceKey));
 			message = UNDEFINED_KEY + resourceKey + UNDEFINED_KEY;

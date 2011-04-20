@@ -4,7 +4,7 @@
 
 <sqlMapConfig>
 
-	<sqlMap resource="org/workin/test/application/entity/sqlmap-person.xml"/>
-	<sqlMap resource="org/workin/test/application/entity/sqlmap-address.xml"/>
-	
+	<sqlMap resource="org/workin/test/application/entity/sqlmap-person.xml" />
+	<sqlMap resource="org/workin/test/application/entity/sqlmap-address.xml" />
+
 </sqlMapConfig>

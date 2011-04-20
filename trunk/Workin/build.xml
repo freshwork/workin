@@ -45,7 +45,7 @@
 		<echo message="Project: ${project.name}, testing... all case." />
 		<junit printsummary="yes" haltonerror="yes" haltonfailure="yes" fork="yes">
 			<formatter type="plain" usefile="flase" />
-			<formatter type="xml" />
+			<formatter type="xml" usefile="false"/>
 
 			<batchtest todir="${target.report.dir}">
 				<fileset dir="${target.codes.test}">
@@ -185,34 +185,6 @@
 		<echo message="Project: ${project.name}, Jar org.workin.ws.${workin.version}.jar OK!" />
 	</target>
 	
-	<!-- for workin style check -->
-	<target name="checkstyle">
-		<property name="checkstyle.data.dir" location="${target.checkstyle.dir}" />
-		<property name="checkstyle.data.file" location="${checkstyle.data.dir}/checkstyle-report.xml" />
-		<property name="checkstyle.report.file" location="${checkstyle.data.dir}/checkstyle-report.html" />
-		<property name="checkstyle.xsl.file" location="${basedir}/tools/checkstyle/checkstyle-noframes.xsl" />
-
-		<mkdir dir="${checkstyle.data.dir}" />
-
-		<taskdef resource="checkstyletask.properties" classpath="${basedir}/tools/checkstyle/checkstyle-all-5.0.jar" />
-
-		<checkstyle config="${basedir}/tools/checkstyle/workin_checks.xml" failOnViolation="false" failureProperty="checkstyle.failure">
-
-			<fileset dir="workin">
-				<patternset refid="java.files.pattern" />
-			</fileset>
-			<!--fileset dir="workin-test">
-				<patternset refid="java.files.pattern" />
-			</fileset-->
-
-			<formatter type="xml" toFile="${checkstyle.data.file}" />
-		</checkstyle>
-
-		<xslt in="${checkstyle.data.file}" out="${checkstyle.report.file}" style="${checkstyle.xsl.file}" />
-		<echo>checkstyle tasks done.</echo>
-	</target>
-
-
 	<!-- For build java docs -->
 	<target name="javadoc">
 		<deltree dir="${target.javadoc.dir}" />

@@ -12,26 +12,27 @@ import org.workin.web.struts2.interceptor.BehaviorAndPerformanceInterceptor;
  *
  */
 public class BehaviorAndPerformanceInterceptorTest extends StrutsTestCase {
-    
+
 	private BehaviorAndPerformanceInterceptor interceptor;
-	
+
+	@Override
 	@Before
-    protected void setUp() throws Exception {
-        super.setUp();
-        interceptor = new BehaviorAndPerformanceInterceptor();
-        interceptor.init();
-    }
-	
+	protected void setUp() throws Exception {
+		super.setUp();
+		interceptor = new BehaviorAndPerformanceInterceptor();
+		interceptor.init();
+	}
+
 	@Test
 	public void interceptorTest() {
 	}
-	
-	
-	@After
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        interceptor.destroy();
-        interceptor = null;
-    }
 
-}	
+	@Override
+	@After
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		interceptor.destroy();
+		interceptor = null;
+	}
+
+}

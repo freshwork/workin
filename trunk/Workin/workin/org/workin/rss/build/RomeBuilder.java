@@ -16,7 +16,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
  *
  */
 public class RomeBuilder implements Builder {
-	
+
 	@Override
 	public SyndFeed buildFeed(List<SyndEntry> syndEntryList) {
 		Assert.notNull(this.templetOfFeed, " templetFeed cannot be null, This value need config with ioc container.");
@@ -27,15 +27,16 @@ public class RomeBuilder implements Builder {
 		for (SyndEntry syndEntry : syndEntryList) {
 			entries.add(syndEntry);
 		}
-		
+
 		logger.debug(" Builded Feed title :{}.", templetOfFeed.getTitle());
 		return templetOfFeed;
 	}
-	
+
+	@Override
 	public void setTempletOfFeed(SyndFeed templetOfFeed) {
 		this.templetOfFeed = templetOfFeed;
 	}
-	
+
 	//	templet for build feed
 	private SyndFeed templetOfFeed;
 

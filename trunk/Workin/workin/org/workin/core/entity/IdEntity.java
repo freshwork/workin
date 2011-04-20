@@ -17,58 +17,66 @@ import org.workin.core.entity.support.DESCComparator;
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-@SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class IdEntity implements Serializable, Idable {
 
+	private static final long serialVersionUID = 8276131316287730389L;
+
 	private Long id;
-	
+
 	@Transient
 	private Serializable dynCompareField;
 
 	private long version;
-	
+
+	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	@Override
 	@Transient
 	public Serializable getDynCompareField() {
 		return dynCompareField;
 	}
-	
+
+	@Override
 	public void setDynCompareField(Serializable dynCompareField) {
 		this.dynCompareField = dynCompareField;
 	}
 
+	@Override
 	@Version
 	public long getVersion() {
 		return version;
 	}
 
+	@Override
 	public void setVersion(long version) {
 		this.version = version;
 	}
-	
+
+	@Override
 	@Transient
-	public void setDynCompareValue(){
+	public void setDynCompareValue() {
 		this.setDynCompareField(id);
 	}
-	
+
 	// For all subClass use same logic ascComparator
 	public static final ASCComparator ascComparator = ASCComparator.getInstance();
-	
+
 	// For all subClass use same logic descComparator
 	public static final DESCComparator descComparator = DESCComparator.getInstance();
-	
-//	@Override
-//	public String toString() {
-//		return ToStringBuilder.reflectionToString(this);
-//	}
+
+	//	@Override
+	//	public String toString() {
+	//		return ToStringBuilder.reflectionToString(this);
+	//	}
 }

@@ -12,17 +12,17 @@ import com.thoughtworks.xstream.XStream;
  *
  */
 public class XStreamBinder implements XmlBinder {
-	
+
 	private XStream xstream = new XStream();
-	
+
 	public XStream getXstream() {
 		return xstream;
 	}
-	
+
 	public XStreamBinder(Class<?>... types) {
 		xstream.processAnnotations(types);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T fromXml(String xml) {
@@ -35,7 +35,6 @@ public class XStreamBinder implements XmlBinder {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public String toXml(List root, String rootName) {
 		throw new NoImplementsException(" No implements this method...");
 	}

@@ -82,8 +82,7 @@ public class Struts2Utils {
 			ThrowableHandler.handle(e, logger);
 		}
 	}
-	
-	
+
 	/**
 	 * 
 	 * Output text(contentType) to screen.
@@ -99,9 +98,9 @@ public class Struts2Utils {
 	 * @param headers
 	 */
 	public static void render(final String contentType, final String content, final String... headers) {
-		
+
 		try {
-			
+
 			HttpServletResponse response = ServletActionContext.getResponse();
 			WebUtils.render(contentType, content, response, headers);
 
@@ -109,7 +108,7 @@ public class Struts2Utils {
 			ThrowableHandler.handle(e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Output text to client.
@@ -166,7 +165,6 @@ public class Struts2Utils {
 	 * @param map
 	 * @param headers
 	 */
-	@SuppressWarnings("unchecked")
 	public static void renderJson(final Map map, final String... headers) {
 		String jsonString = JSONObject.fromObject(map).toString();
 		renderJson(jsonString, headers);
@@ -183,7 +181,7 @@ public class Struts2Utils {
 		String jsonString = JSONObject.fromObject(object).toString();
 		renderJson(jsonString, headers);
 	}
-	
+
 	/**
 	 * 
 	 * Output JSON to client. 
@@ -216,7 +214,6 @@ public class Struts2Utils {
 	 * @param contentMap
 	 * @param headers
 	 */
-	@SuppressWarnings("unchecked")
 	public static void renderJsonp(final String callbackName, final Map contentMap, final String... headers) {
 		String jsonParam = JSONObject.fromObject(contentMap).toString();
 		StringBuilder result = new StringBuilder().append(callbackName).append("(").append(jsonParam).append(");");
@@ -224,6 +221,6 @@ public class Struts2Utils {
 	}
 
 	private static final String PROPERTY_NAME = "id";
-	
+
 	private static final transient Logger logger = LoggerFactory.getLogger(Struts2Utils.class);
 }

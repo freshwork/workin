@@ -14,13 +14,14 @@ public class OracleDialect extends AbstractDialect {
 		return false;
 	}
 
+	@Override
 	public String getLimitString(String sql, int offset, int limit) {
 		Assert.hasText(sql, "sql string can not be null");
-
-		sql = sql.trim();
+		String sqlTmp = sql;
+		sqlTmp = sql.trim();
 		boolean isForUpdate = false;
-		if (sql.toLowerCase().endsWith(" for update")) {
-			sql = sql.substring(0, sql.length() - 11);
+		if (sqlTmp.toLowerCase().endsWith(" for update")) {
+			sqlTmp = sqlTmp.substring(0, sql.length() - 11);
 			isForUpdate = true;
 		}
 
@@ -30,7 +31,7 @@ public class OracleDialect extends AbstractDialect {
 		} else {
 			pagingSelect.append("select * from ( ");
 		}
-		
+
 		pagingSelect.append(sql);
 		if (offset > 0) {
 			pagingSelect.append(" ) row_ ) where rownum_ <= " + (offset + limit) + " and rownum_ > " + offset);

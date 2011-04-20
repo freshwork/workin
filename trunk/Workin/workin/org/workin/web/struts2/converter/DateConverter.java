@@ -16,7 +16,6 @@ import com.opensymphony.xwork2.conversion.impl.DefaultTypeConverter;
  * @author <a href="mailto:angellin.yao@elegoninfotech.com">angellin.yao</a>
  * 
  */
-@SuppressWarnings("unchecked")
 public class DateConverter extends DefaultTypeConverter {
 
 	private static final transient Logger logger = LoggerFactory.getLogger(DateConverter.class);

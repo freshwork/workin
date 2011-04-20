@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.Logger;
-
+import org.apache.log4j.spi.LoggingEvent;
 
 public class MockAppender extends AppenderSkeleton {
 
@@ -60,12 +59,14 @@ public class MockAppender extends AppenderSkeleton {
 	/**
 	 * @see AppenderSkeleton#close()
 	 */
+	@Override
 	public void close() {
 	}
 
 	/**
 	 * @see AppenderSkeleton#requiresLayout()
 	 */
+	@Override
 	public boolean requiresLayout() {
 		return false;
 	}
