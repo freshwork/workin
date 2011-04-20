@@ -4,30 +4,33 @@
 
 <head>
 
-  <link rel="StyleSheet" href="style/irongridStyle.css" type="text/css" media="screen">
+<link rel="StyleSheet" href="style/irongridStyle.css" type="text/css"
+	media="screen">
 
-  <title>Ant Integration</title>
+<title>Ant Integration</title>
 
 </head>
 
-<body  background="images/backgrnd.gif">
+<body background="images/backgrnd.gif">
 
 <!-- Begin Header -->
 
-<table width="165" border="0" align="right" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23"
-    border="0" alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
-    border="0" alt="PREV"> </a></td>
-    <!--td><a href="????.html"><img src="images/navnext.gif" width="81" height="23"
+<table width="165" border="0" align="right" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="????.html"><img src="images/navnext.gif" width="81" height="23"
     border="0" alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23"
     border="0" alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 
-<p><img src="images/IronGridlogo.gif"> </p>
+<p><img src="images/IronGridlogo.gif"></p>
 <hr align="left">
 
 <!-- End Header -->
@@ -36,130 +39,193 @@
 
 <h1>Ant Integration</h1>
 
-<p>IronTrack SQL provides a way for you to integrate performance monitoring with your Ant build process. Ant integration for IronTrack SQL includes the <b>igunit</b> task and the IronTrack SQL module.</p>
+<p>IronTrack SQL provides a way for you to integrate performance
+monitoring with your Ant build process. Ant integration for IronTrack
+SQL includes the <b>igunit</b> task and the IronTrack SQL module.</p>
 
 <p>From this document, you can access the following information:</p>
 
 <ul>
-  <li><a href="#ant_task">The Task Process</a></li>
-  <li><a href="#ant_setup">Setting up Ant</a></li>
-  <li><a href="#ant_igunit">The igunit Task</a></li>
-  <li><a href="#ant_eye_module">The IronEye SQL Module</a></li>
-  <li><a href="#ant_track_module">The IronTrack SQL Module</a></li>
+	<li><a href="#ant_task">The Task Process</a></li>
+	<li><a href="#ant_setup">Setting up Ant</a></li>
+	<li><a href="#ant_igunit">The igunit Task</a></li>
+	<li><a href="#ant_eye_module">The IronEye SQL Module</a></li>
+	<li><a href="#ant_track_module">The IronTrack SQL Module</a></li>
 </ul>
 
 <a name="ant_task"></a>
 
 <h2>The Task Process</h2>
 
-<p>The <b>igunit</b> task works by starting the servers specified in its nested <span class=code>module</span> elements, running your unit tests, and then applying the assertions specified through the nested <b>igassert</b> elements. These assertions are defined by the particular <span class=code>module</span> elements you have specified.</p>
+<p>The <b>igunit</b> task works by starting the servers specified in
+its nested <span class=code>module</span> elements, running your unit
+tests, and then applying the assertions specified through the nested <b>igassert</b>
+elements. These assertions are defined by the particular <span
+	class=code>module</span> elements you have specified.</p>
 
-<p>The <b>igunit</b> task leverages your existing JUnit test base by explicitly sub-classing the well known <b>junit</b> task functionality. This process provides a way for the <b>igunit</b> task to easily integrate into your current processes by, for example, enhancing familiar reports.</p>
+<p>The <b>igunit</b> task leverages your existing JUnit test base by
+explicitly sub-classing the well known <b>junit</b> task functionality.
+This process provides a way for the <b>igunit</b> task to easily
+integrate into your current processes by, for example, enhancing
+familiar reports.</p>
 
 <a name="ant_setup"></a>
 
 <h2>Setting up Ant</H2>
 
-<p><b>Note</b>: The <b>igunit</b> task is written based on Ant, Version 1.5.3.</p>
+<p><b>Note</b>: The <b>igunit</b> task is written based on Ant,
+Version 1.5.3.</p>
 
-<p>To use the task, you will need to have the <b>junit.jar</b> files, the Ant <b>optional.jar</b> file, and the appropriate IronGrid JAR files (for example. <b>irontracksql.jar</b>) defined in the Ant classpath. The most straightforward way to do this is to copy the JAR files into the <b>%ANT_HOME%\lib</b> directory. You also can update your system <b>CLASSPATH</b> environment variable to include the two JAR files.</p>
+<p>To use the task, you will need to have the <b>junit.jar</b>
+files, the Ant <b>optional.jar</b> file, and the appropriate IronGrid
+JAR files (for example. <b>irontracksql.jar</b>) defined in the Ant
+classpath. The most straightforward way to do this is to copy the JAR
+files into the <b>%ANT_HOME%\lib</b> directory. You also can update your
+system <b>CLASSPATH</b> environment variable to include the two JAR
+files.</p>
 
-<p>For more information about installing external libraries, see the "Installing Ant" section of the Ant documentation in the documentation under the "Optional Libraries" sub-heading.</p>
+<p>For more information about installing external libraries, see the
+"Installing Ant" section of the Ant documentation in the documentation
+under the "Optional Libraries" sub-heading.</p>
 
 <a name="ant_igunit">
 
-<h2>The igunit Task</a></h2>
+<h2>The igunit Task
+</a>
+</h2>
 
-<p>The <b>igunit</b> Ant task provides a sub-classed implementation of the standard <b>junit</b> task that specifically monitors SQL performance. To use the <b>junit</b> task, you will need to have both Ant (<a href="http://ant.apache.org/" target="_new">http://ant.apache.org/</a>) and JUnit (<a href="http://junit.org/" target="_new">http://junit.org/</a>) installed. You will also need to have a set of unit tests already written.</p>
+<p>The <b>igunit</b> Ant task provides a sub-classed implementation
+of the standard <b>junit</b> task that specifically monitors SQL
+performance. To use the <b>junit</b> task, you will need to have both
+Ant (<a href="http://ant.apache.org/" target="_new">http://ant.apache.org/</a>)
+and JUnit (<a href="http://junit.org/" target="_new">http://junit.org/</a>)
+installed. You will also need to have a set of unit tests already
+written.</p>
 
 <h3>Description</h3>
 
-<p>The <b>igunit</b> task is a subclass of the <b>junit</b> task that measures performance of the instances of <b>TestCase</b>. The exact measurements performed are defined by the <b>module</b> and <b>igassert</b> sub-elements.</p>
+<p>The <b>igunit</b> task is a subclass of the <b>junit</b> task
+that measures performance of the instances of <b>TestCase</b>. The exact
+measurements performed are defined by the <b>module</b> and <b>igassert</b>
+sub-elements.</p>
 
-<p>The <b>igunit</b> task inherits all of the properties (for example, <b>fork</b>, and so on) that can be set from the <b>junit</b> task. See the <b>junit</b> task documentation (available under the &quot;Optional Task&quot; section of the Ant documentation) for more information.</p>
+<p>The <b>igunit</b> task inherits all of the properties (for
+example, <b>fork</b>, and so on) that can be set from the <b>junit</b>
+task. See the <b>junit</b> task documentation (available under the
+&quot;Optional Task&quot; section of the Ant documentation) for more
+information.</p>
 
 <h3>Parameters</h3>
 
-<p>The <b>igunit</b> task takes the parameters defined in the following sections.</p>
+<p>The <b>igunit</b> task takes the parameters defined in the
+following sections.</p>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <th valign="top">Attribute</th>
-    <th valign="top">Description</th>
-    <th align="center" valign="top">Required</th>
-  </tr>
-  <tr> 
-    <td valign="top"><b>delay</b></td>
-    <td valign="top">Number of milliseconds to delay before starting the test run. In rare cases, you may need to delay execution while the application server, etc. comes up to speed.</td>
-    <td valign="top" align="center">No</td>
-  </tr>
+	<tr>
+		<th valign="top">Attribute</th>
+		<th valign="top">Description</th>
+		<th align="center" valign="top">Required</th>
+	</tr>
+	<tr>
+		<td valign="top"><b>delay</b></td>
+		<td valign="top">Number of milliseconds to delay before starting
+		the test run. In rare cases, you may need to delay execution while the
+		application server, etc. comes up to speed.</td>
+		<td valign="top" align="center">No</td>
+	</tr>
 </table>
 
 <h3>Parameters Specified as Nested Elements</h3>
 
-<p>The following sections describe the nested parameters for the <b>igunit</b> task.</p>
+<p>The following sections describe the nested parameters for the <b>igunit</b>
+task.</p>
 
 <h4>The module Element</h4>
 
-<p>Each <b>module</b> element specifies a specific type of test to be run. The <b>name</b> attribute is required for all instances of the <b>module</b> element, though each module will take other parameters based on the <b>module</b> type.</p>
+<p>Each <b>module</b> element specifies a specific type of test to
+be run. The <b>name</b> attribute is required for all instances of the <b>module</b>
+element, though each module will take other parameters based on the <b>module</b>
+type.</p>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <th valign="top">Attribute</th>
-    <th valign="top">Description</th>
-    <th align="center" valign="top">Required</th>
-  </tr>
-  <tr> 
-    <td valign="top"><b>name</b></td>
-    <td valign="top">Class name of the ModuleInitializer to load.</td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
+	<tr>
+		<th valign="top">Attribute</th>
+		<th valign="top">Description</th>
+		<th align="center" valign="top">Required</th>
+	</tr>
+	<tr>
+		<td valign="top"><b>name</b></td>
+		<td valign="top">Class name of the ModuleInitializer to load.</td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
 </table>
 
 <p>For example:</p>
 
-<p class="code">&lt;module name=&quot;com.irongrid.monitor.MonitorInitializer&quot; port=&quot;2500&quot;/&gt;</p>
+<p class="code">&lt;module
+name=&quot;com.irongrid.monitor.MonitorInitializer&quot;
+port=&quot;2500&quot;/&gt;</p>
 
 <h4>The igassert Element</h4>
 
-<p>Each <b>igassert</b> element specifies the assertion for the <b>igunit</b> task to run. Assertions can be run on either a global (i.e. after all unit tests have completed) or on a per-test basis. Each <b>igassert</b> element has a module property that references one of the modules loaded through the <b>module</b> element. Each <b>igassert</b> element also can have an optional <b>perTest</b> property to determine if they are run globally or on a per-test basis (default is <b>global</b>). The actual test expression is the character data portion (i.e. the  portion between the <b>&lt;igassert&gt;</b> and <b>&lt;/igassert&gt;</b> tags) of the <b>igassert</b> element.</p>
+<p>Each <b>igassert</b> element specifies the assertion for the <b>igunit</b>
+task to run. Assertions can be run on either a global (i.e. after all
+unit tests have completed) or on a per-test basis. Each <b>igassert</b>
+element has a module property that references one of the modules loaded
+through the <b>module</b> element. Each <b>igassert</b> element also can
+have an optional <b>perTest</b> property to determine if they are run
+globally or on a per-test basis (default is <b>global</b>). The actual
+test expression is the character data portion (i.e. the portion between
+the <b>&lt;igassert&gt;</b> and <b>&lt;/igassert&gt;</b> tags) of the <b>igassert</b>
+element.</p>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <th valign="top">Attribute</th>
-    <th valign="top">Description</th>
-    <th align="center" valign="top">Required</th>
-  </tr>
-  <tr> 
-    <td valign="top"><b>module</b></td>
-    <td valign="top">Class name of the ModuleInitializer used to run this assertion. Class must be loaded through a <b>module</b> element.</td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
-  <tr>
-    <td valign="top"><b>perTest</b></td>
-    <td valign="top">Whether this assertion should be run on a per-test basis or globally, that is, after each <span class="code">TestCase</span> runs or after all <span class="code">TestCase</span>s have run.</td>
-    <td valign="top" align="center">No; defaults to <i>false</i></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>character data</b></td>
-    <td valign="top">The assertion to run.</td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
+	<tr>
+		<th valign="top">Attribute</th>
+		<th valign="top">Description</th>
+		<th align="center" valign="top">Required</th>
+	</tr>
+	<tr>
+		<td valign="top"><b>module</b></td>
+		<td valign="top">Class name of the ModuleInitializer used to run
+		this assertion. Class must be loaded through a <b>module</b> element.</td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>perTest</b></td>
+		<td valign="top">Whether this assertion should be run on a
+		per-test basis or globally, that is, after each <span class="code">TestCase</span>
+		runs or after all <span class="code">TestCase</span>s have run.</td>
+		<td valign="top" align="center">No; defaults to <i>false</i></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>character data</b></td>
+		<td valign="top">The assertion to run.</td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
 </table>
 
 <p>For example:</p>
-  
-<p class="code">&lt;igassert module=&quot;com.irongrid.monitor.MonitorInitializer&quot; perTest=&quot;false&quot;&gt;max.retrieval &amp;lt; 10&lt;/igassert&gt;</p>
 
-<p>The actual text of the assertion will vary according to the module. The text in the assertion must not contain new lines. </p>
+<p class="code">&lt;igassert
+module=&quot;com.irongrid.monitor.MonitorInitializer&quot;
+perTest=&quot;false&quot;&gt;max.retrieval &amp;lt; 10&lt;/igassert&gt;</p>
 
-<p><b>Note</b>: All normal Java operators (&lt;, &gt; , ==, &amp;&amp;, ||, *, etc.) are supported, but characters  with specific XML meanings, such as &quot;&lt;&quot;, must be escaped. For example, &quot;&amp;lt;&quot;. </p>
+<p>The actual text of the assertion will vary according to the
+module. The text in the assertion must not contain new lines.</p>
 
-<p>Both the <b>igassert</b> and <b>module</b> elements are further explored under the module-specific documentation.</p>
+<p><b>Note</b>: All normal Java operators (&lt;, &gt; , ==,
+&amp;&amp;, ||, *, etc.) are supported, but characters with specific XML
+meanings, such as &quot;&lt;&quot;, must be escaped. For example,
+&quot;&amp;lt;&quot;.</p>
+
+<p>Both the <b>igassert</b> and <b>module</b> elements are further
+explored under the module-specific documentation.</p>
 
 <h3>Examples</h3>
 
-<p>To start with a new <b>igunit</b> task, create something similar to the following:</p>
+<p>To start with a new <b>igunit</b> task, create something similar
+to the following:</p>
 
 <pre>&lt;taskdef name=&quot;igunit&quot; classname=&quot;com.irongrid.common.ant.IgUnitTask&quot;/&gt;
 
@@ -181,9 +247,14 @@
 
 </pre>
 
-<p>This definition would run the test cases contained in the class <b>org.test.my.test.Case</b>. After each test, you would ensure that the average execution time of any JDBC call for the case was less than 50 milliseconds. After all the tests in the TestCase had been run, ensure that the maximum execution time was never greater than 100 milliseconds.</p>
+<p>This definition would run the test cases contained in the class <b>org.test.my.test.Case</b>.
+After each test, you would ensure that the average execution time of any
+JDBC call for the case was less than 50 milliseconds. After all the
+tests in the TestCase had been run, ensure that the maximum execution
+time was never greater than 100 milliseconds.</p>
 
-<p>To create an <b>igunit</b> task from a current <b>junit</b> task is straightforward. For example, take the following junit definition:</p>
+<p>To create an <b>igunit</b> task from a current <b>junit</b> task
+is straightforward. For example, take the following junit definition:</p>
 
 <pre>
 &lt;junit showoutput="true" printsummary="true" haltonfailure="yes"&gt;
@@ -203,7 +274,10 @@
 
 </pre>
 
-<p>Add the <b>taskdef</b> parameter, change the <b>junit</b> tags to <b>igunit</b>, add in the <b>module</b> and <b>igassert</b>, and then run as normal. The following example has the changes highlighted in bold to show the differences.</p>
+<p>Add the <b>taskdef</b> parameter, change the <b>junit</b> tags to
+<b>igunit</b>, add in the <b>module</b> and <b>igassert</b>, and then
+run as normal. The following example has the changes highlighted in bold
+to show the differences.</p>
 
 <pre><b>
 &lt;taskdef name=&quot;igunit&quot; classname=&quot;com.irongrid.common.ant.IgUnitTask&quot;/&gt;
@@ -248,106 +322,123 @@
 
 <h3>Description</h3>
 
-<p>The IronEye SQL module provides a way for the <b>igunit</b> task to  measure JDBC query performance.</p>
+<p>The IronEye SQL module provides a way for the <b>igunit</b> task
+to measure JDBC query performance.</p>
 
 <h3>The module Parameters</h3>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <td valign="top"><b>Attribute</b></td>
-    <td valign="top"><b>Description</b></td>
-    <td align="center" valign="top"><b>Required</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>name</b></td>
-    <td valign="top">Class name of the IronEye SQL module. This must be set to <b>com.irongrid.monitor.ant.MonitorInitialzer</b></td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
-  <tr>
-    <td valign="top"><b>port</b></td>
-    <td valign="top">TCP/IP port to connect to on the server. This should match the server specified in <b>spy.properties</b></td>
-    <td valign="top" align="center">No; default is <b>2000</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>host</b></td>
-    <td valign="top">Hostname on which the IronEye SQL server is running.</td>
-    <td valign="top" align="center">No; default is <b>localhost</b></td>
-  </tr>
+	<tr>
+		<td valign="top"><b>Attribute</b></td>
+		<td valign="top"><b>Description</b></td>
+		<td align="center" valign="top"><b>Required</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>name</b></td>
+		<td valign="top">Class name of the IronEye SQL module. This must
+		be set to <b>com.irongrid.monitor.ant.MonitorInitialzer</b></td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>port</b></td>
+		<td valign="top">TCP/IP port to connect to on the server. This
+		should match the server specified in <b>spy.properties</b></td>
+		<td valign="top" align="center">No; default is <b>2000</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>host</b></td>
+		<td valign="top">Hostname on which the IronEye SQL server is
+		running.</td>
+		<td valign="top" align="center">No; default is <b>localhost</b></td>
+	</tr>
 </table>
 
 <h3>The igassert Parameters</h3>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <td valign="top"><b>Attribute</b></td>
-    <td valign="top"><b>Description</b></td>
-    <td align="center" valign="top"><b>Required</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>module</b></td>
-    <td valign="top">Class name of the IronEye SQL module. This must be set to <b>com.irongrid.monitor.ant.MonitorInitialzer</b></td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>perTest</b></td>
-    <td valign="top">Whether this assertion should be run per test or globally; that is, after each istance of <b>TestCase</b> runs or after all instances of <b>TestCase</b> have run.</td>
-    <td valign="top" align="center">No; defaults to <b>false</b></td>
-  </tr>
+	<tr>
+		<td valign="top"><b>Attribute</b></td>
+		<td valign="top"><b>Description</b></td>
+		<td align="center" valign="top"><b>Required</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>module</b></td>
+		<td valign="top">Class name of the IronEye SQL module. This must
+		be set to <b>com.irongrid.monitor.ant.MonitorInitialzer</b></td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>perTest</b></td>
+		<td valign="top">Whether this assertion should be run per test or
+		globally; that is, after each istance of <b>TestCase</b> runs or after
+		all instances of <b>TestCase</b> have run.</td>
+		<td valign="top" align="center">No; defaults to <b>false</b></td>
+	</tr>
 </table>
 
 <h3>The igassert Expression Syntax</i></h3>
 
-<p>The IronEye SQL module evaluates the performance of JDBC queries. The expression passed in as character data can measure several metrics, such as average execution time. The following table lists all of the current metrics available.</p>
+<p>The IronEye SQL module evaluates the performance of JDBC queries.
+The expression passed in as character data can measure several metrics,
+such as average execution time. The following table lists all of the
+current metrics available.</p>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <td valign="top"><b>Metric</b></td>
-    <td valign="top"><b>Description</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>min</b></td>
-    <td valign="top">Minimum time for a given statement to complete.</td>
-  </tr>
-  <tr>
-    <td valign="top"><b>max</b></td>
-    <td valign="top">Maximum time for a given statement to complete.</td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>avg</b></td>
-    <td valign="top">Average time for a given statement to complete.</td>
-  </tr>
+	<tr>
+		<td valign="top"><b>Metric</b></td>
+		<td valign="top"><b>Description</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>min</b></td>
+		<td valign="top">Minimum time for a given statement to complete.</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>max</b></td>
+		<td valign="top">Maximum time for a given statement to complete.</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>avg</b></td>
+		<td valign="top">Average time for a given statement to complete.</td>
+	</tr>
 </table>
 
-<p>Each of the timing metrics is further divided into the following phases:</p>
+<p>Each of the timing metrics is further divided into the following
+phases:</p>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <td valign="top"><b>Phase</b></td>
-    <td valign="top"><b>Description</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>prep</b></td>
-    <td valign="top">Time taken in preparing the query (for example, from object creation until <b>executeQuery()<b> is called).</td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>execution</b></td>
-    <td valign="top">Time taken to execute the query (for example, the amount of time spent in the <b>executeQuery()</b> method).</td>
-  </tr>
-  <tr>
-    <td valign="top"><b>retrieval</b></td>
-    <td valign="top">Time taken to retrieve the results of the query (for example, the amount of time spent in the <b>ResultSet.next()</b> method).</td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>total</b></td>
-    <td valign="top">Sum of all the phases.</td>
-  </tr>
+	<tr>
+		<td valign="top"><b>Phase</b></td>
+		<td valign="top"><b>Description</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>prep</b></td>
+		<td valign="top">Time taken in preparing the query (for example,
+		from object creation until <b>executeQuery()<b> is called).</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>execution</b></td>
+		<td valign="top">Time taken to execute the query (for example,
+		the amount of time spent in the <b>executeQuery()</b> method).</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>retrieval</b></td>
+		<td valign="top">Time taken to retrieve the results of the query
+		(for example, the amount of time spent in the <b>ResultSet.next()</b>
+		method).</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>total</b></td>
+		<td valign="top">Sum of all the phases.</td>
+	</tr>
 </table>
 
-<p>These metrics and phases correspond to the graphs available in the IronEye SQL runtime GUI.</p>
+<p>These metrics and phases correspond to the graphs available in
+the IronEye SQL runtime GUI.</p>
 
 <h3>Examples</h3>
 
-<p>To assert that no query has an average total time of greater than 57 ms, do the following:</p>
+<p>To assert that no query has an average total time of greater than
+57 ms, do the following:</p>
 
 <pre>&lt;igassert
 	module=&quot;com.irongrid.monitor.ant.MonitorInitialzer&quot;
@@ -355,7 +446,8 @@
 
 </pre>
 
-<p>To assert that the maximum preparation time of every query is between 10 and 20 ms, do the following:</p>
+<p>To assert that the maximum preparation time of every query is
+between 10 and 20 ms, do the following:</p>
 
 <pre>&lt;igassert
 	module=&quot;com.irongrid.monitor.ant.MonitorInitialzer&quot;
@@ -363,7 +455,8 @@
 
 </pre>
 
-<p>To assert that the minimum execution time of every query is is less than the minimum retrieval time, do the following:</p>
+<p>To assert that the minimum execution time of every query is is
+less than the minimum retrieval time, do the following:</p>
 
 <pre>&lt;igassert
 	module=&quot;com.irongrid.monitor.ant.MonitorInitialzer&quot;
@@ -380,85 +473,116 @@
 
 <p>The following sections describe the IronTrack SQL module.</p>
 
-<p><b>Note:</b> You must have installed IronTrack SQL for this module to work.</p>
+<p><b>Note:</b> You must have installed IronTrack SQL for this
+module to work.</p>
 
 <h3>Description</h3>
 
-<p>The IronTrack SQL module is an extension of the IronEye SQL module. The IronTrack SQL module provides a way for the <b>igunit</b> task to measure JDBC query performance, both against fixed numbers as well against a previously created baseline.</p>
+<p>The IronTrack SQL module is an extension of the IronEye SQL
+module. The IronTrack SQL module provides a way for the <b>igunit</b>
+task to measure JDBC query performance, both against fixed numbers as
+well against a previously created baseline.</p>
 
 <h3>The module Parameters</h3>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <th valign="top">Attribute</th>
-    <th valign="top">Description</th>
-    <th align="center" valign="top">Required</th>
-  </tr>
-  <tr> 
-    <td valign="top"><b>name</b></td>
-    <td valign="top">Class name of the IronTrack SQL module. This must be set to <b>com.irongrid.ibeam.ant.IBeamInitialzer.</b></td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
-  <tr>
-    <td valign="top"><b>port</></td>
-    <td valign="top">TCP/IP port to connect to on the server. This should match the server specified in <b>spy.properties</b>.</td>
-    <td valign="top" align="center">No; default is <b>2000</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>host</b></td>
-    <td valign="top">Host name on which the IronTrack SQL server is running.</td>
-    <td valign="top" align="center">No; default is <b>localhost</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>baselineDir</b></td>
-    <td valign="top">Directory in which to store baseline files.</td>
-    <td valign="top" align="center">No; default is <b>baselines</b></td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>version</b></td>
-    <td valign="top">User defined tag to distinguish baselines. Each <b>version<b> will look to a subdirectory under <b>baselineDir</b> to store and read baselines.</td>
-    <td valign="top" align="center">No; default is no version</td>
-  </tr>
-  <tr> 
-    <td valign="top"><b>createBase</b></td>
-    <td valign="top">If set to <b>true</b>, assertions will not be run, but rather a new baseline will be created in <b>baselineDir</b> under the directory <b>version</b>. If set to <b>false</b>, baseline assertions will instead read from the specified directory.</td>
-    <td valign="top" align="center">No; default is <b>false</b></td>
-  </tr>
+	<tr>
+		<th valign="top">Attribute</th>
+		<th valign="top">Description</th>
+		<th align="center" valign="top">Required</th>
+	</tr>
+	<tr>
+		<td valign="top"><b>name</b></td>
+		<td valign="top">Class name of the IronTrack SQL module. This
+		must be set to <b>com.irongrid.ibeam.ant.IBeamInitialzer.</b></td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>port</></td>
+		<td valign="top">TCP/IP port to connect to on the server. This
+		should match the server specified in <b>spy.properties</b>.</td>
+		<td valign="top" align="center">No; default is <b>2000</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>host</b></td>
+		<td valign="top">Host name on which the IronTrack SQL server is
+		running.</td>
+		<td valign="top" align="center">No; default is <b>localhost</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>baselineDir</b></td>
+		<td valign="top">Directory in which to store baseline files.</td>
+		<td valign="top" align="center">No; default is <b>baselines</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><b>version</b></td>
+		<td valign="top">User defined tag to distinguish baselines. Each
+		<b>version<b> will look to a subdirectory under <b>baselineDir</b>
+		to store and read baselines.</td>
+		<td valign="top" align="center">No; default is no version</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>createBase</b></td>
+		<td valign="top">If set to <b>true</b>, assertions will not be
+		run, but rather a new baseline will be created in <b>baselineDir</b>
+		under the directory <b>version</b>. If set to <b>false</b>, baseline
+		assertions will instead read from the specified directory.</td>
+		<td valign="top" align="center">No; default is <b>false</b></td>
+	</tr>
 </table>
 
 <h3>The igassert Parameters</h3>
 
 <table border="1" cellpadding="2" cellspacing="0">
-  <tr> 
-    <th valign="top">Attribute</th>
-    <th valign="top">Description</th>
-    <th align="center" valign="top">Required</th>
-  </tr>
-  <tr> 
-    <td valign="top"><b>module</b></td>
-    <td valign="top">Class name of the IronTrack SQL module. This must be set to <b>com.irongrid.ibeam.ant.IBeamInitialzer</b></td>
-    <td valign="top" align="center">Yes</td>
-  </tr>
-  <tr> 
-    <td valign="top"><i>perTest</i></td>
-    <td valign="top">Whether this assertion should be run per test or globally, that is, after each <span class="code">TestCase</span> runs or after all <span class="code">TestCase</span>s have run.</td>
-    <td valign="top" align="center">No; defaults to <i>false</i></td>
-  </tr>
+	<tr>
+		<th valign="top">Attribute</th>
+		<th valign="top">Description</th>
+		<th align="center" valign="top">Required</th>
+	</tr>
+	<tr>
+		<td valign="top"><b>module</b></td>
+		<td valign="top">Class name of the IronTrack SQL module. This
+		must be set to <b>com.irongrid.ibeam.ant.IBeamInitialzer</b></td>
+		<td valign="top" align="center">Yes</td>
+	</tr>
+	<tr>
+		<td valign="top"><i>perTest</i></td>
+		<td valign="top">Whether this assertion should be run per test or
+		globally, that is, after each <span class="code">TestCase</span> runs
+		or after all <span class="code">TestCase</span>s have run.</td>
+		<td valign="top" align="center">No; defaults to <i>false</i></td>
+	</tr>
 </table>
 
 <h3>The igassert Expression Syntax</h3>
 
-<p>The IronTrack SQL module evaluates the performance of JDBC queries, either against fixed expressions such as IronEye SQL or against pre-configured baselines. All of the metrics available to IronEye SQL are also available to IronTrack SQL, along with the special baseline comparator. This is demarcated by a metric compared to a simple percentage. For example:</p>
+<p>The IronTrack SQL module evaluates the performance of JDBC
+queries, either against fixed expressions such as IronEye SQL or against
+pre-configured baselines. All of the metrics available to IronEye SQL
+are also available to IronTrack SQL, along with the special baseline
+comparator. This is demarcated by a metric compared to a simple
+percentage. For example:</p>
 
-<p class="code">&lt;igassert module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;avg.total &amp;lt; 105%&lt;/igassert&gt;</pre>
+<p class="code">&lt;igassert
+module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;avg.total
+&amp;lt; 105%&lt;/igassert&gt;
+</pre>
 
-<p>means that the average total time of all SQL statements must be less than 105%  of their corresponding baseline. So if the baseline for a statement was 100 ms, and the actual result ran in 90 ms, this assertion would return <b>true</b>. If the actual result was 110 ms, the assertion would return <b>false</b>.</p>
+<p>means that the average total time of all SQL statements must be
+less than 105% of their corresponding baseline. So if the baseline for a
+statement was 100 ms, and the actual result ran in 90 ms, this assertion
+would return <b>true</b>. If the actual result was 110 ms, the assertion
+would return <b>false</b>.</p>
 
-<p>Baselines are stored in subdirectories specified by in the <b>module</b> element. They are further stored as either per-test baselines or as global baselines.</p>
+<p>Baselines are stored in subdirectories specified by in the <b>module</b>
+element. They are further stored as either per-test baselines or as
+global baselines.</p>
 
 <h3>Examples</h3>
 
-<p>To run a set of unit tests and create a baseline for comparison, set the <b>createBase</b> attribute to <b>true</b> and optionally set values for <b>baselineDir</b> and <b>version</b>. For example:</p>
+<p>To run a set of unit tests and create a baseline for comparison,
+set the <b>createBase</b> attribute to <b>true</b> and optionally set
+values for <b>baselineDir</b> and <b>version</b>. For example:</p>
 
 <pre>&lt;igunit&gt;
 
@@ -485,9 +609,12 @@
 
 &lt;/igunt&gt;</pre>
 
-<p><b>Note</b>: You can freely mix baseline assertions (&quot;<b>avg.total &lt;= 100%</b>&quot;) and non-baseline assertions (&quot;<<b>max.total &lt; 233</b>&quot;). </p>
+<p><b>Note</b>: You can freely mix baseline assertions (&quot;<b>avg.total
+&lt;= 100%</b>&quot;) and non-baseline assertions (&quot;<<b>max.total
+&lt; 233</b>&quot;).</p>
 
-<p>To then assert against the baseline, set <b>createBase</b> to <b>false</b>, or remove it. For example:</p>
+<p>To then assert against the baseline, set <b>createBase</b> to <b>false</b>,
+or remove it. For example:</p>
 
 <pre>&lt;igunit&gt;
 
@@ -514,7 +641,9 @@
 
 &lt;/igunt&gt;</pre>
 
-<p>To later create a new set of baselines, say against Version 2 of your product, set <b>createBase</b> to <b>true</b> and modify the <b>version</b> attribute:</p>
+<p>To later create a new set of baselines, say against Version 2 of
+your product, set <b>createBase</b> to <b>true</b> and modify the <b>version</b>
+attribute:</p>
 
 <pre>&lt;igunit&gt;
 
@@ -541,19 +670,29 @@
 
 &lt;/igunt&gt;</pre>
 
-<p>To assert that the average time of each query is less than or equal to its matching baseline, do the following:</p>
+<p>To assert that the average time of each query is less than or
+equal to its matching baseline, do the following:</p>
 
-<p class="code">&lt;igassert module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;avg.total &amp;lt;= 100%&lt;/igassert&gt;</p>
+<p class="code">&lt;igassert
+module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;avg.total
+&amp;lt;= 100%&lt;/igassert&gt;</p>
 
-<p>To assert that the maximum time of each query is with 15% of its baseline, do the following:</p>
+<p>To assert that the maximum time of each query is with 15% of its
+baseline, do the following:</p>
 
-<p class="code">&lt;igassert module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;(max.total &amp;gt;= 95%) &amp;&amp; (max.total &amp;lt;= 105%)&lt;/igassert&gt;</p>
+<p class="code">&lt;igassert
+module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;(max.total
+&amp;gt;= 95%) &amp;&amp; (max.total &amp;lt;= 105%)&lt;/igassert&gt;</p>
 
-<p>To assert that the average time of each query is equal to its baseline, do the following:</p>
+<p>To assert that the average time of each query is equal to its
+baseline, do the following:</p>
 
-<p class="code">&lt;igassert module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;avg.total == 100%&lt;/igassert&gt;</p>
+<p class="code">&lt;igassert
+module=&quot;com.irongrid.ibeam.ant.IBeamInitialzer&quot;&gt;avg.total
+== 100%&lt;/igassert&gt;</p>
 
-<p><b>Note</b>: There is usually negligible variation between test runs, so the above test is prohibitively strict.</p>
+<p><b>Note</b>: There is usually negligible variation between test
+runs, so the above test is prohibitively strict.</p>
 
 <!-- End IronTrack SQL Module -->
 
@@ -572,16 +711,17 @@
 
 
 <table width="165" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23" border="0"
-    alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
-    border="0" alt="PREV"> </a></td>
-    <!--td><a href="????.html"><img src="images/navnext.gif" width="81" height="23" border="0"
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="????.html"><img src="images/navnext.gif" width="81" height="23" border="0"
     alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23" border="0"
     alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 
 <!-- End Footer -->

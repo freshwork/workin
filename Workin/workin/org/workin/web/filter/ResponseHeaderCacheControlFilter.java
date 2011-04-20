@@ -54,10 +54,11 @@ import org.workin.web.constant.WebConstants;
 public class ResponseHeaderCacheControlFilter implements Filter {
 
 	private long expiresSeconds;
-	
+
+	@Override
 	public void destroy() {
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -67,6 +68,7 @@ public class ResponseHeaderCacheControlFilter implements Filter {
 	 * @throws ServletException
 	 * 
 	 */
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		WebUtils.setExpiresHeader((HttpServletResponse) response, expiresSeconds);
@@ -78,6 +80,7 @@ public class ResponseHeaderCacheControlFilter implements Filter {
 	 * @param filterConfig
 	 * 
 	 */
+	@Override
 	public void init(FilterConfig filterConfig) {
 		String expiresSecondsParam = filterConfig.getInitParameter(WebConstants.PARAM_EXPIRES_SECOND);
 		if (expiresSecondsParam != null) {

@@ -4,28 +4,31 @@
 
 <head>
 
-  <link rel="StyleSheet" href="style/irongridStyle.css" type="text/css" media="screen">
+<link rel="StyleSheet" href="style/irongridStyle.css" type="text/css"
+	media="screen">
 
-  <title>Installing IronTrack SQL</title>
+<title>Installing IronTrack SQL</title>
 
 </head>
 
-<body  background="images/backgrnd.gif">
+<body background="images/backgrnd.gif">
 <!-- Begin Header -->
 
-<table width="165" border="0" align="right" cellpadding="0" cellspacing="0">
-  <tr> 
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23"
-    border="0" alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
-    border="0" alt="PREV"> </a></td>
-    <!--td><a href="configure.html"><img src="images/navnext.gif" width="81" height="23"
+<table width="165" border="0" align="right" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="configure.html"><img src="images/navnext.gif" width="81" height="23"
     border="0" alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23"
     border="0" alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
-<p><img src="images/IronGridlogo.gif"> </p>
+<p><img src="images/IronGridlogo.gif"></p>
 <hr align="left" />
 <!-- End Header -->
 <!-- Begin Content -->
@@ -34,168 +37,235 @@
 
 <h1>Installing IronTrack SQL</h1>
 
-<p>This document describes how to install both the server and client components of IronTrack SQL. If the application server you will be using resides on the same system as the one on which you will run the IronTrack SQL client, you can install both components on that system. You can also install the client and server components on separate systems.</p>
+<p>This document describes how to install both the server and client
+components of IronTrack SQL. If the application server you will be using
+resides on the same system as the one on which you will run the
+IronTrack SQL client, you can install both components on that system.
+You can also install the client and server components on separate
+systems.</p>
 
-<p>IronTrack SQL offers many advanced configuration options. For more information, see <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>IronTrack SQL offers many advanced configuration options. For
+more information, see <a href="configure.html">Advanced
+Configuration of IronTrack SQL</a>.</p>
 
 <p>From this document, you can access the following information:</p>
 
 <ul>
-        <li><a href="#install_process">The Installation Process</a></li>
-        <li><a href="#install_running">Initiating IronTrack SQL Installation</a></li>
-        <li><a href="#install_start_client">Starting the IronTrack SQL Client</a></li>
-        <li><a href="#install_preinstall">Pre-Installation for the IronTrack SQL Server Component</a></li>
-        <li><a href="#install_unspecified">Installing IronTrack SQL on an Unspecified Application Server</a></li>
-  <li><a href="#install_preinstall_app_servers">Installing IronTrack SQL on Supported Application Servers</a></li>
-        <li><a href="#install_uninstall">Uninstalling IronTrack SQL</a></li>
-        <li><a href="#install_upgrade">Upgrading IronTrack SQL</a></li>
-        <li><a href="#install_upgrade_appserver">Upgrading a Current IronTrack SQL Server Installation</a></li>
+	<li><a href="#install_process">The Installation Process</a></li>
+	<li><a href="#install_running">Initiating IronTrack SQL
+	Installation</a></li>
+	<li><a href="#install_start_client">Starting the IronTrack SQL
+	Client</a></li>
+	<li><a href="#install_preinstall">Pre-Installation for the
+	IronTrack SQL Server Component</a></li>
+	<li><a href="#install_unspecified">Installing IronTrack SQL on
+	an Unspecified Application Server</a></li>
+	<li><a href="#install_preinstall_app_servers">Installing
+	IronTrack SQL on Supported Application Servers</a></li>
+	<li><a href="#install_uninstall">Uninstalling IronTrack SQL</a></li>
+	<li><a href="#install_upgrade">Upgrading IronTrack SQL</a></li>
+	<li><a href="#install_upgrade_appserver">Upgrading a Current
+	IronTrack SQL Server Installation</a></li>
 </ul>
 
 <a name="install_process"></a>
 
 <h2>The Installation Process</h2>
 
-<p>The IronTrack SQL installation process begins after you have downloaded the <b>irontracksql-installer.jar</b> file to the Desktop. From there, the installation process consists of the following steps:</p>
+<p>The IronTrack SQL installation process begins after you have
+downloaded the <b>irontracksql-installer.jar</b> file to the Desktop.
+From there, the installation process consists of the following steps:</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file to start the installer for IronTrack SQL and extract the files you will need for installing and configuring  the system.</li>
-  <li>Copy the server configuration files to your application server. (See the installation process for your application server to determine where to copy these files.)</li>
-  <li>Set the classpath on your application server to recognize the configuration files.</li>
-  <li>Wrap your application server's database driver by editing the application server's database driver file to use the IronTrack SQL database driver and the IronTrack SQL server configuration to use the application server's driver.</li>
-  <li>Make sure that the port number defined in the IronTrack SQL server configuration matches that of the client.</li>
+	<li>Run the <b>irontracksql-installer.jar</b> file to start the
+	installer for IronTrack SQL and extract the files you will need for
+	installing and configuring the system.</li>
+	<li>Copy the server configuration files to your application
+	server. (See the installation process for your application server to
+	determine where to copy these files.)</li>
+	<li>Set the classpath on your application server to recognize the
+	configuration files.</li>
+	<li>Wrap your application server's database driver by editing the
+	application server's database driver file to use the IronTrack SQL
+	database driver and the IronTrack SQL server configuration to use the
+	application server's driver.</li>
+	<li>Make sure that the port number defined in the IronTrack SQL
+	server configuration matches that of the client.</li>
 </ol>
 
-<p>After you have completed the installation process for your specific application server, you can begin using IronTrack SQL to monitor and manage the performance of your application's SQL statements.</p>
+<p>After you have completed the installation process for your
+specific application server, you can begin using IronTrack SQL to
+monitor and manage the performance of your application's SQL statements.</p>
 
-<a name="install_running"></a> 
+<a name="install_running"></a>
 
 <h2>Initiating IronTrack SQL Installation</h2>
 
 <p>To begin installing IronTrack SQL</p>
 
 <ol>
-  <li>From the Desktop, double-click the <b>irontracksql-installer.jar</b> file.<br>
-  &mdash; OR &mdash;<br>
-  From a command prompt, enter <b>java -jar irontracksql-installer.jar</b> from a command line to display the IronGrid Java installer.</li>
-  <li>Use the down arrow to select the language to use, and click <b>OK</b> to display the welcome page.</li>
-  <li>Click <b>Next</b> to display the IronGrid software license agreement.</li>
-  <li>After reading the license agreement, select the radio button to accept the terms and click <b>Next</b> to display the installation path for IronTrack SQL.</li>
-  <li>Enter an installation path.<br>
-  &mdash; OR &mdash;<br>
-  Click the <b>Browse</b> button to select an installation path.<br>
-  <b>Note</b>: If it does not already exist on your system, the installer will create the new path.</li>
-  <li>Click <b>Next</b> to display the <b>Installation progress</b> screen.</li>
-  <li>When the installation process is complete, click <b>Next</b> to display a list of program groups in which you can add a shortcut to the IronTrack SQL client.</li>
-  <ol type="a">
-    <li>In the <b>Select a Program Group for the Shortcuts</b> section, click on a program group in which to include a shortcut.</li>
-    <li>For Windows: You optionally can select or deselect the <b>Create shortcut on the desktop</b> check box.</li>
-	<li>Click <b>Create Shortcuts</b>.</li>
-  </ol>
-  <li>Click the <b>Quit</b> button to exit the installer.</li>
+	<li>From the Desktop, double-click the <b>irontracksql-installer.jar</b>
+	file.<br>
+	&mdash; OR &mdash;<br>
+	From a command prompt, enter <b>java -jar
+	irontracksql-installer.jar</b> from a command line to display the IronGrid
+	Java installer.</li>
+	<li>Use the down arrow to select the language to use, and click <b>OK</b>
+	to display the welcome page.</li>
+	<li>Click <b>Next</b> to display the IronGrid software license
+	agreement.</li>
+	<li>After reading the license agreement, select the radio button
+	to accept the terms and click <b>Next</b> to display the installation
+	path for IronTrack SQL.</li>
+	<li>Enter an installation path.<br>
+	&mdash; OR &mdash;<br>
+	Click the <b>Browse</b> button to select an installation path.<br>
+	<b>Note</b>: If it does not already exist on your system, the installer
+	will create the new path.</li>
+	<li>Click <b>Next</b> to display the <b>Installation progress</b>
+	screen.</li>
+	<li>When the installation process is complete, click <b>Next</b>
+	to display a list of program groups in which you can add a shortcut to
+	the IronTrack SQL client.</li>
+	<ol type="a">
+		<li>In the <b>Select a Program Group for the Shortcuts</b>
+		section, click on a program group in which to include a shortcut.</li>
+		<li>For Windows: You optionally can select or deselect the <b>Create
+		shortcut on the desktop</b> check box.</li>
+		<li>Click <b>Create Shortcuts</b>.</li>
+	</ol>
+	<li>Click the <b>Quit</b> button to exit the installer.</li>
 </ol>
 
-<a name="install_start_client"></a> 
+<a name="install_start_client"></a>
 
 <h2>Starting the IronTrack SQL Client</h2>
 
-<p>To continue installing the IronTrack SQL server component, you will need to run the client component.</p>
+<p>To continue installing the IronTrack SQL server component, you
+will need to run the client component.</p>
 
-<p>To start the client component, from the Desktop, double-click on the <b>IronTrack SQL</b> shortcut to display the IronTrack SQL user interface, or run <b>java -jar irontracksql.jar</b> from the command line.</p>
+<p>To start the client component, from the Desktop, double-click on
+the <b>IronTrack SQL</b> shortcut to display the IronTrack SQL user
+interface, or run <b>java -jar irontracksql.jar</b> from the command
+line.</p>
 
-<p><img src="images/clientView.jpg"  alt="" border="0"></p>
+<p><img src="images/clientView.jpg" alt="" border="0"></p>
 
-<a name="install_preinstall"></a> 
+<a name="install_preinstall"></a>
 
 <h2>Pre-Installation for the IronTrack SQL Server Component</h2>
 
-<p>The server component of IronTrack SQL includes specific installation instructions for each of the supported application servers. Before installing the server component, ensure that your environment meets the requirements defined in the following sections.</p>
+<p>The server component of IronTrack SQL includes specific
+installation instructions for each of the supported application servers.
+Before installing the server component, ensure that your environment
+meets the requirements defined in the following sections.</p>
 
 <ul>
-  <li><a href="#install_preinstall_os">Supported Platform Operating Systems</a></li>
-  <li><a href="#install_preinstall_app_servers">Supported Application Servers</a></li>
-  <li><a href="#install_preinstall_system_reqs">System Requirements</a></li>
-  <li><a href="#install_preinstall_dir_structure">Directory Structure</a></li>
+	<li><a href="#install_preinstall_os">Supported Platform
+	Operating Systems</a></li>
+	<li><a href="#install_preinstall_app_servers">Supported
+	Application Servers</a></li>
+	<li><a href="#install_preinstall_system_reqs">System
+	Requirements</a></li>
+	<li><a href="#install_preinstall_dir_structure">Directory
+	Structure</a></li>
 </ul>
 
-<a name="install_preinstall_os"></a> 
+<a name="install_preinstall_os"></a>
 
 <h3>Supported Platform Operating Systems</h3>
 
-<p>IronTrack SQL is supported on most Windows, UNIX, and Linux operating systems. IronTrack SQL is supported on any Java supported platform running a minimum of JDK 1.3, with JDK 1.4 recommended.</p>
+<p>IronTrack SQL is supported on most Windows, UNIX, and Linux
+operating systems. IronTrack SQL is supported on any Java supported
+platform running a minimum of JDK 1.3, with JDK 1.4 recommended.</p>
 
-<p><b>Note</b>: You must have Java installed prior to installing IronTrack SQL.</p>
+<p><b>Note</b>: You must have Java installed prior to installing
+IronTrack SQL.</p>
 
-<a name="install_preinstall_app_servers"></a> 
+<a name="install_preinstall_app_servers"></a>
 
 <h3>Supported Application Servers</h3>
 
 <p>IronTrack SQL supports the following application servers:</p>
 <!--p><b>Note</b>: Clicking on the version number of the application server in the following table takes you to the directions for installing IronTrack SQL on that system.</p-->
 
-<p><b>Note</b>: Your installation may differ from the following examples, depending on how your application server environment is configured.</p>
+<p><b>Note</b>: Your installation may differ from the following
+examples, depending on how your application server environment is
+configured.</p>
 
 <table cellspacing="2" cellpadding="2" border="1" frame="box">
-  <tr valign="left">
-    <th>Application Server 
-    <th>Version </tr>
-  <tr valign="left">
-    <td>JBoss</td>
-    <td><a href="#install_jboss2x">2.x</a>, <a href="#install_jboss3x">3.x</a></td>
-  </tr>
-  <tr valign="left">
-    <td>Oracle9iAS Container for J2EE (OC4J)</td>
-    <td><a href="#install_oracle9iAS">9.0.3</a></td>
-  </tr>
-  <tr valign="left">
-    <td>Jakarta Tomcat</td>
-    <td><a href="#install_tomcat">3.x</a></td>
-  </tr>
-  <tr valign="left">
-    <td>JOnAS EJB</td>
-    <td><a href="#install_jonas_ejb">2.3.x</a></td>
-  </tr>
-  <!--tr valign="left">
+	<tr valign="left">
+		<th>Application Server
+		<th>Version
+	</tr>
+	<tr valign="left">
+		<td>JBoss</td>
+		<td><a href="#install_jboss2x">2.x</a>, <a
+			href="#install_jboss3x">3.x</a></td>
+	</tr>
+	<tr valign="left">
+		<td>Oracle9iAS Container for J2EE (OC4J)</td>
+		<td><a href="#install_oracle9iAS">9.0.3</a></td>
+	</tr>
+	<tr valign="left">
+		<td>Jakarta Tomcat</td>
+		<td><a href="#install_tomcat">3.x</a></td>
+	</tr>
+	<tr valign="left">
+		<td>JOnAS EJB</td>
+		<td><a href="#install_jonas_ejb">2.3.x</a></td>
+	</tr>
+	<!--tr valign="left">
     <td>BEA WebLogic Portal</td>
     <td><a href="#install_bea_portal40">4.0</a></td>
   </tr-->
-  <tr valign="left">
-    <td>BEA WebLogic</td>
-    <td><a href="#install_bea_portal40">4.0</a>, <a href="#install_bea51">5.1</a>, <a href="#install_bea_server61">6.1</a>, 
-      <a href="#install_bea_server70">7.0</a></td>
-  </tr>
-  <tr valign="left">
-    <td>ATG Dynamo</td>
-    <td><a href="#install_atg">5.1</a></td>
-  </tr>
-  <tr valign="left">
-    <td>Sun iPlanet</td>
-    <td><a href="#install_sun">6.0</a></td>
-  </tr>
-  <tr valign="left">
-    <td>IBM WebSphere</td>
-    <td><a href="#install_ibm">4.0</a></td>
-  </tr>
-  <tr valign="left">
-    <td>Caucho Resin</td>
-    <td><a href="#install_caucho">2.1.x</a></td>
-  </tr>
+	<tr valign="left">
+		<td>BEA WebLogic</td>
+		<td><a href="#install_bea_portal40">4.0</a>, <a
+			href="#install_bea51">5.1</a>, <a href="#install_bea_server61">6.1</a>,
+		<a href="#install_bea_server70">7.0</a></td>
+	</tr>
+	<tr valign="left">
+		<td>ATG Dynamo</td>
+		<td><a href="#install_atg">5.1</a></td>
+	</tr>
+	<tr valign="left">
+		<td>Sun iPlanet</td>
+		<td><a href="#install_sun">6.0</a></td>
+	</tr>
+	<tr valign="left">
+		<td>IBM WebSphere</td>
+		<td><a href="#install_ibm">4.0</a></td>
+	</tr>
+	<tr valign="left">
+		<td>Caucho Resin</td>
+		<td><a href="#install_caucho">2.1.x</a></td>
+	</tr>
 </table>
 
-<p>IronTrack SQL also supports unspecified application servers and applications that do not run on application servers. For more information, see <a href="#install_unspecified">Installing IronTrack SQL on an Unspecified Application Server</a>.</p>
+<p>IronTrack SQL also supports unspecified application servers and
+applications that do not run on application servers. For more
+information, see <a href="#install_unspecified">Installing IronTrack
+SQL on an Unspecified Application Server</a>.</p>
 
-<a name="install_preinstall_system_reqs"></a> 
+<a name="install_preinstall_system_reqs"></a>
 
 <h3>System Requirements</h3>
 
-<p>IronTrack SQL requires the following minimum disk space and memory:</p>
+<p>IronTrack SQL requires the following minimum disk space and
+memory:</p>
 
 <ul>
-  <li>Disk Space &mdash; 5MB</li>
-  <li>Memory &mdash; 120MB</li>
+	<li>Disk Space &mdash; 5MB</li>
+	<li>Memory &mdash; 120MB</li>
 </ul>
 
-<p><b>Note</b>: Logging is enabled by default, and the IronTrack SQL log file, <b>spy.log</b>, can get very large. To accommodate the growth of <b>spy.log</b>, it is recommended that you reserve significant disk space beyond these minimum requirements. For information on disabling logging, see <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p><b>Note</b>: Logging is enabled by default, and the IronTrack SQL
+log file, <b>spy.log</b>, can get very large. To accommodate the growth
+of <b>spy.log</b>, it is recommended that you reserve significant disk
+space beyond these minimum requirements. For information on disabling
+logging, see <a href="configure.html">Advanced Configuration of
+IronTrack SQL</a>.</p>
 
 <a name="install_preinstall_dir_structure"></a>
 
@@ -203,238 +273,408 @@
 
 <p>Following is the directory structure of IronTrack SQL:</p>
 
-<blockquote> 
-  <p class="code"> IronTrack SQL<br>
-    &nbsp;&nbsp;docs<br>
-    &nbsp;&nbsp;ico<br>
-    &nbsp;&nbsp;license<br>
-    &nbsp;&nbsp;lib<br>
-    &nbsp;&nbsp;Uninstaller<br>
-    irongrid.properties<br>
-    irontracksql.jar<br>
-    log4j-1.2.8.jar<br>
-    p6spy.jar<br>
-    spy.properties<br>
-  </p>
+<blockquote>
+<p class="code">IronTrack SQL<br>
+&nbsp;&nbsp;docs<br>
+&nbsp;&nbsp;ico<br>
+&nbsp;&nbsp;license<br>
+&nbsp;&nbsp;lib<br>
+&nbsp;&nbsp;Uninstaller<br>
+irongrid.properties<br>
+irontracksql.jar<br>
+log4j-1.2.8.jar<br>
+p6spy.jar<br>
+spy.properties<br>
+</p>
 </blockquote>
 
-<p>The <b>/docs</b> directory contains 	<b>releaseNotesIronEyeSQL.html</b> and the HTML help files for IronTrack SQL. You can open <b>index.html</b> to view all of the files in the IronTrack SQL help system.</p>
+<p>The <b>/docs</b> directory contains <b>releaseNotesIronEyeSQL.html</b>
+and the HTML help files for IronTrack SQL. You can open <b>index.html</b>
+to view all of the files in the IronTrack SQL help system.</p>
 
 <p>The <b>/ico</b> directory contains the following files:</p>
 
-<blockquote> 
-  <p class="code"> irongrid.ico<br>
-    uninstall.ico<br>
-  </p>
+<blockquote>
+<p class="code">irongrid.ico<br>
+uninstall.ico<br>
+</p>
 </blockquote>
 
 <p>The <b>/lib</b> directory contains the following files:</p>
 
-<blockquote> 
-  <p class="code"> alloy.jar<br>
-    commons-pool.jar<br>
-    jakarta-regexp-&lt;version&gt.jar<br>
-    janino.jar<br>
-    jce-jdk&lt;version&gt;.jar<br>
-    jcommon&lt;version&gt;.jar<br>
-    jdom.jar<br>
-    jfreechart&lt;version&gt;.jar<br>
-    layout.jar<br>
-    nanoxml.jar<br>
-    nanoxml-sax.jar<br>
-    sax2.jar<br>
-    sax2-ext.jar<br>
-  </p>
+<blockquote>
+<p class="code">alloy.jar<br>
+commons-pool.jar<br>
+jakarta-regexp-&lt;version&gt.jar<br>
+janino.jar<br>
+jce-jdk&lt;version&gt;.jar<br>
+jcommon&lt;version&gt;.jar<br>
+jdom.jar<br>
+jfreechart&lt;version&gt;.jar<br>
+layout.jar<br>
+nanoxml.jar<br>
+nanoxml-sax.jar<br>
+sax2.jar<br>
+sax2-ext.jar<br>
+</p>
 </blockquote>
 
 <p>The <b>/license</b> directory contains the following files:</p>
 
 <blockquote>
-  <p class="code">apache-license-1.1.txt<br>
-  GNU-LGPL-2.1.txt<br>
-  izpack-license.txt<br>
-  janino.txt<br>
-  jdom-license.txt<br>
-  nanoxml-license.txt<br>
-  p6spy-license.txt<br>
-  </p>
+<p class="code">apache-license-1.1.txt<br>
+GNU-LGPL-2.1.txt<br>
+izpack-license.txt<br>
+janino.txt<br>
+jdom-license.txt<br>
+nanoxml-license.txt<br>
+p6spy-license.txt<br>
+</p>
 </blockquote>
 
 <p>The <b>/Uninstaller</b> directory contains the following files:</p>
 
-<blockquote> 
-  <p class="code"> uninstaller.jar </p>
+<blockquote>
+<p class="code">uninstaller.jar</p>
 </blockquote>
 
-<a name="install_unspecified"></a> 
+<a name="install_unspecified"></a>
 
 <h2>Installing IronTrack SQL on an Unspecified Application Server</h2>
 
-<p>The following installation instructions are intended for use with application servers not listed previously and applications that do not use application servers.</p>
+<p>The following installation instructions are intended for use with
+application servers not listed previously and applications that do not
+use application servers.</p>
 
 <p>To install IronTrack SQL on an unspecified application server</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  </ul>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b> files in your classpath by copying them to your <b>ext</b> directory. If you are using an EJB server it probably has its own <b>ext</b> directory. If you are not using an EJB server, use the JDK <b>ext</b> directory (<b>JDK_HOME/jre/lib/ext</b>) or add them to your system classpath.</li>
-  <p><b>Note</b>: If you are adding <b>irontracksql.jar</b> and <b>p6spy.jar</b> to your classpath, you must reference the JAR filename directly. For example:</p>
-  <p class="code">CLASSPATH=c:\irontrack\irontracksql.jar.</p>
-  <p><b>Note</b>: If you are using an EJB server, adding the <b>irontracksql.jar</b> file and <b>p6spy.jar</b> file to your system classpath may not work. Some EJB servers ignore the system classpath, setting their own on startup.</p>
-  <li>Move <b>spy.properties</b> into a directory listed in your classpath. For example, if your classpath is <b>C:\irontrack\irontracksql.jar;c:\java</b>, copy it to the <b>java</b> directory. Unlike JAR files, you do not directly reference your property file in the classpath.</li>
-  <li>Modify your application server or application to use the P6Spy database driver.</li>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=weblogic.jdbc.oci.Driver </p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server. You also can wrap a data source. For information on wrapping a data source, see Data Source Replacement in <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg"  alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	</ul>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b>
+	files in your classpath by copying them to your <b>ext</b> directory.
+	If you are using an EJB server it probably has its own <b>ext</b>
+	directory. If you are not using an EJB server, use the JDK <b>ext</b>
+	directory (<b>JDK_HOME/jre/lib/ext</b>) or add them to your system
+	classpath.</li>
+	<p><b>Note</b>: If you are adding <b>irontracksql.jar</b> and <b>p6spy.jar</b>
+	to your classpath, you must reference the JAR filename directly. For
+	example:</p>
+	<p class="code">CLASSPATH=c:\irontrack\irontracksql.jar.</p>
+	<p><b>Note</b>: If you are using an EJB server, adding the <b>irontracksql.jar</b>
+	file and <b>p6spy.jar</b> file to your system classpath may not work.
+	Some EJB servers ignore the system classpath, setting their own on
+	startup.</p>
+	<li>Move <b>spy.properties</b> into a directory listed in your
+	classpath. For example, if your classpath is <b>C:\irontrack\irontracksql.jar;c:\java</b>,
+	copy it to the <b>java</b> directory. Unlike JAR files, you do not
+	directly reference your property file in the classpath.</li>
+	<li>Modify your application server or application to use the P6Spy
+	database driver.</li>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=weblogic.jdbc.oci.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server. You also can wrap a data source. For information on wrapping a
+	data source, see Data Source Replacement in <a href="configure.html">Advanced
+	Configuration of IronTrack SQL</a>.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated. The log file contains a list of all of the database
+statements executed. You can change both the destination of <b>spy.log</b>
+and what it logs by editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
-<a name="install_jboss2x"></a> 
+<a name="install_jboss2x"></a>
 
 <h2>Installing IronTrack SQL on JBoss 2.x</h2>
 
 <p>To install IronTrack SQL on the JBoss 2.x server</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.</li>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to your <b>\ext</b> directory. For example:</li>
-  <p class="code">C:\JBoss-2.2.2_Tomcat-3.2.2\jboss\lib\ext</p>
-  <li>Move the <b>spy.properties</b> file to your <b>db</b> directory, which is part of the JBoss classpath. For example:</li>
-  <p class="code">C:\JBoss-2.2.2_Tomcat-3.2.2\jboss\db</p>
-  <li>Modify the <b>jboss.jcml</b> file in the Tomcat <b>conf</b> directory to use the IronTrack SQL driver.</li>
-  <ol type="a">
-    <li>Remove your existing driver from the <b>Drivers</b> attribute.</li>
-    <li>Replace it with the P6Spy driver. Following is an example of an edited <b>jboss.jcml</b> file:</li>
-    <p class="code">&lt;mbean code="org.jboss.jdbc.JdbcProvider"name="DefaultDomain:service=JdbcProvider"&gt;<br>
-      &lt;attribute name="Drivers"&gtcom.p6spy.engine.spy.P6SpyDriver&lt;/attribute&gt;<br>
-      &lt;/mbean&gt;</p>
-  </ol>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=oracle.jdbc.driver.OracleDriver</p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> menu to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg"  alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.</li>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b>
+	files from the top-level IronTrack SQL directory to your <b>\ext</b>
+	directory. For example:</li>
+	<p class="code">C:\JBoss-2.2.2_Tomcat-3.2.2\jboss\lib\ext</p>
+	<li>Move the <b>spy.properties</b> file to your <b>db</b>
+	directory, which is part of the JBoss classpath. For example:</li>
+	<p class="code">C:\JBoss-2.2.2_Tomcat-3.2.2\jboss\db</p>
+	<li>Modify the <b>jboss.jcml</b> file in the Tomcat <b>conf</b>
+	directory to use the IronTrack SQL driver.</li>
+	<ol type="a">
+		<li>Remove your existing driver from the <b>Drivers</b>
+		attribute.</li>
+		<li>Replace it with the P6Spy driver. Following is an example of
+		an edited <b>jboss.jcml</b> file:</li>
+		<p class="code">&lt;mbean
+		code="org.jboss.jdbc.JdbcProvider"name="DefaultDomain:service=JdbcProvider"&gt;<br>
+		&lt;attribute
+		name="Drivers"&gtcom.p6spy.engine.spy.P6SpyDriver&lt;/attribute&gt;<br>
+		&lt;/mbean&gt;</p>
+	</ol>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=oracle.jdbc.driver.OracleDriver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> menu to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the bin directory of the JBoss server. The log file contains a list of all of the database statements executed. You can change both the destination of spy.log and what it logs by editing the spy.properties file; refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
-<a name="install_jboss3x"></a> 
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the bin directory of the JBoss server. The log file
+contains a list of all of the database statements executed. You can
+change both the destination of spy.log and what it logs by editing the
+spy.properties file; refer to <a href="configure.html">Advanced
+Configuration of IronTrack SQL</a>.</p>
+<a name="install_jboss3x"></a>
 <h2>Installing IronTrack SQL on JBoss 3.x</h2>
 <p>To install IronTrack SQL on JBoss 3.x</p>
-<p><b>Note</b>: The following procedure assumes you are using the default server residing in <b>JBOSS_DIST\server\default</b>, in which <b>JBOSS_DIST</b> is the directory in which JBoss is installed. These instructions are intended for wrapping driver services, not XADataSource services. </p>
+<p><b>Note</b>: The following procedure assumes you are using the
+default server residing in <b>JBOSS_DIST\server\default</b>, in which <b>JBOSS_DIST</b>
+is the directory in which JBoss is installed. These instructions are
+intended for wrapping driver services, not XADataSource services.</p>
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to Running the <a href="#install_running">IronTrack SQL Installer</a>.</li>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to your <b>\ext</b> directory of your server. For example:</li>
-  <p class="code">C:\java\jboss-3.0.4\server\default\lib </p>
-  <li>Add <b>spy.properties</b> to your JBoss classpath. By default, the JBoss classpath set up by <b>run.bat</b> only points to <b>tools.jar</b> and <b>run.jar</b>. 
-    You may need to add a directory, via <b>JBOSS_CLASSPATH</b>, to this path. Following is an example of an edited JBoss classpath:</li>
-  <p class="code">C:\> set JBOSS_CLASSPATH=C:\java\jboss-3.0.4\server\default\db</p>
-  <p class="code">C:\> copy C:\java\irontrack\spy.* C:\java\jboss-3.0.4\server\default\db</p>
-  <li>Create an <b>irontrack-service.xml</b> file in <b>JBOSS_DIST\server\deploy</b>.</li>
-  <li>Set the <b>config-property</b> element named DriverClass to P6SpyDriver in <b>irontrack-service.xml</b>, by basing a new XML file on one of the examples in the <b>JBOSS_DIST\docs\examples\jca</b> directory. You can also configure <b>JndiName</b> and <b>ConnectionURL</b> for your specific implementation. An example of the pertinent portions (not the complete XML file) of a <b>irontrack-service.xml</b> file follows:</li>
-  <p class="code">&lt;attribute name="JndiName"&gt;MySqlDS&lt/attribute&gt;<br>
-    &lt;attribute name="ManagedConnectionFactoryProperties"&gt;<br>
-    &lt;properties&gt<br>
-    &lt;config-property name="ConnectionURL" type="java.lang.String"&gt;jdbc:mysql://localhost/localdb&lt;/config-property&gt;<br>
-&lt;config-propertyname="DriverClass"type="java.lang.String"&gt;com.p6spy.engine.spy.P6SpyDriver&lt;/config-property&gt;<br>
-    .<br>
-    .<br>
-    .</p>
-  <p><b>Note</b>: Make sure there is not a service that explicitly loads the wrapped driver. A service of this type will load the specified driver before P6SpyDriver, resulting in unwrapped connections.</p>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=org.gjt.mm.musql.Driver </p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg"  alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to
+	Running the <a href="#install_running">IronTrack SQL Installer</a>.</li>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b>
+	files from the top-level IronTrack SQL directory to your <b>\ext</b>
+	directory of your server. For example:</li>
+	<p class="code">C:\java\jboss-3.0.4\server\default\lib</p>
+	<li>Add <b>spy.properties</b> to your JBoss classpath. By default,
+	the JBoss classpath set up by <b>run.bat</b> only points to <b>tools.jar</b>
+	and <b>run.jar</b>. You may need to add a directory, via <b>JBOSS_CLASSPATH</b>,
+	to this path. Following is an example of an edited JBoss classpath:</li>
+	<p class="code">C:\> set
+	JBOSS_CLASSPATH=C:\java\jboss-3.0.4\server\default\db</p>
+	<p class="code">C:\> copy C:\java\irontrack\spy.*
+	C:\java\jboss-3.0.4\server\default\db</p>
+	<li>Create an <b>irontrack-service.xml</b> file in <b>JBOSS_DIST\server\deploy</b>.</li>
+	<li>Set the <b>config-property</b> element named DriverClass to
+	P6SpyDriver in <b>irontrack-service.xml</b>, by basing a new XML file
+	on one of the examples in the <b>JBOSS_DIST\docs\examples\jca</b>
+	directory. You can also configure <b>JndiName</b> and <b>ConnectionURL</b>
+	for your specific implementation. An example of the pertinent portions
+	(not the complete XML file) of a <b>irontrack-service.xml</b> file
+	follows:</li>
+	<p class="code">&lt;attribute
+	name="JndiName"&gt;MySqlDS&lt/attribute&gt;<br>
+	&lt;attribute name="ManagedConnectionFactoryProperties"&gt;<br>
+	&lt;properties&gt<br>
+	&lt;config-property name="ConnectionURL"
+	type="java.lang.String"&gt;jdbc:mysql://localhost/localdb&lt;/config-property&gt;<br>
+	&lt;config-propertyname="DriverClass"type="java.lang.String"&gt;com.p6spy.engine.spy.P6SpyDriver&lt;/config-property&gt;<br>
+	.<br>
+	.<br>
+	.</p>
+	<p><b>Note</b>: Make sure there is not a service that explicitly
+	loads the wrapped driver. A service of this type will load the
+	specified driver before P6SpyDriver, resulting in unwrapped
+	connections.</p>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=org.gjt.mm.musql.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the <b>bin</b> directory of the JBoss server. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the <b>bin</b> directory of the JBoss server. The log file
+contains a list of all of the database statements executed. You can
+change both the destination of <b>spy.log</b> and what it logs by
+editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
-<a name="install_oracle9iAS"></a> 
+<a name="install_oracle9iAS"></a>
 
 <h2>Installing IronTrack SQL on Oracle9iAS Container for J2EE</h2>
 
 <p>To install IronTrack SQL on Oracle9iAS Container for J2EE (OC4J)</p>
 
 <ol>
-  <li><li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.</li>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, <b>spy.properties</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to your <b>\ext</b> directory.</li>
-  <li>Modify the <b>data-sources.xml</b> file located in the <b>&lt;OC4J-HOME&gt;/J2EE/home/config</b> directory by setting the P6SpyDriver as the default JDBC driver as shown in     the <b>connection-driver</b> attribute in the following example:</li>
-  <p class="code">&lt;data-source name="oracleDS" class="com.evermind.sql.DriverManagerDataSource" connection-driver="com.p6spy.engine.spy.P6SpyDriver" location="jdbc/oracleDS"     ejb-location="jdbc/oracleDS" xa-location="jdbc/xa/oracleXADS" url="jdbc:oracle:thin:@localhost:1521:oracleDS" inactivity-timeout="30" username="sonntag" password="shatta17"/&gt;</p>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped database driver. (This is the original value specified in <b>connection-driver</b>.) For example, if <b>Orcle.JDBC.driver.OracleDriver.jdbcDriver</b> (the default database) was the original <b>connection-driver</b> value, the <b>realdriver</b> value is set to <b>Oracle.JDBC.driver.OracleDriver</b>.</li>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>When starting the server, run the following command to indicate to OC4J where the <b>spy.properties</b> file is located:</li>
-  <p class="code">java -Dp6.home=OC4J/J2EE/home/lib</p>
+	<li>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.</li>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, <b>spy.properties</b>,
+	and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL
+	directory to your <b>\ext</b> directory.</li>
+	<li>Modify the <b>data-sources.xml</b> file located in the <b>&lt;OC4J-HOME&gt;/J2EE/home/config</b>
+	directory by setting the P6SpyDriver as the default JDBC driver as
+	shown in the <b>connection-driver</b> attribute in the following
+	example:</li>
+	<p class="code">&lt;data-source name="oracleDS"
+	class="com.evermind.sql.DriverManagerDataSource"
+	connection-driver="com.p6spy.engine.spy.P6SpyDriver"
+	location="jdbc/oracleDS" ejb-location="jdbc/oracleDS"
+	xa-location="jdbc/xa/oracleXADS"
+	url="jdbc:oracle:thin:@localhost:1521:oracleDS" inactivity-timeout="30"
+	username="sonntag" password="shatta17"/&gt;</p>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. (This is the original
+	value specified in <b>connection-driver</b>.) For example, if <b>Orcle.JDBC.driver.OracleDriver.jdbcDriver</b>
+	(the default database) was the original <b>connection-driver</b> value,
+	the <b>realdriver</b> value is set to <b>Oracle.JDBC.driver.OracleDriver</b>.</li>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>When starting the server, run the following command to
+	indicate to OC4J where the <b>spy.properties</b> file is located:</li>
+	<p class="code">java -Dp6.home=OC4J/J2EE/home/lib</p>
 </ol>
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the <b>&lt;OC4J-HOME&gt;/J2EE/home/lib</b> directory of the OC4J server. The log file contains a list of all of the database statements executed. You can change both the destination of spy.log and what it logs by editing the spy.properties file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the <b>&lt;OC4J-HOME&gt;/J2EE/home/lib</b> directory of the
+OC4J server. The log file contains a list of all of the database
+statements executed. You can change both the destination of spy.log and
+what it logs by editing the spy.properties file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
-<a name="install_tomcat"></a> 
+<a name="install_tomcat"></a>
 
 <h2>Installing IronTrack SQL on Jakarta Tomcat 3.x</h2>
 
 <p>To install IronTrack SQL on Jakarta Tomcat 3.x</p>
 
-<p><b>Note</b>: Since you typically write or otherwise obtain your own Connection Pool when using Tomcat, this procedure may differ by application.</p>
+<p><b>Note</b>: Since you typically write or otherwise obtain your
+own Connection Pool when using Tomcat, this procedure may differ by
+application.</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.</li>
-  <li>Move the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to the <b>\lib</b> directory of your web application. For example:
-  <p class="code">C:\jakarta-tomcat-3.2.1\webapps\p6\WEB-INF\lib </p></li>
-  <li>Copy <b>spy.properties</b> to the <b>\classes</b> directory.
-  <p class="code">C:\jakarta-tomcat-3.2.1\webappp6\WEB-INF\classes</p></li>
-  <li>Modify Tomcat to use the P6Spy driver. Tomcat applications obtain their JDBC connection in a variety of ways. Most applications have the database driver name externalized as a configuration parameter. For example, in your <b>web.xml</b> file (which resides in <b>C:\jakarta-tomcat-3.2.1\webapps\p6\WEB-INF</b>) you may have something similar to the following:</li>
-  <p class="code">&lt;init-param&gt;<br>
-    &nbsp;&nbsp;&lt;param-name&gtdatabaseDriver&lt;/param-name&gt;<br>
-    &nbsp;&nbsp;&lt;param-value&gt;org.gjt.mm.mysql.Driver&lt;/param-value&gt;<br>
-    &lt;/init-param&gt;</p>
-  <p>In this case, the <b>databaseDriver</b> parameter has a value of <b>org.gjt.mm.mysql.Driver</b>, which is the MySql driver. Wherever this configuration information is stored, change the driver name (<b>org.gjt.mm.mysql.Driver</b>, in this example) to <b>com.p6spy.engine.spy.P6SpyDriver</b>:</p>
-  <p class="code">&lt;init-param&gt;<br>
-    &nbsp;&nbsp;&lt;param-name&gtdatabaseDriver&lt;/param-name&gt;<br>
-    &nbsp;&nbsp;&lt;param-value&gt;com.p6spy.engine.spy.P6SpyDriver&lt;/param-value&gt;<br>
-    &lt;/init-param&gt;</p>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=org.gjt.mm.mysql.Driver</p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.</li>
+	<li>Move the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b>
+	files from the top-level IronTrack SQL directory to the <b>\lib</b>
+	directory of your web application. For example:
+	<p class="code">C:\jakarta-tomcat-3.2.1\webapps\p6\WEB-INF\lib</p>
+	</li>
+	<li>Copy <b>spy.properties</b> to the <b>\classes</b> directory.
+	<p class="code">C:\jakarta-tomcat-3.2.1\webappp6\WEB-INF\classes</p>
+	</li>
+	<li>Modify Tomcat to use the P6Spy driver. Tomcat applications
+	obtain their JDBC connection in a variety of ways. Most applications
+	have the database driver name externalized as a configuration
+	parameter. For example, in your <b>web.xml</b> file (which resides in <b>C:\jakarta-tomcat-3.2.1\webapps\p6\WEB-INF</b>)
+	you may have something similar to the following:</li>
+	<p class="code">&lt;init-param&gt;<br>
+	&nbsp;&nbsp;&lt;param-name&gtdatabaseDriver&lt;/param-name&gt;<br>
+	&nbsp;&nbsp;&lt;param-value&gt;org.gjt.mm.mysql.Driver&lt;/param-value&gt;<br>
+	&lt;/init-param&gt;</p>
+	<p>In this case, the <b>databaseDriver</b> parameter has a value of
+	<b>org.gjt.mm.mysql.Driver</b>, which is the MySql driver. Wherever
+	this configuration information is stored, change the driver name (<b>org.gjt.mm.mysql.Driver</b>,
+	in this example) to <b>com.p6spy.engine.spy.P6SpyDriver</b>:</p>
+	<p class="code">&lt;init-param&gt;<br>
+	&nbsp;&nbsp;&lt;param-name&gtdatabaseDriver&lt;/param-name&gt;<br>
+	&nbsp;&nbsp;&lt;param-value&gt;com.p6spy.engine.spy.P6SpyDriver&lt;/param-value&gt;<br>
+	&lt;/init-param&gt;</p>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=org.gjt.mm.mysql.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the directory from which you launched the application. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the directory from which you launched the application. The
+log file contains a list of all of the database statements executed. You
+can change both the destination of <b>spy.log</b> and what it logs by
+editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
-<a name="install_jonas_ejb"></a> 
+<a name="install_jonas_ejb"></a>
 
-<h2>Installing IronTrack SQL on JOnAS EJB </h2>
+<h2>Installing IronTrack SQL on JOnAS EJB</h2>
 
 <p>To install IronTrack SQL on JOnAS EJB 2.3x</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Include the <b>irontracksql.jar</b> file in the classpath of the JOnAS EJB server. For example, if <b>irontracksql.jar</b> is in the <b>/opt/Provider6</b> directory, add <b>/opt/Provider6/irontracksql.jar</b> to the <b>XTRA_CLASSPATH</b> environment variable or directly edit the <b>config_env</b> script. </li>
-  <li>Move <b>spy.properties</b> to a directory that is part of your classpath. It is recommended that you move it to the directory in which your <b>jndi.properties</b> file resides.</li>
-  <li>Modify the <b><i>datasource</i>.properties</b> file (where <i>datasource</i> is the name of the data source) by replacing the database driver classname with the P6Spy database driver classname in the <b>datasource.classname</b> property. For example, update the <b>Oracle1.properties</b> file delivered with JOnAS by replacing <b>oracle.jdbc.driver.OracleDriver</b> with <b>com.p6spy.engine.spy.P6SpyDriver</b>. For example: </li>
-  <p class="code">datasource.name jdbc_1 datasource.description "Standard jdbc driver for Oracle" datasource.url jdbc:oracle:thin:scott/tiger@maltes:1521:ORA1 datasource.classname com.p6spy.engine.spy.P6SpyDriver ... </p>
-  <p><b>Note</b>: Database access configuration within JOnAS is described in a DataSource property file, such as <b>Oracle1.properties</b>. Refer to the <i>JOnAS Bean Programmer’s Guide</i> for more details. </p>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=oracle.jdbc.driver.OrcleDriver</p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Include the <b>irontracksql.jar</b> file in the classpath of
+	the JOnAS EJB server. For example, if <b>irontracksql.jar</b> is in the
+	<b>/opt/Provider6</b> directory, add <b>/opt/Provider6/irontracksql.jar</b>
+	to the <b>XTRA_CLASSPATH</b> environment variable or directly edit the
+	<b>config_env</b> script.</li>
+	<li>Move <b>spy.properties</b> to a directory that is part of your
+	classpath. It is recommended that you move it to the directory in which
+	your <b>jndi.properties</b> file resides.</li>
+	<li>Modify the <b><i>datasource</i>.properties</b> file (where <i>datasource</i>
+	is the name of the data source) by replacing the database driver
+	classname with the P6Spy database driver classname in the <b>datasource.classname</b>
+	property. For example, update the <b>Oracle1.properties</b> file
+	delivered with JOnAS by replacing <b>oracle.jdbc.driver.OracleDriver</b>
+	with <b>com.p6spy.engine.spy.P6SpyDriver</b>. For example:</li>
+	<p class="code">datasource.name jdbc_1 datasource.description
+	"Standard jdbc driver for Oracle" datasource.url
+	jdbc:oracle:thin:scott/tiger@maltes:1521:ORA1 datasource.classname
+	com.p6spy.engine.spy.P6SpyDriver ...</p>
+	<p><b>Note</b>: Database access configuration within JOnAS is
+	described in a DataSource property file, such as <b>Oracle1.properties</b>.
+	Refer to the <i>JOnAS Bean Programmerï¿½s Guide</i> for more details.</p>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=oracle.jdbc.driver.OrcleDriver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the directory from which you launched the application. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log </b>and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>. </p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the directory from which you launched the application. The
+log file contains a list of all of the database statements executed. You
+can change both the destination of <b>spy.log </b>and what it logs by
+editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
 <!--a name="install_bea"></a> 
 
@@ -448,143 +688,263 @@
   <li><a href="#install_bea51">BEA WebLogic 5.1</a></li>
 </ul-->
 
-<a name="install_bea_portal40"></a> 
+<a name="install_bea_portal40"></a>
 
 <h2>Installing IronTrack SQL on BEA WebLogic Portal 4.0</h2>
 
 <p>To install IronTrack SQL on BEA WebLogic Portal 4.0</p>
 
-<p><b>Note</b>: This example uses the default Stockportal (Avitek) application.</p>
+<p><b>Note</b>: This example uses the default Stockportal (Avitek)
+application.</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to <b><i>bea-home</i>\wlportal4.0\lib\ext</b>, where <i>bea-home</i> is the directory in which BEA WebLogic is installed.</li>
-  <li>Add <b>;%P13N_DIR%\lib\ext\irontracksql.jar</b> and <b>;%P13N_DIR%\lib\ext\p6spy.jar</b> to <b>EXT_CLASSPATH</b> in the <b>set-environment.bat</b> file. The <b>set-environment.bat</b> file resides in <b><i>bea-home</i>\wlportal4.0\bin\win32</b>. Do not include any trailing spaces after the new line.</li>
-  <li>Move <b>spy.properties</b> to <b><i>bea-home</i>\wlportal4.0\config\portalDomain</b> or to the application domain directory.</li>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=weblogic.jdbc.oci.Driver</p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>Add <b>;%P13N_DIR%\config\portalDomain</b> to the classpath in the <b>startPortal.bat</b> file. The path to <b>startPortal.bat</b> is <b><i>bea-home</i>\wlportal4.0\config\portalDomain</b>. Do not include any trailing spaces after the new line. </li>
-  <li>Modify WebLogic Portal to use the P6Spy driver. Either modify <b>config.xml</b> (which resides in <b><i>bea-home</i>\wlportal4.0\config\portalDomain</b>) directly or complete the following steps:
-  <ol type="a">
-    <li>Start WebLogic Portal by running <b>startPortal.bat</b>.</li>
-    <li>Start the Administration Console tool by navigating to <b>http://<i>your-host</i>:7501/console</b>, where <i>your-host</i> is the machine on which BEA WebLogic is installed.</li>
-    <li>Navigate to the <b><i>your-domain</i> -> Services -> JDBC -> Connection Pools</b> node (where <i>your-domain</i> is the domain name specified during the BEA WebLogic install) and set the Driver Classname for each Connection Pool to <i>com.p6spy.engine.spy.P6SpyDriver</i>.</li>
-  </ol></li>
-  <li>If you are using RDBMS Security Realm, configure IronTrack SQL to monitor your realms (in this example, <b>commercePool</b>, <b>dataSyncPool</b>, and <b>wlcsRealm</b>) by completing the following steps: 
-  <ol type="a">
-    <li>Using the Administration Console, navigate to the <i><b>your-domain</b></i> <b>-> Security -> Realms</b> node.</li>
-    <li>Select the <b>security</b> realm.</li>
-    <li>Click the <b>Database</b> tab.</li>
-    <li>Set the <b>Driver</b> parameter to <b>com.p6spy.engine.spy.P6SpyDriver</b>. </li>
-  </ol></li>
-  <li>Using the Administration Console, shut down WebLogic Portal.</li>
-  <li>Right-click on the <b><i>your-domain</i>->Servers-> <i>your-server node</i></b> and select <b>Stop this Server</b> from the pop-up menu.</li>
-  <li>Restart WebLogic Portal by running <b>startPortal.bat</b>.</li>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b>
+	files from the top-level IronTrack SQL directory to <b><i>bea-home</i>\wlportal4.0\lib\ext</b>,
+	where <i>bea-home</i> is the directory in which BEA WebLogic is
+	installed.</li>
+	<li>Add <b>;%P13N_DIR%\lib\ext\irontracksql.jar</b> and <b>;%P13N_DIR%\lib\ext\p6spy.jar</b>
+	to <b>EXT_CLASSPATH</b> in the <b>set-environment.bat</b> file. The <b>set-environment.bat</b>
+	file resides in <b><i>bea-home</i>\wlportal4.0\bin\win32</b>. Do not
+	include any trailing spaces after the new line.</li>
+	<li>Move <b>spy.properties</b> to <b><i>bea-home</i>\wlportal4.0\config\portalDomain</b>
+	or to the application domain directory.</li>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=weblogic.jdbc.oci.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Add <b>;%P13N_DIR%\config\portalDomain</b> to the classpath in
+	the <b>startPortal.bat</b> file. The path to <b>startPortal.bat</b> is
+	<b><i>bea-home</i>\wlportal4.0\config\portalDomain</b>. Do not include
+	any trailing spaces after the new line.</li>
+	<li>Modify WebLogic Portal to use the P6Spy driver. Either modify
+	<b>config.xml</b> (which resides in <b><i>bea-home</i>\wlportal4.0\config\portalDomain</b>)
+	directly or complete the following steps:
+	<ol type="a">
+		<li>Start WebLogic Portal by running <b>startPortal.bat</b>.</li>
+		<li>Start the Administration Console tool by navigating to <b>http://<i>your-host</i>:7501/console</b>,
+		where <i>your-host</i> is the machine on which BEA WebLogic is
+		installed.</li>
+		<li>Navigate to the <b><i>your-domain</i> -> Services -> JDBC
+		-> Connection Pools</b> node (where <i>your-domain</i> is the domain name
+		specified during the BEA WebLogic install) and set the Driver
+		Classname for each Connection Pool to <i>com.p6spy.engine.spy.P6SpyDriver</i>.</li>
+	</ol>
+	</li>
+	<li>If you are using RDBMS Security Realm, configure IronTrack SQL
+	to monitor your realms (in this example, <b>commercePool</b>, <b>dataSyncPool</b>,
+	and <b>wlcsRealm</b>) by completing the following steps:
+	<ol type="a">
+		<li>Using the Administration Console, navigate to the <i><b>your-domain</b></i>
+		<b>-> Security -> Realms</b> node.</li>
+		<li>Select the <b>security</b> realm.</li>
+		<li>Click the <b>Database</b> tab.</li>
+		<li>Set the <b>Driver</b> parameter to <b>com.p6spy.engine.spy.P6SpyDriver</b>.
+		</li>
+	</ol>
+	</li>
+	<li>Using the Administration Console, shut down WebLogic Portal.</li>
+	<li>Right-click on the <b><i>your-domain</i>->Servers-> <i>your-server
+	node</i></b> and select <b>Stop this Server</b> from the pop-up menu.</li>
+	<li>Restart WebLogic Portal by running <b>startPortal.bat</b>.</li>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in <b><i>bea-home</i>\wlportal4.0</b>. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in <b><i>bea-home</i>\wlportal4.0</b>. The log file contains a
+list of all of the database statements executed. You can change both the
+destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b>
+file. Refer to <a href="configure.html">Advanced Configuration of
+IronTrack SQL</a>.</p>
 
-<a name="install_bea51"></a> 
+<a name="install_bea51"></a>
 
 <h2>Installing IronTrack SQL on BEA WebLogic 5.1</h2>
 
 <p>To install IronTrack SQL on BEA WebLogic 5.1</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Edit <b>startWeblogic.sh</b>, by putting <b>irontracksql.jar</b> and the directory path of <b>spy.properties</b> in the <b>JAVA_CLASSPATH</b>.</li>
-  <li>Edit <b>weblogic.properties</b> (Connection Pool), by replacing the JDBC class driver with <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li> 
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=weblogic.jdbc.oci.Driver </p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Edit <b>startWeblogic.sh</b>, by putting <b>irontracksql.jar</b>
+	and the directory path of <b>spy.properties</b> in the <b>JAVA_CLASSPATH</b>.</li>
+	<li>Edit <b>weblogic.properties</b> (Connection Pool), by
+	replacing the JDBC class driver with <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=weblogic.jdbc.oci.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the WebLogic home directory. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the WebLogic home directory. The log file contains a list
+of all of the database statements executed. You can change both the
+destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b>
+file. Refer to <a href="configure.html">Advanced Configuration of
+IronTrack SQL</a>.</p>
 
 <p><a name="install_bea_server61"></a></p>
 
-<h2>Installing IronTrack SQL on BEA WebLogic Server 6.1</h2> 
+<h2>Installing IronTrack SQL on BEA WebLogic Server 6.1</h2>
 
 <p>To install IronTrack SQL on BEA WebLogic Server 6.1</p>
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to <b><i>bea-home</i>\wlserver6.1\lib\ext</b>, where <i>bea-home</i> is the directory in which BEA WebLogic is installed.</li>
-  <li>Move <b>spy.properties</b> to <i><b>bea-home</b></i><b>\wlserver6.1\config\<i>your-domain</i></b>, where <i>your-domain</i> is the domain name specified during the BEA WebLogic install.</li>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=weblogic.jdbc.oci.Driver </p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>Add <b>;.\lib\ext\irontracksql.jar;.\lib\ext\p6spy.jar;.\config\&lt;<i>your-domain</i>&gt;</b> to the classpath in the <b>startWebLogic.cmd</b> file.</li>
-  <p>The <b>startWebLogic.cmd</b> file resides in <i><b>bea-home</b></i><b>\wlserver6.1\config\<i>your-domain</i></b>. Do not include any trailing spaces after the new line. This adds <b>irontracksql.jar</b> and <b>spy.properties</b> to the classpath.</p>
-  <li>Modify WebLogic Server to use the P6Spy driver. Either modify <b>config.xml</b> which resides in <i><b>bea-home</b></i><b>\wlserver6.1\config\<i>your-domain</i></b>)   directly or complete the following steps:
-  <ol type="a">
-    <li>Start WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
-    <li>Start the Administration Console tool by navigating to <b>http://&lt;<i>your-host</i>&gt;:&lt;<i>port number</i>&gt;/console</b>.</li>
-    <li>Navigate to the <b><i>your-domain</i> -&gt; Services -&gt; JDBC -&gt; Connection Pools</b> node and set the driver classname for each connection pool to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
-  </ol></li>
-  <li>If you are using RDBMS Security Realm, configure IronTrack SQL to monitor your realms (in this example, <b>commercePool</b>, <b>dataSyncPool</b>, and <b>wlcsRealm</b>) by completing the following steps:
-  <ol type="a">
-    <li>Using the Administration Console, navigate to the <i><b>your-domain</b></i> <b>-&gt; Security -&gt; Realms</b> node.</li>
-    <li>Select the <b>security</b> realm.</li>
-	<li>Click the <b>Database</b> tab.</li>
-    <li>Set the <b>Driver</b> parameter to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
-  </ol></li>
-  <li>Using the Administration Console, shut down WebLogic Server.</li>
-  <li>Right-click on the <i><b>your-domain</b></i> <b>-> Servers -> <i>your-server</i></b> node and select <b>Stop this Server</b> from the pop-up menu.</li>
-  <li>Restart WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, and <b>log4j-1.2.8.jar</b>
+	files from the top-level IronTrack SQL directory to <b><i>bea-home</i>\wlserver6.1\lib\ext</b>,
+	where <i>bea-home</i> is the directory in which BEA WebLogic is
+	installed.</li>
+	<li>Move <b>spy.properties</b> to <i><b>bea-home</b></i><b>\wlserver6.1\config\<i>your-domain</i></b>,
+	where <i>your-domain</i> is the domain name specified during the BEA
+	WebLogic install.</li>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=weblogic.jdbc.oci.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Add <b>;.\lib\ext\irontracksql.jar;.\lib\ext\p6spy.jar;.\config\&lt;<i>your-domain</i>&gt;</b>
+	to the classpath in the <b>startWebLogic.cmd</b> file.</li>
+	<p>The <b>startWebLogic.cmd</b> file resides in <i><b>bea-home</b></i><b>\wlserver6.1\config\<i>your-domain</i></b>.
+	Do not include any trailing spaces after the new line. This adds <b>irontracksql.jar</b>
+	and <b>spy.properties</b> to the classpath.</p>
+	<li>Modify WebLogic Server to use the P6Spy driver. Either modify
+	<b>config.xml</b> which resides in <i><b>bea-home</b></i><b>\wlserver6.1\config\<i>your-domain</i></b>)
+	directly or complete the following steps:
+	<ol type="a">
+		<li>Start WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
+		<li>Start the Administration Console tool by navigating to <b>http://&lt;<i>your-host</i>&gt;:&lt;<i>port
+		number</i>&gt;/console</b>.</li>
+		<li>Navigate to the <b><i>your-domain</i> -&gt; Services
+		-&gt; JDBC -&gt; Connection Pools</b> node and set the driver classname
+		for each connection pool to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
+	</ol>
+	</li>
+	<li>If you are using RDBMS Security Realm, configure IronTrack SQL
+	to monitor your realms (in this example, <b>commercePool</b>, <b>dataSyncPool</b>,
+	and <b>wlcsRealm</b>) by completing the following steps:
+	<ol type="a">
+		<li>Using the Administration Console, navigate to the <i><b>your-domain</b></i>
+		<b>-&gt; Security -&gt; Realms</b> node.</li>
+		<li>Select the <b>security</b> realm.</li>
+		<li>Click the <b>Database</b> tab.</li>
+		<li>Set the <b>Driver</b> parameter to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
+	</ol>
+	</li>
+	<li>Using the Administration Console, shut down WebLogic Server.</li>
+	<li>Right-click on the <i><b>your-domain</b></i> <b>-> Servers
+	-> <i>your-server</i></b> node and select <b>Stop this Server</b> from the
+	pop-up menu.</li>
+	<li>Restart WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in <i><b>bea-home</b></i><b>\wlserver6.1</b>. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in <i><b>bea-home</b></i><b>\wlserver6.1</b>. The log file
+contains a list of all of the database statements executed. You can
+change both the destination of <b>spy.log</b> and what it logs by
+editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
-<a name="install_bea_server70"></a> 
+<a name="install_bea_server70"></a>
 
 <h2>Installing IronTrack SQL on BEA WebLogic Server 7.0</h2>
 
 <p>To install IronTrack SQL on BEA WebLogic Server 7.0</p>
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Copy <b>irontracksql.jar</b>, <b>log4j-1.2.8.jar</b>, <b>p6spy.jar</b> and <b>spy.properties</b> from the top-level IronTrack SQL directory to <b><i>bea-home</i>\weblogic700\server\ext</b>, where <i>bea-home</i> is the directory in which BEA WebLogic is installed.</li>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=weblogic.jdbc.oci.Driver </p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>Add the following to the classpath in the script that starts the application to monitor:</li>
-  <p class="code"><i>bea-home</i>\weblogic700\server\ext\irontracksql.jar <br>
-    <i>bea-home</i>\weblogic700\server\ext\p6spy.jar<br>
-    bea-home\weblogic700\server\ext</p>
-  <p><b>Note</b>: Do not include any trailing spaces after the new line.</p>
-  <li>Modify WebLogic Server to use the P6Spy driver. Either modify <b>config.xml</b> (which resides in <b><i>bea-home</i>\user_projects\<i>your-domain</i></b>) directly or complete the following steps:</li>
-  <ol type="a">
-    <li>Start WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
-    <li>Start the Administration Console tool by navigating to <b>http://<i>app_server-host</i>:<i>port_number</i>/console</b>, where <i>app_server-host</i> is the name of the system on which the application server is running, and <i>port_number</i> is the port number through which the applications server communicates.</li>
-    <li>Navigate to the <b><i>your-domain</i> -> Services -> JDBC -&> Connection Pools</b> node and set the driver classname for each connection pool to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
-  </ol>
-  <li>If you are using RDBMS Security Realm, configure IronTrack SQL to monitor your realms (in this example, <b>commercePool</b>, <b>dataSyncPool</b>, and <b>wlcsRealm</b>) by completing the following steps:</li>
-  <ol type="a">
-    <li>Using the Administration Console, navigate to the <b><i>your-domain</i> -&gt; Security -&gt; Realms</b> node. Select the <b>security</b> realm.</li>
-    <li>Click the <b>Database</b> tab.</li>
-    <li>Set the Driver parameter to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
-  </ol>
-  <li>Using the Administration Console, shut down WebLogic Server.</li>
-  <li>Right-click on the <b><i>your-domain</i> -> Servers -> <i>your-server</i></b> node and select <b>Stop this Server</b> from the pop-up menu.</li>
-  <li>Restart WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Copy <b>irontracksql.jar</b>, <b>log4j-1.2.8.jar</b>, <b>p6spy.jar</b>
+	and <b>spy.properties</b> from the top-level IronTrack SQL directory to
+	<b><i>bea-home</i>\weblogic700\server\ext</b>, where <i>bea-home</i> is
+	the directory in which BEA WebLogic is installed.</li>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=weblogic.jdbc.oci.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Add the following to the classpath in the script that starts
+	the application to monitor:</li>
+	<p class="code"><i>bea-home</i>\weblogic700\server\ext\irontracksql.jar
+	<br>
+	<i>bea-home</i>\weblogic700\server\ext\p6spy.jar<br>
+	bea-home\weblogic700\server\ext</p>
+	<p><b>Note</b>: Do not include any trailing spaces after the new
+	line.</p>
+	<li>Modify WebLogic Server to use the P6Spy driver. Either modify
+	<b>config.xml</b> (which resides in <b><i>bea-home</i>\user_projects\<i>your-domain</i></b>)
+	directly or complete the following steps:</li>
+	<ol type="a">
+		<li>Start WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
+		<li>Start the Administration Console tool by navigating to <b>http://<i>app_server-host</i>:<i>port_number</i>/console</b>,
+		where <i>app_server-host</i> is the name of the system on which the
+		application server is running, and <i>port_number</i> is the port
+		number through which the applications server communicates.</li>
+		<li>Navigate to the <b><i>your-domain</i> -> Services -> JDBC
+		-&> Connection Pools</b> node and set the driver classname for each
+		connection pool to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
+	</ol>
+	<li>If you are using RDBMS Security Realm, configure IronTrack SQL
+	to monitor your realms (in this example, <b>commercePool</b>, <b>dataSyncPool</b>,
+	and <b>wlcsRealm</b>) by completing the following steps:</li>
+	<ol type="a">
+		<li>Using the Administration Console, navigate to the <b><i>your-domain</i>
+		-&gt; Security -&gt; Realms</b> node. Select the <b>security</b> realm.</li>
+		<li>Click the <b>Database</b> tab.</li>
+		<li>Set the Driver parameter to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
+	</ol>
+	<li>Using the Administration Console, shut down WebLogic Server.</li>
+	<li>Right-click on the <b><i>your-domain</i> -> Servers -> <i>your-server</i></b>
+	node and select <b>Stop this Server</b> from the pop-up menu.</li>
+	<li>Restart WebLogic Server by running <b>startWebLogic.cmd</b>.</li>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in <b>bea-home\weblogic700\server\ext</b>. The log file contains a list of all of the database statements executed. You can change both the destination of spy.log and what it logs by editing the spy.properties file. For more information, see <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in <b>bea-home\weblogic700\server\ext</b>. The log file
+contains a list of all of the database statements executed. You can
+change both the destination of spy.log and what it logs by editing the
+spy.properties file. For more information, see <a href="configure.html">Advanced
+Configuration of IronTrack SQL</a>.</p>
 
 <a name="install_atg"></a>
 
@@ -593,78 +953,106 @@
 <p>To install IronTrack SQL on ATG Dynamo</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Start the ATG Dynamo application server and your database.</li>
-  <li>Modify the ATG Dynamo server to include <b>irontracksql.jar</b> and <b>spy.properties</b> in its classpath by completing the following steps:</li>
-  <ol type="a">
-    <li>Run the Admin Tool by logging in to <b>http://localhost:8830</b>. (This URL is an example that assumes you are running ATG Dynamo on your local machine).</li>
-	<p><b>Note</b>: The default user and password is <b>admin/admin</b>.</p>
-	<li>Select <b>Configuration Manager -&gt; Default Configuration -&gt; System Paths</b>.</li>
-	<li>Enter the full path of the <b>irontracksql.jar</b> file under Extend Dynamo's Classpath. For example:</li>
-	<p class="code">C:\irontrack\irontracksql.jar.</p>
-	<li>Enter the full path of the spy.properties file under Extend Dynamo's Classpath. For example:</li>
-	<p class="code">C:\irontrack</p>
-	<li>Click <b>Append to Classpath</b>.</li>
-	<li>Confirm the new classpath value is correct under Extend Dynamo's Classpath.</li>
-	<li>Restart ATG Dynamo by navigating to <b>http://localhost:8830</b> and clicking <b>Restart Dynamo</b>.</li>
-    </ol> 
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. The <b>realdriver</b> property is, by default, set to Oracle. For example:</li>
-  <p class="code">realdriver=oracle.jdbc.driver.OracleDriver</p>
-  <li>Change this line to reflect your database, For Example:</li>
-  <p class="code">realdriver=solid.jdbc.SolidDriver</p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>Change ATG to use the P6Spy driver by completing the following steps:</li>
-  <ol type="a">
-    <li>Run the Admin Tool by logging in to <b>http://localhost:8830</b>.</li>
-	<li>Select <b>Configuration Manager -&gt; Default Configuration -&gt; Connection Pools -&gt; JTDataSource -&gt; JDBC 1.x/2.x driver -&gt; Custom JDBC Information</b>.</li>
-	<li>Enter the information exactly as you would for connecting to your database, except for the driver.</li>
-	<li>Set the driver field to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
-	<li>Click <b>Try to Connect</b>.</li>
-	<li>Confirm that the ATG connection is successful.</li>
-	<li>Click <b>Apply Changes</b>, if the connection is successful.</li>
-	<li>Restart ATG Dynamo by navigating to <b>http://localhost:8830</b>.</li>
-	<li>Click <b>Restart Dynamo</b>.</li>
-  </ol> 
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Start the ATG Dynamo application server and your database.</li>
+	<li>Modify the ATG Dynamo server to include <b>irontracksql.jar</b>
+	and <b>spy.properties</b> in its classpath by completing the following
+	steps:</li>
+	<ol type="a">
+		<li>Run the Admin Tool by logging in to <b>http://localhost:8830</b>.
+		(This URL is an example that assumes you are running ATG Dynamo on
+		your local machine).</li>
+		<p><b>Note</b>: The default user and password is <b>admin/admin</b>.</p>
+		<li>Select <b>Configuration Manager -&gt; Default
+		Configuration -&gt; System Paths</b>.</li>
+		<li>Enter the full path of the <b>irontracksql.jar</b> file under
+		Extend Dynamo's Classpath. For example:</li>
+		<p class="code">C:\irontrack\irontracksql.jar.</p>
+		<li>Enter the full path of the spy.properties file under Extend
+		Dynamo's Classpath. For example:</li>
+		<p class="code">C:\irontrack</p>
+		<li>Click <b>Append to Classpath</b>.</li>
+		<li>Confirm the new classpath value is correct under Extend
+		Dynamo's Classpath.</li>
+		<li>Restart ATG Dynamo by navigating to <b>http://localhost:8830</b>
+		and clicking <b>Restart Dynamo</b>.</li>
+	</ol>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. The <b>realdriver</b>
+	property is, by default, set to Oracle. For example:</li>
+	<p class="code">realdriver=oracle.jdbc.driver.OracleDriver</p>
+	<li>Change this line to reflect your database, For Example:</li>
+	<p class="code">realdriver=solid.jdbc.SolidDriver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Change ATG to use the P6Spy driver by completing the following
+	steps:</li>
+	<ol type="a">
+		<li>Run the Admin Tool by logging in to <b>http://localhost:8830</b>.</li>
+		<li>Select <b>Configuration Manager -&gt; Default
+		Configuration -&gt; Connection Pools -&gt; JTDataSource -&gt; JDBC
+		1.x/2.x driver -&gt; Custom JDBC Information</b>.</li>
+		<li>Enter the information exactly as you would for connecting to
+		your database, except for the driver.</li>
+		<li>Set the driver field to <b>com.p6spy.engine.spy.P6SpyDriver</b>.</li>
+		<li>Click <b>Try to Connect</b>.</li>
+		<li>Confirm that the ATG connection is successful.</li>
+		<li>Click <b>Apply Changes</b>, if the connection is successful.</li>
+		<li>Restart ATG Dynamo by navigating to <b>http://localhost:8830</b>.</li>
+		<li>Click <b>Restart Dynamo</b>.</li>
+	</ol>
 
-<p>Following is an example setup: </p>
+	<p>Following is an example setup:</p>
 
-<table cellspacing="2" cellpadding="2" border="1" frame="box">
-<tr valign="left">
-    <th>Property</th>
-    <th>Value</th>
-</tr>
-<tr valign="left">
-    <td><b>URL</b></td>
-    <td class="code">jdbc:solid://localhost:1313</td>
-</tr>
-<tr valign="left">
-    <td><b>Driver</b></td>
-    <td class="code">com.p6spy.engine.spy.P6SpyDriver</td>
-</tr>
-<tr valign="left">
-    <td><b>Database server name</b></td>
-    <td class="code">localhost:1313</td>
-</tr>
-<tr valign="left">
-    <td><b>User name</b></td>
-    <td class="code">admin</td>
-</tr>
-<tr valign="left">
-    <td><b>Password</b></td>
-    <td class="code">admin</td>
-</tr>
-<tr valign="left">
-    <td><b>Confirm password</b></td>
-    <td class="code">admin</td>
-</tr>
-</table>
+	<table cellspacing="2" cellpadding="2" border="1" frame="box">
+		<tr valign="left">
+			<th>Property</th>
+			<th>Value</th>
+		</tr>
+		<tr valign="left">
+			<td><b>URL</b></td>
+			<td class="code">jdbc:solid://localhost:1313</td>
+		</tr>
+		<tr valign="left">
+			<td><b>Driver</b></td>
+			<td class="code">com.p6spy.engine.spy.P6SpyDriver</td>
+		</tr>
+		<tr valign="left">
+			<td><b>Database server name</b></td>
+			<td class="code">localhost:1313</td>
+		</tr>
+		<tr valign="left">
+			<td><b>User name</b></td>
+			<td class="code">admin</td>
+		</tr>
+		<tr valign="left">
+			<td><b>Password</b></td>
+			<td class="code">admin</td>
+		</tr>
+		<tr valign="left">
+			<td><b>Confirm password</b></td>
+			<td class="code">admin</td>
+		</tr>
+	</table>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the <b>C:\ATG\Dynamo5.1\home</b> directory. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the <b>C:\ATG\Dynamo5.1\home</b> directory. The log file
+contains a list of all of the database statements executed. You can
+change both the destination of <b>spy.log</b> and what it logs by
+editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
 <a name="install_sun"></a>
 
@@ -673,98 +1061,160 @@
 <p>To install IronTrack SQL on Sun iPlanet</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Add <b>irontracksql.jar</b> and <b>p6spy.jar</b> to your classpath by running the command line executable <b>kregedit</b>.</li>
-  <li>Under <b>Software\iPlanet -> 6.0 -> Java -> ClassPath</b>, modify the entry adding <b>spy-home</b> to the end of the classpath.</li>
-  <li>Modify your application server to use the P6Spy driver by running the command line executable <b>jdbcsetup</b>.</li>
-  <li>Add a new third-party JDBC configuration as shown in the following example:</li>
-  <p class="code">Driver Identifier: spy<br>
-  &nbsp;&nbsp;Driver Classname: com.p6spy.engine.spy.P6SpyDriver<br>
-  &nbsp;&nbsp;Driver Classpath: spy-home\irontracksql.jar</p>
-  <li>To tell IronTrack SQL about the wrapped database driver, register your DataSource by running the following command line executable:</li>
-  <p class="code">iasdeploy regdatasource -user <i>iPlanet_admin_username</i> &nbsp;-password <i>iPlanet_admin_password</i>&nbsp; -host localhost -port <i>iPlanet_admin _port</i>&nbsp; <i>config_filename</i></p> 
-  <p>where <i>iPlanet_admin_username</i> is your iPlanet admin username, <i>iPlanet_admin_password</i> is your iPlanet administrative password, <i>iPlanet_admin_port</i> is the iPlanet administrative port number, and <i>config_filename</i> is the fully-qualified path to the file containing your DataSource configuration.</p>
-  <p>For example:</p>
-  <p class="code">&lt;ias-resource&gt;<br>
-  &nbsp;&nbsp;&lt;resource&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&lt;jndi-name&gt;jdbc/yourapp/ora-type4-spy&lt;/jndi-name&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&lt;jdbc&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;driver-type&gt;spy&lt;/driver-type&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;database-url&gt;jdbc:oracle:thin:@localhost:1521:orcl&lt;/database-url&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;username&gt;aladdin&lt;/username&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;password&gt;sesame&lt;/password>&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/jdbc&gt;<br>
-  &nbsp;&nbsp;&lt;/resource&gt;<br>
-  &lt;/ias-resource&gt;</p>
-  <p><b>Note</b>: For more details about parameters passed to <b>iasdeploy</b> and the format of <i>config_filename</i>, refer to the iPlanet documentation.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Add <b>irontracksql.jar</b> and <b>p6spy.jar</b> to your
+	classpath by running the command line executable <b>kregedit</b>.</li>
+	<li>Under <b>Software\iPlanet -> 6.0 -> Java -> ClassPath</b>,
+	modify the entry adding <b>spy-home</b> to the end of the classpath.</li>
+	<li>Modify your application server to use the P6Spy driver by
+	running the command line executable <b>jdbcsetup</b>.</li>
+	<li>Add a new third-party JDBC configuration as shown in the
+	following example:</li>
+	<p class="code">Driver Identifier: spy<br>
+	&nbsp;&nbsp;Driver Classname: com.p6spy.engine.spy.P6SpyDriver<br>
+	&nbsp;&nbsp;Driver Classpath: spy-home\irontracksql.jar</p>
+	<li>To tell IronTrack SQL about the wrapped database driver,
+	register your DataSource by running the following command line
+	executable:</li>
+	<p class="code">iasdeploy regdatasource -user <i>iPlanet_admin_username</i>
+	&nbsp;-password <i>iPlanet_admin_password</i>&nbsp; -host localhost
+	-port <i>iPlanet_admin _port</i>&nbsp; <i>config_filename</i></p>
+	<p>where <i>iPlanet_admin_username</i> is your iPlanet admin
+	username, <i>iPlanet_admin_password</i> is your iPlanet administrative
+	password, <i>iPlanet_admin_port</i> is the iPlanet administrative port
+	number, and <i>config_filename</i> is the fully-qualified path to the
+	file containing your DataSource configuration.</p>
+	<p>For example:</p>
+	<p class="code">&lt;ias-resource&gt;<br>
+	&nbsp;&nbsp;&lt;resource&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;jndi-name&gt;jdbc/yourapp/ora-type4-spy&lt;/jndi-name&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;jdbc&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;driver-type&gt;spy&lt;/driver-type&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;database-url&gt;jdbc:oracle:thin:@localhost:1521:orcl&lt;/database-url&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;username&gt;aladdin&lt;/username&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;password&gt;sesame&lt;/password>&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;/jdbc&gt;<br>
+	&nbsp;&nbsp;&lt;/resource&gt;<br>
+	&lt;/ias-resource&gt;</p>
+	<p><b>Note</b>: For more details about parameters passed to <b>iasdeploy</b>
+	and the format of <i>config_filename</i>, refer to the iPlanet
+	documentation.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
 </ol>
 
-<p>When you run your application, a log file (<b>spy.log</b>) is generated. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p> 
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated. The log file contains a list of all of the database
+statements executed. You can change both the destination of <b>spy.log</b>
+and what it logs by editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
 <a name="install_ibm"></a>
 
 <h2>Installing IronTrack SQL on IBM WebSphere 4.0</h2>
 <p>To install IronTrack SQL on IBM WebSphere 4.0</p>
 
-<p><b>Note</b>: Before installing IronTrack SQL, configure your JDBC driver in your target application server as a DataSource.</p>
+<p><b>Note</b>: Before installing IronTrack SQL, configure your JDBC
+driver in your target application server as a DataSource.</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Move the <b>spy.properties</b> file to the <b>WebSphere/AppServer/properties</b> directory.</li>
-  <li>Copy <b>irontracksql.jar</b> and <b>p6spy.jar</b> to the <b>WebSphere/AppServer/lib/app</b> directory.</li>
-  <li>Run the WebSphere Administration tool by logging in to <b>http://localhost/9090/admin</b>.</li>
-  <li>Under the WebSphere Administration Domain, open the <b>Resources</b> tree.</li>
-  <li>Open the <b>JDBC Drivers</b> tree.</li>
-  <li>Open the JDBC Driver you want to replace. The list of data sources defined for this driver displays.</li>
-  <li>Click on the name of the data source to trace with IronTrack SQL. The configuration page for that data source displays.</li> 
-  <li>Before making any changes, note the values of the following fields:</li>
-  <ul>
-    <li><b>DatabaseName</b></li>
-	<li><b>Default User</b></li>
-	<li><b>Default Password</b></li>
-  </ul>
-  <li>Click <b>Properties</b> to view the driver specific properties. Each of the items displayed in the table is a setting that the driver needs in order to connect to the database. Note the name and value of each item. In our MySQL example, the properties are as follows:</li>
-  <p class="code">port 3306<br>
-  &nbsp;&nbsp;serverName myhost</p>
-  <li>Navigate to the previous page (the configuration page for the driver), and change the <b>JNDI Name</b> for the DataSource. For example, if the DataSource <b>JNDI Name</b> is <b>MySqlDS</b>, change it to <b>RealMySqlDS</b>.</li>
-  <li>Click <b>JDBC Drivers</b> (in the left panel), to open the list of drivers.</li>
-  <li>Click New to open a configuration page for a new driver.</li>
-  <li>Accept the <b>User-defined JDBC Driver</b> selection.</li>
-  <li>Click <b>Next</b>.</li>
-  <li>Fill in the table with the following values:</li>
-  <p class="code">Server Class Path = path_to_irontracksql.jar<br>
-  &nbsp;&nbsp;Name = P6SpyDriver<br>
-  &nbsp;&nbsp;Description = P6Spy JDBC tracing driver<br>
-  &nbsp;&nbsp;Implementation Classname = com.p6spy.engine.spy.P6ConnectionPoolDataSource</p>
-  <li>Click <b>OK</b>. The list of drivers displays that contains your new driver specifications.</li>
-  <li>Open the new <b>JDBC Drivers</b> tree, which contains the P6SpyDriver.</li>
-  <li>Open the <b>Data Sources</b> folder.</li>
-  <li>Click <b>New</b> to create a new data source for P6SpyDriver.</li>
-  <li>Set this data source as you did for the original configuration for your target driver, with the following exceptions:</li>
-  <ul>
-    <li>The data source name</li>
-	<li>The driver specific properties</li> 
-  </ul>
-  <p>Use a different value for the data source name, and do not set any driver specific properties.</p>
-  <li>Save the configuration.</li>
-  <li>Configure the <b>spy.properties</b> file. Assuming you are using the MySQL driver from <b>mysql.com</b>, your data source related entries appear as follows:</li>
-  <p class="code">realdatasource=RealMySqlDS<br>
-  realdatasourceclass=com.mysql.jdbc.jdbc2.optional.MysqlDataSource<br>
-  realdatasourceproperties=port;3306,serverName;myhost</p>
-  <p><b>Note</b>: The items in <b>realdatasourceproperties</b> are the items that you recorded from the <b>Driver Specific</b> properties in your original data source configuration. See Data Source Replacement in <a href="configure.html">Advanced Configuration of IronTrack SQL</a> for more information about wrapping your data source.</p> 
-  <!--li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect the wrapped database driver (<b>com.mysql.Driver</b>, in our example). An example of a modified <b>realdriver</b> line follows:</li>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Move the <b>spy.properties</b> file to the <b>WebSphere/AppServer/properties</b>
+	directory.</li>
+	<li>Copy <b>irontracksql.jar</b> and <b>p6spy.jar</b> to the <b>WebSphere/AppServer/lib/app</b>
+	directory.</li>
+	<li>Run the WebSphere Administration tool by logging in to <b>http://localhost/9090/admin</b>.</li>
+	<li>Under the WebSphere Administration Domain, open the <b>Resources</b>
+	tree.</li>
+	<li>Open the <b>JDBC Drivers</b> tree.</li>
+	<li>Open the JDBC Driver you want to replace. The list of data
+	sources defined for this driver displays.</li>
+	<li>Click on the name of the data source to trace with IronTrack
+	SQL. The configuration page for that data source displays.</li>
+	<li>Before making any changes, note the values of the following
+	fields:</li>
+	<ul>
+		<li><b>DatabaseName</b></li>
+		<li><b>Default User</b></li>
+		<li><b>Default Password</b></li>
+	</ul>
+	<li>Click <b>Properties</b> to view the driver specific
+	properties. Each of the items displayed in the table is a setting that
+	the driver needs in order to connect to the database. Note the name and
+	value of each item. In our MySQL example, the properties are as
+	follows:</li>
+	<p class="code">port 3306<br>
+	&nbsp;&nbsp;serverName myhost</p>
+	<li>Navigate to the previous page (the configuration page for the
+	driver), and change the <b>JNDI Name</b> for the DataSource. For
+	example, if the DataSource <b>JNDI Name</b> is <b>MySqlDS</b>, change
+	it to <b>RealMySqlDS</b>.</li>
+	<li>Click <b>JDBC Drivers</b> (in the left panel), to open the
+	list of drivers.</li>
+	<li>Click New to open a configuration page for a new driver.</li>
+	<li>Accept the <b>User-defined JDBC Driver</b> selection.</li>
+	<li>Click <b>Next</b>.</li>
+	<li>Fill in the table with the following values:</li>
+	<p class="code">Server Class Path = path_to_irontracksql.jar<br>
+	&nbsp;&nbsp;Name = P6SpyDriver<br>
+	&nbsp;&nbsp;Description = P6Spy JDBC tracing driver<br>
+	&nbsp;&nbsp;Implementation Classname =
+	com.p6spy.engine.spy.P6ConnectionPoolDataSource</p>
+	<li>Click <b>OK</b>. The list of drivers displays that contains
+	your new driver specifications.</li>
+	<li>Open the new <b>JDBC Drivers</b> tree, which contains the
+	P6SpyDriver.</li>
+	<li>Open the <b>Data Sources</b> folder.</li>
+	<li>Click <b>New</b> to create a new data source for P6SpyDriver.</li>
+	<li>Set this data source as you did for the original configuration
+	for your target driver, with the following exceptions:</li>
+	<ul>
+		<li>The data source name</li>
+		<li>The driver specific properties</li>
+	</ul>
+	<p>Use a different value for the data source name, and do not set
+	any driver specific properties.</p>
+	<li>Save the configuration.</li>
+	<li>Configure the <b>spy.properties</b> file. Assuming you are
+	using the MySQL driver from <b>mysql.com</b>, your data source related
+	entries appear as follows:</li>
+	<p class="code">realdatasource=RealMySqlDS<br>
+	realdatasourceclass=com.mysql.jdbc.jdbc2.optional.MysqlDataSource<br>
+	realdatasourceproperties=port;3306,serverName;myhost</p>
+	<p><b>Note</b>: The items in <b>realdatasourceproperties</b> are
+	the items that you recorded from the <b>Driver Specific</b> properties
+	in your original data source configuration. See Data Source Replacement
+	in <a href="configure.html">Advanced Configuration of IronTrack SQL</a>
+	for more information about wrapping your data source.</p>
+	<!--li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect the wrapped database driver (<b>com.mysql.Driver</b>, in our example). An example of a modified <b>realdriver</b> line follows:</li>
   <p class="code">realdriver=com.mysql.Driver</p-->
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>Restart WebSphere, by using either the <b>FirstSteps</b> control panel or the scripts in the WebSphere <b>bin</b> directory.</li>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>Restart WebSphere, by using either the <b>FirstSteps</b>
+	control panel or the scripts in the WebSphere <b>bin</b> directory.</li>
 </ol>
-<p>When you run your application, a log file (<b>spy.log</b>) is generated in the <b>bin</b> directory of the WebSphere server. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties</b> file. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated in the <b>bin</b> directory of the WebSphere server. The log
+file contains a list of all of the database statements executed. You can
+change both the destination of <b>spy.log</b> and what it logs by
+editing the <b>spy.properties</b> file. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
 <a name="install_caucho"></a>
 
@@ -772,48 +1222,92 @@
 
 <p>To install IronTrack SQL on Resin</p>
 
-<p><b>Note</b>: Since you typically write or otherwise obtain your own connection pool when using Resin, this procedure may differ by application.</p>
+<p><b>Note</b>: Since you typically write or otherwise obtain your
+own connection pool when using Resin, this procedure may differ by
+application.</p>
 
 <ol>
-  <li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a href="#install_running">Running the IronTrack SQL Installer</a>.<br></li>
-  <li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, <b>spy.properties</b>, and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL directory to the lib directory of your web application. An example of the path to your <b>lib</b> directory <b>is C:\resin-2.1.6\webapps\<i>your_app_name</i>\WEB-INF\lib</b>, where <i>your_app_name</i> is the name of your application.</li>
-  <li>Modify Resin to use the P6Spy driver. Resin applications obtain their JDBC connection in a variety of ways. Most applications have the database driver name externalized as a configuration parameter. For example, in your <b>web.xml</b> file (which may reside in <b>C:\resin-2.1.6\webapps\your_app_name\WEB-INF</b>), you may have something similar to the following:</li> 
-  <p class="code">&lt;init-param&gt;<br>
-  &nbsp;&nbsp;&lt;param-name&gt;db.driver&lt;/param-name&gt;<br>
-  &nbsp;&nbsp;&lt;!-- mysql (mm driver) --&gt;<br>
-  &nbsp;&nbsp;&lt;param-value&gt;org.gjt.mm.mysql.Driver&lt;/param-value&gt;<br>
-  &lt;/init-param&gt;</p> 
-  <p>In this case, the <b>db.driver</b> parameter has a value of <b>org.gjt.mm.mysql.Driver</b>, which is the MySQL driver. Wherever this configuration information is stored, change the driver name (<b>org.gjt.mm.mysql.Driver</b>, in this example) to <b>com.p6spy.engine.spy.P6SpyDriver</b>, as in the following example:</p>
-  <p class="code">&lt;init-param&gt;<br>
-  &nbsp;&nbsp;&lt;param-name&gt;db.driver&lt;/param-name&gt;<br>
-  &nbsp;&nbsp;&lt;!-- mysql (mm driver) --&gt;<br>
-  &nbsp;&nbsp;&lt;param-value&gt;com.p6spy.engine.spy.P6SpyDriver&lt;/param-value&gt;<br>
-  &lt;/init-param&gt;</p>
-  <li>Modify the <b>realdriver</b> line in the <b>spy.properties</b> file to reflect your wrapped  database driver. For example:</li>
-  <p class="code">realdriver=org.gjt.mm.mysql.Driver</p>
-  <p><b>Note</b>: The value in the previous line is just an example. You must use the actual driver value provided in the application server.</p>
-  <li>Set the port number through which IronTrack SQL will communicate in the <b>spy.properties file</b>, as follows:</li>
-  <p class="code">monitorport=<i>nnnn</i></p>
-  <p>where <i>nnnn</i> is the IronTrack SQL port number; from the IronTrack SQL user interface, click on the <b>Config</b> button or select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b> dialog, which displays the port number.</p>
-  <p><img src="images/configDialog.jpg" alt="" border="0"></p>
-  <li>In your start-up script (for Unix), or startup command-line (for Windows), enable Resin to locate <b>spy.properties</b>. While all of the JAR files in your <b>lib</b> directory are, by default, included in Resin’s classpath, the <b>lib</b> directory itself is not. Resin will be unable to find your <b>spy.properties</b> file, which will result in an error. Therefore, you must include <b>spy.properties</b> in the Resin classpath. Use Resin’s command-line argument to specify the location of the <b>spy.properties</b> file. An example of passing the <b>p6.home</b> environment variable as a command-line argument to Resin’s <b>httpd</b> daemon on Windows follows:</li>
-  <p class="code">C:\resin-2.1.6\bin\httpd - -Dp6.home=C:\resin-2.1.6\webapps\your_app_name\WEB-INF\lib</p>
+	<li>Run the <b>irontracksql-installer.jar</b> file. Refer to <a
+		href="#install_running">Running the IronTrack SQL Installer</a>.<br>
+	</li>
+	<li>Copy the <b>irontracksql.jar</b>, <b>p6spy.jar</b>, <b>spy.properties</b>,
+	and <b>log4j-1.2.8.jar</b> files from the top-level IronTrack SQL
+	directory to the lib directory of your web application. An example of
+	the path to your <b>lib</b> directory <b>is C:\resin-2.1.6\webapps\<i>your_app_name</i>\WEB-INF\lib</b>,
+	where <i>your_app_name</i> is the name of your application.</li>
+	<li>Modify Resin to use the P6Spy driver. Resin applications
+	obtain their JDBC connection in a variety of ways. Most applications
+	have the database driver name externalized as a configuration
+	parameter. For example, in your <b>web.xml</b> file (which may reside
+	in <b>C:\resin-2.1.6\webapps\your_app_name\WEB-INF</b>), you may have
+	something similar to the following:</li>
+	<p class="code">&lt;init-param&gt;<br>
+	&nbsp;&nbsp;&lt;param-name&gt;db.driver&lt;/param-name&gt;<br>
+	&nbsp;&nbsp;&lt;!-- mysql (mm driver) --&gt;<br>
+	&nbsp;&nbsp;&lt;param-value&gt;org.gjt.mm.mysql.Driver&lt;/param-value&gt;<br>
+	&lt;/init-param&gt;</p>
+	<p>In this case, the <b>db.driver</b> parameter has a value of <b>org.gjt.mm.mysql.Driver</b>,
+	which is the MySQL driver. Wherever this configuration information is
+	stored, change the driver name (<b>org.gjt.mm.mysql.Driver</b>, in this
+	example) to <b>com.p6spy.engine.spy.P6SpyDriver</b>, as in the
+	following example:</p>
+	<p class="code">&lt;init-param&gt;<br>
+	&nbsp;&nbsp;&lt;param-name&gt;db.driver&lt;/param-name&gt;<br>
+	&nbsp;&nbsp;&lt;!-- mysql (mm driver) --&gt;<br>
+	&nbsp;&nbsp;&lt;param-value&gt;com.p6spy.engine.spy.P6SpyDriver&lt;/param-value&gt;<br>
+	&lt;/init-param&gt;</p>
+	<li>Modify the <b>realdriver</b> line in the <b>spy.properties</b>
+	file to reflect your wrapped database driver. For example:</li>
+	<p class="code">realdriver=org.gjt.mm.mysql.Driver</p>
+	<p><b>Note</b>: The value in the previous line is just an example.
+	You must use the actual driver value provided in the application
+	server.</p>
+	<li>Set the port number through which IronTrack SQL will
+	communicate in the <b>spy.properties file</b>, as follows:</li>
+	<p class="code">monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number; from the
+	IronTrack SQL user interface, click on the <b>Config</b> button or
+	select <b>Configure</b> from the <b>Server</b> to display the <b>Configuration</b>
+	dialog, which displays the port number.</p>
+	<p><img src="images/configDialog.jpg" alt="" border="0"></p>
+	<li>In your start-up script (for Unix), or startup command-line
+	(for Windows), enable Resin to locate <b>spy.properties</b>. While all
+	of the JAR files in your <b>lib</b> directory are, by default, included
+	in Resinï¿½s classpath, the <b>lib</b> directory itself is not. Resin
+	will be unable to find your <b>spy.properties</b> file, which will
+	result in an error. Therefore, you must include <b>spy.properties</b>
+	in the Resin classpath. Use Resinï¿½s command-line argument to specify
+	the location of the <b>spy.properties</b> file. An example of passing
+	the <b>p6.home</b> environment variable as a command-line argument to
+	Resinï¿½s <b>httpd</b> daemon on Windows follows:</li>
+	<p class="code">C:\resin-2.1.6\bin\httpd -
+	-Dp6.home=C:\resin-2.1.6\webapps\your_app_name\WEB-INF\lib</p>
 </ol>
-<p>When you run your application, a log file (<b>spy.log</b>) is generated. The log file contains a list of all of the database statements executed. You can change both the destination of <b>spy.log</b> and what it logs by editing the <b>spy.properties file</b>. Refer to <a href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
+<p>When you run your application, a log file (<b>spy.log</b>) is
+generated. The log file contains a list of all of the database
+statements executed. You can change both the destination of <b>spy.log</b>
+and what it logs by editing the <b>spy.properties file</b>. Refer to <a
+	href="configure.html">Advanced Configuration of IronTrack SQL</a>.</p>
 
 <a name="install_uninstall"></a>
 
 <h2>Uninstalling IronTrack SQL</h2>
 
-<p>To uninstall the IronTrack SQL application, run the <b>uninstaller.jar</b> file located at the top level of the IronTrack SQL directory. Then remove the setting applied to your application by pointing it back to the original JDBC driver.</p>
+<p>To uninstall the IronTrack SQL application, run the <b>uninstaller.jar</b>
+file located at the top level of the IronTrack SQL directory. Then
+remove the setting applied to your application by pointing it back to
+the original JDBC driver.</p>
 
 <a name="install_upgrade"></a>
 
 <h2>Upgrading IronTrack SQL</h2>
 
-<p>To upgrade IronTrack SQL from a previous version, follow the procedures provided in sections of this document that address your application server.</p>
+<p>To upgrade IronTrack SQL from a previous version, follow the
+procedures provided in sections of this document that address your
+application server.</p>
 
-<p><b>Note</b>: IronGrid recommends uninstalling a previous version prior to upgrading.</p>
+<p><b>Note</b>: IronGrid recommends uninstalling a previous version
+prior to upgrading.</p>
 
 <a name="install_upgrade_appserver"></a>
 
@@ -822,14 +1316,20 @@
 <p>To upgrade IronTrack SQL on the application server</p>
 
 <ol>
-  <li>Copy <b>irontracksql.jar</b> to your application server and add its location to the server classpath.</li>
-  <li>Add the following two lines to the <b>spy.properties</b> file:</li>
-  <p class="code">module.monitor=com.irongrid.monitor.server.MonitorFactory<br>
-  monitorport=<i>nnnn</i></p> 
-  <p>where <i>nnnn</i> is the IronTrack SQL port number.</p>
+	<li>Copy <b>irontracksql.jar</b> to your application server and
+	add its location to the server classpath.</li>
+	<li>Add the following two lines to the <b>spy.properties</b> file:</li>
+	<p class="code">module.monitor=com.irongrid.monitor.server.MonitorFactory<br>
+	monitorport=<i>nnnn</i></p>
+	<p>where <i>nnnn</i> is the IronTrack SQL port number.</p>
 </ol>
 
-<p>When you run your application, a <b>spy.log</b> file is generated and the server module for IronTrack SQL is loaded on port <i>nnnn</i> based on the lines entered in <b>spy.properties</b> above. Run the client and configure the server and port options. Click on the <b>Connect</b> button to begin seeing data pass through. See <a href="configure.html">Advanced Configuration of IronTrack SQL</a> for more options.</p>
+<p>When you run your application, a <b>spy.log</b> file is generated
+and the server module for IronTrack SQL is loaded on port <i>nnnn</i>
+based on the lines entered in <b>spy.properties</b> above. Run the
+client and configure the server and port options. Click on the <b>Connect</b>
+button to begin seeing data pass through. See <a href="configure.html">Advanced
+Configuration of IronTrack SQL</a> for more options.</p>
 
 
 <!-- End Content -->
@@ -838,16 +1338,17 @@
 <hr />
 
 <table width="165" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23" border="0"
-    alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23" border="0"
-    alt="PREV"> </a></td>
-    <!--td><a href="configure.html"><img src="images/navnext.gif" width="81" height="23" border="0"
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="configure.html"><img src="images/navnext.gif" width="81" height="23" border="0"
     alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23" border="0"
     alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 
 <!-- End Footer -->

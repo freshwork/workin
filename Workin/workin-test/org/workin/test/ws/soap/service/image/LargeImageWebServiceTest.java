@@ -26,23 +26,23 @@ import org.workin.ws.soap.engine.SoapEngine;
  *
  */
 public class LargeImageWebServiceTest extends BaseTestCase {
-	
+
 	SoapClient<LargeImageService> client = null;
 	LargeImageService largeImageService = null;
-	
+
 	public static void main(String[] args) throws Exception {
 		new LargeImageWebServiceTest().startEngine();
-		Runtime.getRuntime().exec("cmd /c start scripts\\ws\\wsdl2java-image-large.bat"); 
+		Runtime.getRuntime().exec("cmd /c start scripts\\ws\\wsdl2java-image-large.bat");
 	}
-	
+
 	@Before
 	public void startEngine() {
 		SoapEngine.getInstance().start(org.workin.ws.soap.service.impl.LargeImageWebServiceImpl.class, URL_SOAP_SERVER);
 		assertEquals(true, SoapEngine.getInstance().isServerStarted());
 		client = new SoapClientImpl<LargeImageService>(LargeImageService.class);
-		largeImageService = (LargeImageService)client.buildSoapServiceWithCxf("LargeImageService", URL_SOAP_SERVER_WSDL);
+		largeImageService = client.buildSoapServiceWithCxf("LargeImageService", URL_SOAP_SERVER_WSDL);
 	}
-	
+
 	@Test
 	public void getLargeImage() throws IOException {
 		LargeImageResult result = largeImageService.getImageWithPath(FILE_PATH_CLIENT);
@@ -54,17 +54,17 @@ public class LargeImageWebServiceTest extends BaseTestCase {
 		IOUtils.copy(is, os);
 		IOUtils.closeQuietly(is);
 		IOUtils.closeQuietly(os);
-		
+
 		logger.info("largePic.jpg saved to: " + tempFilePath);
-		
+
 		File tempFile = new File(tempFilePath);
 		assertTrue(tempFile.length() > 0);
 	}
-	
+
 	private static final String URL_SOAP_SERVER = "http://localhost:8080/workin/soap/image/largeImageService";
 	private static final String URL_SOAP_SERVER_WSDL = "http://localhost:8080/workin/soap/image/largeImageService?wsdl";
-	
+
 	private static final String FILE_PATH_CLIENT = "cxf.jpeg";
-	
+
 	private static final transient Logger logger = LoggerFactory.getLogger(LargeImageWebServiceTest.class);
 }

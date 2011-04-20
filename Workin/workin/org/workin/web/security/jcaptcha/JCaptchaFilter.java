@@ -32,7 +32,6 @@ import com.octo.captcha.service.CaptchaServiceException;
  */
 public class JCaptchaFilter implements Filter {
 
-
 	// Define in web.xml 
 	public static final String PARAM_CAPTCHA_PARAMTER_NAME = "captchaParamterName";
 	public static final String PARAM_CAPTCHA_SERVICE_ID = "captchaServiceId";
@@ -53,6 +52,7 @@ public class JCaptchaFilter implements Filter {
 
 	private CaptchaService captchaService;
 
+	@Override
 	public void init(final FilterConfig fConfig) throws ServletException {
 		initParameters(fConfig);
 		initCaptchaService(fConfig);
@@ -94,13 +94,13 @@ public class JCaptchaFilter implements Filter {
 
 	public void destroy() {
 	}
-	
+
 	public void doFilter(final ServletRequest theRequest, final ServletResponse theResponse, final FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) theRequest;
 		HttpServletResponse response = (HttpServletResponse) theResponse;
 		String servletPath = request.getServletPath();
-		
+
 		// To verify compliance filterProcessesUrl process the request, verify the remaining image to generate the request.
 		if (StringUtils.startsWith(servletPath, filterProcessesUrl)) {
 			boolean validated = validateCaptchaChallenge(request);
@@ -141,7 +141,7 @@ public class JCaptchaFilter implements Filter {
 			out.close();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -167,6 +167,6 @@ public class JCaptchaFilter implements Filter {
 			throws IOException {
 		response.sendRedirect(request.getContextPath() + failureUrl);
 	}
-	
+
 	private transient static final Logger logger = LoggerFactory.getLogger(JCaptchaFilter.class);
 }

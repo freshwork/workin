@@ -9,10 +9,11 @@ import org.workin.util.Assert;
  */
 public class PostgreSQLDialect extends AbstractDialect {
 
+	@Override
 	public String getLimitString(String sql, int offset, int limit) {
 		Assert.hasText(sql, "sql string can not be null");
 
-		return new StringBuffer(sql.length() + 20).append(sql).append(
-				offset > 0 ? " limit " + limit + " offset " + offset : " limit " + limit).toString();
+		return new StringBuffer(sql.length() + 20).append(sql)
+				.append(offset > 0 ? " limit " + limit + " offset " + offset : " limit " + limit).toString();
 	}
 }

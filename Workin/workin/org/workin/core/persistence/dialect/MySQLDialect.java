@@ -9,12 +9,13 @@ import org.workin.util.Assert;
  */
 public class MySQLDialect extends AbstractDialect {
 
+	@Override
 	public String getLimitString(String sql, int offset, int limit) {
 		Assert.hasText(sql, "sql string can not be null");
-		
+
 		StringBuffer selectedOfSql = new StringBuffer(sql);
 		selectedOfSql.append(" limit ");
-		
+
 		if (offset > 0) {
 			return selectedOfSql.append(offset).append(",").append(limit).toString();
 		} else {

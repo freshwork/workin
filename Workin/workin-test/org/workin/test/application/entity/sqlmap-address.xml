@@ -3,19 +3,19 @@
 
 <sqlMap namespace="Person">
 
-  <resultMap id="result" class="org.workin.test.application.entity.Address">
-    <result property="home" column="home" columnIndex="50"/>
-    <result property="work" column="work" columnIndex="50"/>
-    <result property="phone" column="phone" columnIndex="20"/>
-  </resultMap>
+	<resultMap id="result" class="org.workin.test.application.entity.Address">
+		<result property="home" column="home" columnIndex="50" />
+		<result property="work" column="work" columnIndex="50" />
+		<result property="phone" column="phone" columnIndex="20" />
+	</resultMap>
 
-  <select id="getAddress" resultMap="result">
-    SELECT
-    	address.home,
-    	address.work,
-    	address.phone
-    FROM address 
-    WHERE address.phone= #phone#
+	<select id="getAddress" resultMap="result">
+		SELECT
+		address.home,
+		address.work,
+		address.phone
+		FROM address
+		WHERE address.phone= #phone#
   </select>
 
 </sqlMap>

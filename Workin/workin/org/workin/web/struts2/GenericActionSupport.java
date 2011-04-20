@@ -10,15 +10,14 @@ import com.opensymphony.xwork2.Preparable;
  * @param <T>
  */
 @SuppressWarnings("serial")
-public abstract class GenericActionSupport<T> extends AbstractActionSupport implements
-		ModelDriven<T>, Preparable {
+public abstract class GenericActionSupport<T> extends AbstractActionSupport implements ModelDriven<T>, Preparable {
 
 	// redirect to action default screen
 	public static final String RELOAD = "reload";
-	
+
 	// redirect to action default screen
 	public static final String VIEW = "view";
-	
+
 	@Override
 	public String execute() throws Exception {
 		return list();
@@ -32,7 +31,7 @@ public abstract class GenericActionSupport<T> extends AbstractActionSupport impl
 	 * 
 	 */
 	public abstract String list() throws Exception;
-	
+
 	/**
 	 * 
 	 * Action function - save or update entity.
@@ -48,7 +47,7 @@ public abstract class GenericActionSupport<T> extends AbstractActionSupport impl
 	 * @return
 	 */
 	public abstract String remove() throws Exception;
-	
+
 	/**
 	 * 
 	 * Action function - view.
@@ -58,16 +57,17 @@ public abstract class GenericActionSupport<T> extends AbstractActionSupport impl
 	public String view() throws Exception {
 		return VIEW;
 	}
-	
+
 	/**
 	 * 
 	 * hidden this function.
 	 * 
 	 */
+	@Override
 	public void prepare() throws Exception {
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * Rebinding before save, need call this function by user.
@@ -78,7 +78,7 @@ public abstract class GenericActionSupport<T> extends AbstractActionSupport impl
 	public void prepareSave() throws Exception {
 		prepareModel();
 	}
-	
+
 	/**
 	 * 
 	 * Rebinding before input, need call this function by user.
@@ -88,7 +88,7 @@ public abstract class GenericActionSupport<T> extends AbstractActionSupport impl
 	public void prepareInput() throws Exception {
 		prepareModel();
 	}
-	
+
 	/**
 	 * 
 	 * Rebinding before view, need call this function by user.
@@ -98,7 +98,7 @@ public abstract class GenericActionSupport<T> extends AbstractActionSupport impl
 	public void prepareView() throws Exception {
 		prepareModel();
 	}
-	
-	protected abstract void prepareModel() throws Exception;	
+
+	protected abstract void prepareModel() throws Exception;
 
 }

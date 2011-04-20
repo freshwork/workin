@@ -22,13 +22,13 @@ import org.workin.xml.JaxbBinder;
  *
  */
 public class RestHttpClient<T> extends RestClientTemplet<T> {
-	
+
 	public RestHttpClient(final Class<T> clazz) {
 		this.clientClass = clazz;
-		if(binder == null)
+		if (binder == null)
 			binder = new JaxbBinder(clazz);
 	}
-	
+
 	/**
 	 * 
 	 * excute REST request and return Object<T>.
@@ -37,10 +37,11 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 	 * @return
 	 * 
 	 */
+	@Override
 	public T restReturnObject(final String url) {
 		return binder.fromXml(restReturnXml(url));
 	}
-	
+
 	/**
 	 * 
 	 * excute REST request and return xml.
@@ -49,8 +50,9 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 	 * @return
 	 * 
 	 */
+	@Override
 	public String restReturnXml(final String url) {
-		
+
 		String xml = null;
 		HttpGet get = new HttpGet(url);
 		HttpClient httpclient = new DefaultHttpClient();
@@ -61,12 +63,11 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 		} catch (Exception e) {
 			ThrowableHandler.handle(e);
 		}
-		
+
 		logger.info(" excuteXMLRest xml: " + xml);
 		return xml;
 	}
-	
-	
+
 	/**
 	 * 
 	 * excute REST request and return Response.
@@ -78,7 +79,7 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 	public T restResponseReturnObject(final String url) {
 		return binder.fromXml(restResponseReturnXml(url));
 	}
-	
+
 	/**
 	 * 
 	 * excute REST request and return xml.
@@ -87,7 +88,7 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 	 * @return
 	 */
 	public String restResponseReturnXml(final String url) {
-		
+
 		String xml = null;
 		HttpGet get = new HttpGet(url);
 		HttpClient httpclient = new DefaultHttpClient();
@@ -95,7 +96,7 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 		try {
 			HttpResponse response = httpclient.execute(get);
 			StatusLine statusLine = response.getStatusLine();
-			
+
 			if (statusLine.getStatusCode() == HttpServletResponse.SC_OK) {
 				xml = buildXml(response);
 			} else {
@@ -104,11 +105,11 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 		} catch (Exception e) {
 			ThrowableHandler.handle(e);
 		}
-		
+
 		logger.info(" excuteXMLResponseRest xml: " + xml);
 		return xml;
 	}
-	
+
 	/**
 	 * 
 	 * build xml with http response.
@@ -118,10 +119,10 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 	 * 
 	 */
 	private String buildXml(final HttpResponse response) {
-		
+
 		StringBuilder xml = new StringBuilder();
 		byte[] buffer = new byte[WSConstants.WS_BUFFER_SIZE];
-		
+
 		try {
 			InputStream ins = response.getEntity().getContent();
 			while (ins.read(buffer) != -1) {
@@ -131,10 +132,10 @@ public class RestHttpClient<T> extends RestClientTemplet<T> {
 			ThrowableHandler.handle(e);
 		} catch (IOException e) {
 			ThrowableHandler.handle(e);
-		} 
-		
+		}
+
 		return xml.toString();
 	}
-	
+
 	private static final transient Logger logger = LoggerFactory.getLogger(RestHttpClient.class);
 }

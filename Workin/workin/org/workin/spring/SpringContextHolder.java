@@ -10,18 +10,19 @@ import org.springframework.context.ApplicationContextAware;
  */
 @SuppressWarnings("unchecked")
 public class SpringContextHolder implements ApplicationContextAware {
-	
+
 	private static ApplicationContext applicationContext;
 
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
-		SpringContextHolder.applicationContext =applicationContext;
+		SpringContextHolder.applicationContext = applicationContext;
 	}
 
 	public static ApplicationContext getApplicationContext() {
 		checkApplicationContext();
 		return applicationContext;
 	}
-	
+
 	/**
 	 * 
 	 * Get bean with bean name in spring IOC.
@@ -35,7 +36,7 @@ public class SpringContextHolder implements ApplicationContextAware {
 		checkApplicationContext();
 		return (T) applicationContext.getBean(name);
 	}
-	
+
 	/**
 	 * 
 	 * Get bean with bean class in spring IOC.
@@ -49,9 +50,10 @@ public class SpringContextHolder implements ApplicationContextAware {
 		checkApplicationContext();
 		return (T) applicationContext.getBeansOfType(clazz);
 	}
-	
+
 	private static void checkApplicationContext() {
 		if (applicationContext == null)
-			throw new IllegalStateException("applicaitonContext cannot find...,Please config applicationContext.xml for SpringContextHolder");
+			throw new IllegalStateException(
+					"applicaitonContext cannot find...,Please config applicationContext.xml for SpringContextHolder");
 	}
 }

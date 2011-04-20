@@ -10,7 +10,6 @@ import org.apache.struts2.util.StrutsTypeConverter;
  * 
  */
 
-@SuppressWarnings("unchecked")
 public class DoubleConverter extends StrutsTypeConverter {
 
 	@Override

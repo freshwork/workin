@@ -31,7 +31,7 @@ import org.workin.util.DateUtils;
  */
 @Entity
 @Table(name = "person")
-@NamedQueries( { @NamedQuery(name = "findAllPerson", query = "SELECT p FROM Person p"),
+@NamedQueries({ @NamedQuery(name = "findAllPerson", query = "SELECT p FROM Person p"),
 		@NamedQuery(name = "findPersonByName", query = "SELECT p FROM Person p WHERE p.name = :name"),
 		@NamedQuery(name = "findPersonByNameExt", query = "SELECT p FROM Person p WHERE p.name = ?"),
 		@NamedQuery(name = "update_Person", query = "UPDATE Person SET name = ? WHERE name = ?"),
@@ -107,6 +107,7 @@ public class Person extends IdEntity {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
+	@Override
 	@Transient
 	public void setDynCompareValue() {
 		this.setDynCompareField(this.sortTest);
@@ -131,7 +132,7 @@ public class Person extends IdEntity {
 		goingmm.setName("a");
 		goingmm.setBirthday(new Date("2009/12/30"));
 		goingmm.setSortTest(10.3);
-		
+
 		List<Person> list = new ArrayList<Person>();
 		list.add(wanggang);
 		list.add(angellin);

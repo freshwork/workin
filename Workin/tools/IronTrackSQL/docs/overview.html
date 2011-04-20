@@ -4,30 +4,33 @@
 
 <head>
 
-  <link rel="StyleSheet" href="style/irongridStyle.css" type="text/css" media="screen">
+<link rel="StyleSheet" href="style/irongridStyle.css" type="text/css"
+	media="screen">
 
-  <title>IronTrack SQL Overview</title>
+<title>IronTrack SQL Overview</title>
 
 </head>
 
-<body  background="images/backgrnd.gif">
+<body background="images/backgrnd.gif">
 
 <!-- Begin Header -->
 
-<table width="165" border="0" align="right" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23"
-    border="0" alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23"
-    border="0" alt="PREV"> </a></td>
-    <!--td><a href="install.html"><img src="images/navnext.gif" width="81" height="23"
+<table width="165" border="0" align="right" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="install.html"><img src="images/navnext.gif" width="81" height="23"
     border="0" alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23"
     border="0" alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 
-<p><img src="images/IronGridlogo.gif"> </p>
+<p><img src="images/IronGridlogo.gif"></p>
 <hr align="left" />
 
 <!-- End Header -->
@@ -37,68 +40,128 @@
 
 <a name="overview"></a>
 <h1>Introducing IronTrack SQL</h1>
-  <p>In typical application development, the greatest sources of performance deficiencies are the network connection and database access. Applications with numerous calls often suffer major performance bottlenecks due to excessive or slow running SQL. Depending on the type of application developed, other factors, such as disk I/O, may also impact overall system performance. Sending requests over the wire (network I/O) and retrieving data from persistent storage (reading and writing to the database) are often the culprits for poor performance.</p>
+<p>In typical application development, the greatest sources of
+performance deficiencies are the network connection and database access.
+Applications with numerous calls often suffer major performance
+bottlenecks due to excessive or slow running SQL. Depending on the type
+of application developed, other factors, such as disk I/O, may also
+impact overall system performance. Sending requests over the wire
+(network I/O) and retrieving data from persistent storage (reading and
+writing to the database) are often the culprits for poor performance.</p>
 
-  <p>With the inability to view the actual execution of SQL transactions, such bottlenecks are often difficult to diagnose. These performance problems are most often detected in the testing environment, or even later, in the production environment, creating costly debugging efforts and changes to the source code.</p>
+<p>With the inability to view the actual execution of SQL
+transactions, such bottlenecks are often difficult to diagnose. These
+performance problems are most often detected in the testing environment,
+or even later, in the production environment, creating costly debugging
+efforts and changes to the source code.</p>
 
-  <p>Using IronTrack SQL, you can diagnose and correct common database performance issues. By gaining access to the data you need to analyze, you can optimize application performance and improve the efficiency of your SQL statements. IronTrack SQL provides a way for you to improve the performance of your applications in the following ways:</p>
+<p>Using IronTrack SQL, you can diagnose and correct common database
+performance issues. By gaining access to the data you need to analyze,
+you can optimize application performance and improve the efficiency of
+your SQL statements. IronTrack SQL provides a way for you to improve the
+performance of your applications in the following ways:</p>
 
 <ul>
-  <li>By pinpointing unnecessary database calls and other potential bottlenecks.</li>
-  <li>By comparing and analyzing performance over time from release to release or build to build.</li>
-  <li>By automatically testing performance in regularly scheduled builds using Ant integration.</li>
+	<li>By pinpointing unnecessary database calls and other potential
+	bottlenecks.</li>
+	<li>By comparing and analyzing performance over time from release
+	to release or build to build.</li>
+	<li>By automatically testing performance in regularly scheduled
+	builds using Ant integration.</li>
 </ul>
 
- 
+
 
 <p>From this document, you can access the following information:</p>
 
 <ul>
-  <li><a href="#overview_analyzing">Analyzing and Optimizing Performance</a></li>
-  <li><a href="#overview_visibility">IronTrack SQL Visibility</a></li>
-  <li><a href="#overview_benefits">IronTrack SQL Benefits</a></li>
+	<li><a href="#overview_analyzing">Analyzing and Optimizing
+	Performance</a></li>
+	<li><a href="#overview_visibility">IronTrack SQL Visibility</a></li>
+	<li><a href="#overview_benefits">IronTrack SQL Benefits</a></li>
 </ul>
 
 <a name="overview_analyzing"></a>
 <h2>Analyzing and Optimizing Performance</h2>
 
-  <p>Most application servers allow you to tune your system configuration to minimize database access for better runtime performance. However tuning requires visibility into the root of the problem. IronTrack SQL provides that visibility.</p>
+<p>Most application servers allow you to tune your system
+configuration to minimize database access for better runtime
+performance. However tuning requires visibility into the root of the
+problem. IronTrack SQL provides that visibility.</p>
 
-  <p>Without changing code or using complex profiling techniques, IronTrack SQL provides instant visibility to your SQL traffic using an intuitive user interface. You can examine all the SQL calls in a JDBC connection and quickly identify database access bottlenecks. IronTrack SQL provides all the data you need to measure and enhance the performance of your application.</p>
+<p>Without changing code or using complex profiling techniques,
+IronTrack SQL provides instant visibility to your SQL traffic using an
+intuitive user interface. You can examine all the SQL calls in a JDBC
+connection and quickly identify database access bottlenecks. IronTrack
+SQL provides all the data you need to measure and enhance the
+performance of your application.</p>
 
 <h3>Minimizing Unnecessary Database Calls</h3>
 
-  <p>Generating numerous database calls, each transmitted to a remotely located database, could severely impact performance. For example, if you read two properties from one hundred EJBs, such as <i>first name</i> and <i>last name</i>, you are making a database call every time and are potentially generating two hundred separate calls, each of which could be transmitted to a remotely located database.</p>
+<p>Generating numerous database calls, each transmitted to a
+remotely located database, could severely impact performance. For
+example, if you read two properties from one hundred EJBs, such as <i>first
+name</i> and <i>last name</i>, you are making a database call every time and
+are potentially generating two hundred separate calls, each of which
+could be transmitted to a remotely located database.</p>
 
-  <p>Every call to the database incurs a cost. To avoid running the exact same query tens or hundreds of times within a few seconds, you can use IronTrack SQL to identify and cache data that is not going to change in memory. You can easily sort by SQL statement or by the number of executions and quickly find good candidates for application-level caching, or simply unnecessary inquiries to the database.</p>
+<p>Every call to the database incurs a cost. To avoid running the
+exact same query tens or hundreds of times within a few seconds, you can
+use IronTrack SQL to identify and cache data that is not going to change
+in memory. You can easily sort by SQL statement or by the number of
+executions and quickly find good candidates for application-level
+caching, or simply unnecessary inquiries to the database.</p>
 
-  <p>While a caching infrastructure to save connections to the database is important, when you must connect to the database, you can use IronTrack SQL to identify queries that are run more times than necessary.</p>
+<p>While a caching infrastructure to save connections to the
+database is important, when you must connect to the database, you can
+use IronTrack SQL to identify queries that are run more times than
+necessary.</p>
 
-  <p>You can also use IronTrack SQL to locate and question suspicious queries. For example:</p>
+<p>You can also use IronTrack SQL to locate and question suspicious
+queries. For example:</p>
 
-    <ul>
-	
-	  <li>Why are you running queries that only return an ID?</li>
-	
-	  <li>Do you also have other queries that are keyed off an ID? </li>
-	
-	  <li>For queries that return too much data and that have excessively long retrieval times, are you returning more than you need?</li>
-	
-	</ul>
+<ul>
 
-  <p>Although it may be tempting to store code in the database because it provides a single point of contact and each application benefits from the centralized functionality, it is often inefficient. IronTrack SQL cannot determine what occurs internally in a stored procedure, but it can demonstrate that a callable statement is taking a long time to execute, and you can then look for problems within the procedure. IronTrack SQL can also identify when you are using too many different SQL queries where one would suffice, which reduces your total number of queries and leverages the database SQL.</p>
+	<li>Why are you running queries that only return an ID?</li>
+
+	<li>Do you also have other queries that are keyed off an ID?</li>
+
+	<li>For queries that return too much data and that have
+	excessively long retrieval times, are you returning more than you need?</li>
+
+</ul>
+
+<p>Although it may be tempting to store code in the database because
+it provides a single point of contact and each application benefits from
+the centralized functionality, it is often inefficient. IronTrack SQL
+cannot determine what occurs internally in a stored procedure, but it
+can demonstrate that a callable statement is taking a long time to
+execute, and you can then look for problems within the procedure.
+IronTrack SQL can also identify when you are using too many different
+SQL queries where one would suffice, which reduces your total number of
+queries and leverages the database SQL.</p>
 
 <a name="overview_visibility"></a>
 
 <h2>The IronTrack SQL Approach</h2>
 
-  <p>Sometimes a practice works in one situation and does not in another. Your database configuration; its size; whether it is embedded, local, or remote; and the types of queries you are running all can change how you approach tuning. IronTrack SQL lets you perform empirical measures. You can make changes to your code, re-run it, and see the impact of your changes. Each snapshot can be analyzed side by side.</p>
+<p>Sometimes a practice works in one situation and does not in
+another. Your database configuration; its size; whether it is embedded,
+local, or remote; and the types of queries you are running all can
+change how you approach tuning. IronTrack SQL lets you perform empirical
+measures. You can make changes to your code, re-run it, and see the
+impact of your changes. Each snapshot can be analyzed side by side.</p>
 
-  <!--p>Created by developers for developers, IronTrack SQL exposes all of the SQL being generated by an application and summarizes the information in a simple, easy to understand interface. Without changing a line of application code, you can instantly identify excessive SQL statements or long running SQL statements being generated by your EJBs, JDBC calls, or O/R mapping tool. With early visibility, you can correct performance problems early on in the development cycle, rather than during testing or production in which diagnosing and resolving the same issues is far more complex, time consuming, and costly.</p-->
+<!--p>Created by developers for developers, IronTrack SQL exposes all of the SQL being generated by an application and summarizes the information in a simple, easy to understand interface. Without changing a line of application code, you can instantly identify excessive SQL statements or long running SQL statements being generated by your EJBs, JDBC calls, or O/R mapping tool. With early visibility, you can correct performance problems early on in the development cycle, rather than during testing or production in which diagnosing and resolving the same issues is far more complex, time consuming, and costly.</p-->
 
-  <p>IronTrack SQL works with any application using JBDC, any database, and requires no code changes. IronTrack SQL integrates with existing build processes to provide continuous performance by analyzing the SQL generated by unit tests and looking for newly introduced code early in development cycle that may be causing performance problems.</p>
+<p>IronTrack SQL works with any application using JBDC, any
+database, and requires no code changes. IronTrack SQL integrates with
+existing build processes to provide continuous performance by analyzing
+the SQL generated by unit tests and looking for newly introduced code
+early in development cycle that may be causing performance problems.</p>
 
-  <p>IronTrack SQL can track all the SQL that flows between an application and a database through a GUI console, log files, or both.</p>
+<p>IronTrack SQL can track all the SQL that flows between an
+application and a database through a GUI console, log files, or both.</p>
 
 <a name="overview_benefits"></a>
 
@@ -107,17 +170,30 @@
 <p>IronTrack SQL provides the following features:</p>
 
 <ul>
-  <li>A fully interactive user interface with reports and graphs.</li>
-  <li>A way to visually identify long running SQL statements by preparation, execution, and retrieval time.</li>
-  <li>A way to visually identify excessively executed queries.</li>
-  <li>A detailed analysis of any SQL statement, comparing it with the system average.</li>
-  <li>A solution that works with any application using JDBC, any database, and requires no code changes.</li>
-  <li>Timeline analysis &mdash; queries are arranged as they occur in time, providing a way for you to analyze interaction between queries, periods of high utilization, and so on.</li>
-  <li>A way to compare two snapshots of performance data side by side.</li>
-  <li>Expanded Ant task functionality that provides a way for you to assert on variances from baseline performance.</li>
+	<li>A fully interactive user interface with reports and graphs.</li>
+	<li>A way to visually identify long running SQL statements by
+	preparation, execution, and retrieval time.</li>
+	<li>A way to visually identify excessively executed queries.</li>
+	<li>A detailed analysis of any SQL statement, comparing it with
+	the system average.</li>
+	<li>A solution that works with any application using JDBC, any
+	database, and requires no code changes.</li>
+	<li>Timeline analysis &mdash; queries are arranged as they occur
+	in time, providing a way for you to analyze interaction between
+	queries, periods of high utilization, and so on.</li>
+	<li>A way to compare two snapshots of performance data side by
+	side.</li>
+	<li>Expanded Ant task functionality that provides a way for you to
+	assert on variances from baseline performance.</li>
 </ul>
 
-<p>IronTrack SQL includes technology that enables visibility into the SQL transactions flowing between an application and the database. With its own Virtual JDBC Driver, it implements all of the methods and classes of a standard JDBC native driver, but does not require specific knowledge of the actual database. IronTrack SQL can intercept all API calls from any Java application that use the JDBC API to access a database without having to rewrite the application or the database.</p>
+<p>IronTrack SQL includes technology that enables visibility into
+the SQL transactions flowing between an application and the database.
+With its own Virtual JDBC Driver, it implements all of the methods and
+classes of a standard JDBC native driver, but does not require specific
+knowledge of the actual database. IronTrack SQL can intercept all API
+calls from any Java application that use the JDBC API to access a
+database without having to rewrite the application or the database.</p>
 
 <!-- End Content -->
 
@@ -128,16 +204,17 @@
 
 
 <table width="165" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><a href="TOCtrack.html"><img src="images/navtoc.gif" width="84" height="23" border="0"
-    alt="TOC"> </a></td>
-    <td><a href="javascript:history.go(-1);"><img src="images/navprev.gif" width="81" height="23" border="0"
-    alt="PREV"> </a></td>
-    <!--td><a href="install.html"><img src="images/navnext.gif" width="81" height="23" border="0"
+	<tr>
+		<td><a href="TOCtrack.html"><img src="images/navtoc.gif"
+			width="84" height="23" border="0" alt="TOC"> </a></td>
+		<td><a href="javascript:history.go(-1);"><img
+			src="images/navprev.gif" width="81" height="23" border="0" alt="PREV">
+		</a></td>
+		<!--td><a href="install.html"><img src="images/navnext.gif" width="81" height="23" border="0"
     alt="NEXT"> </a></td>
     <td><a href="????.html"><img src="images/navidx.gif" width="85" height="23" border="0"
     alt="INDEX"> </a></td-->
-  </tr>
+	</tr>
 </table>
 
 <p>&nbsp;</p>

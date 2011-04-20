@@ -29,7 +29,7 @@ import com.ibatis.sqlmap.engine.scope.StatementScope;
  */
 @SuppressWarnings("deprecation")
 public class CountStatementHelper {
-	
+
 	public static MappedStatement createCountStatement(MappedStatement selectStatement) {
 		return new CountStatement((SelectStatement) selectStatement);
 	}
@@ -40,9 +40,9 @@ public class CountStatementHelper {
 
 }
 
-@SuppressWarnings({"unchecked", "deprecation" })
+@SuppressWarnings({ "rawtypes", "deprecation" })
 class CountStatement extends SelectStatement {
-	
+
 	public CountStatement(SelectStatement selectStatement) {
 		super();
 		setId(CountStatementHelper.getCountStatementId(selectStatement.getId()));
@@ -69,32 +69,33 @@ class CountStatement extends SelectStatement {
 		setResultMap(resultMap);
 	}
 
+	@Override
 	protected void executeQueryWithCallback(StatementScope request, Connection conn, Object parameterObject,
 			Object resultObject, RowHandler rowHandler, int skipResults, int maxResults) throws SQLException {
 		ErrorContext errorContext = request.getErrorContext();
 		errorContext.setActivity("preparing the mapped statement for execution");
 		errorContext.setObjectId(this.getId());
 		errorContext.setResource(this.getResource());
-
+		Object tmpParam = parameterObject;
 		try {
-			parameterObject = validateParameter(parameterObject);
+			tmpParam = validateParameter(tmpParam);
 
 			Sql sql = getSql();
 
 			errorContext.setMoreInfo("Check the parameter map.");
-			ParameterMap parameterMap = sql.getParameterMap(request, parameterObject);
+			ParameterMap parameterMap = sql.getParameterMap(request, tmpParam);
 
 			errorContext.setMoreInfo("Check the result map.");
-			ResultMap resultMap = getResultMap(request, parameterObject, sql);
+			ResultMap resultMap = getResultMap(request, tmpParam, sql);
 
 			request.setResultMap(resultMap);
 			request.setParameterMap(parameterMap);
 
 			errorContext.setMoreInfo("Check the parameter map.");
-			Object[] parameters = parameterMap.getParameterObjectValues(request, parameterObject);
+			Object[] parameters = parameterMap.getParameterObjectValues(request, tmpParam);
 
 			errorContext.setMoreInfo("Check the SQL statement.");
-			String sqlString = getSqlString(request, parameterObject, sql);
+			String sqlString = getSqlString(request, tmpParam, sql);
 
 			errorContext.setActivity("executing mapped statement");
 			errorContext.setMoreInfo("Check the SQL statement or the result map.");
@@ -102,8 +103,8 @@ class CountStatement extends SelectStatement {
 			sqlExecuteQuery(request, conn, sqlString, parameters, skipResults, maxResults, callback);
 
 			errorContext.setMoreInfo("Check the output parameters.");
-			if (parameterObject != null) {
-				postProcessParameterObject(request, parameterObject, parameters);
+			if (tmpParam != null) {
+				postProcessParameterObject(request, tmpParam, parameters);
 			}
 
 			errorContext.reset();
@@ -121,7 +122,7 @@ class CountStatement extends SelectStatement {
 	private String getSqlString(StatementScope request, Object parameterObject, Sql sql) {
 		String sqlString = sql.getSql(request, parameterObject);
 		logger.debug(" sqlString: {}", sqlString);
-		
+
 		int start = sqlString.toLowerCase().indexOf("from");
 		if (start >= 0) {
 			sqlString = "SELECT COUNT(*) AS c " + sqlString.substring(start);
@@ -132,6 +133,6 @@ class CountStatement extends SelectStatement {
 	private ResultMap getResultMap(StatementScope request, Object parameterObject, Sql sql) {
 		return getResultMap();
 	}
-	
+
 	private static final transient Logger logger = LoggerFactory.getLogger(CountStatementHelper.class);
 }

@@ -6,13 +6,11 @@ import java.util.Map;
 import org.workin.core.persistence.ibatis.plugin.SqlMapCounter;
 import org.workin.core.persistence.support.PaginationSupport;
 
-
 /**
  * 
  * @author <a href="mailto:goingmm@gmail.com">G.Lee</a>
  *
  */
-@SuppressWarnings("unchecked")
 public interface SqlMapPersistence extends SqlMapCounter {
 
 	/**
@@ -36,8 +34,7 @@ public interface SqlMapPersistence extends SqlMapCounter {
 	 * 
 	 */
 	public List findListBySqlMap(String sqlMapId, Object parameterObject);
-	
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -63,7 +60,7 @@ public interface SqlMapPersistence extends SqlMapCounter {
 	 * 
 	 */
 	public Map findMapBySqlMap(String sqlMapId, Object parameterObject, String key);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -90,7 +87,7 @@ public interface SqlMapPersistence extends SqlMapCounter {
 	 * 
 	 */
 	public Map findMapBySqlMap(String sqlMapId, Object parameterObject, String key, String value);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -112,7 +109,7 @@ public interface SqlMapPersistence extends SqlMapCounter {
 	 * 
 	 */
 	public Object findObjectBySqlMap(String sqlMapId, Object parameterObject);
-	
+
 	/**
 	 * 
 	 * Executes a mapped SQL SELECT statement that returns data to populate a
@@ -137,4 +134,3 @@ public interface SqlMapPersistence extends SqlMapCounter {
 	 */
 	public PaginationSupport findPaginatedBySqlMap(String sqlMapId, Object parameterObject, int offset, int maxRows);
 }
-
