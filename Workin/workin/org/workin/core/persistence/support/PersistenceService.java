@@ -65,7 +65,7 @@ public interface PersistenceService<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public void batchPersist(final List objectsToSave);
+	public void batchPersist(final List<T> objectsToSave);
 
 	/**
 	 * 

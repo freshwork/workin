@@ -23,7 +23,7 @@ import org.workin.util.Assert;
 public class PersistenceServiceProvider<T, PK extends Serializable> implements PersistenceService<T, PK> {
 
 	// Handle service with JPA
-	private JpaPersistence jpaPersistence;
+	private JpaPersistence<T, PK> jpaPersistence;
 
 	// Handle service with iBatis
 	private SqlMapPersistence sqlMapPersistence;
@@ -34,12 +34,12 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 		Assert.notNull(null, " Please config EntityPersistence first!");
 	}
 
-	public PersistenceServiceProvider(JpaPersistence jpaPersistence) {
+	public PersistenceServiceProvider(JpaPersistence<T, PK> jpaPersistence) {
 		Assert.notNull(jpaPersistence, " jpaPersistence cannot be null!");
 		this.jpaPersistence = jpaPersistence;
 	}
 
-	public PersistenceServiceProvider(JpaPersistence jpaPersistence, SqlMapPersistence sqlMapPersistence) {
+	public PersistenceServiceProvider(JpaPersistence<T, PK> jpaPersistence, SqlMapPersistence sqlMapPersistence) {
 		Assert.notNull(jpaPersistence, " jpaPersistence cannot be null!");
 		Assert.notNull(sqlMapPersistence, " sqlMapPersistence cannot be null!");
 		this.jpaPersistence = jpaPersistence;
@@ -48,17 +48,17 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 
 	@Override
 	public T persist(final T objectToSave) {
-		return (T) this.jpaPersistence.persist(objectToSave);
+		return this.jpaPersistence.persist(objectToSave);
 	}
 
 	@Override
-	public void batchPersist(final List objectsToSave) {
+	public void batchPersist(final List<T> objectsToSave) {
 		this.jpaPersistence.batchPersist(objectsToSave);
 	}
 
 	@Override
 	public T merge(final T objectToMerge) {
-		return (T) this.jpaPersistence.merge(objectToMerge);
+		return this.jpaPersistence.merge(objectToMerge);
 	}
 
 	@Override
@@ -138,27 +138,27 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 
 	@Override
 	public T findById(final Class<T> entityClass, final PK id) {
-		return (T) this.jpaPersistence.findById(entityClass, id);
+		return this.jpaPersistence.findById(entityClass, id);
 	}
 
 	@Override
 	public T findUniqueByNamedOfQuery(final String queryName, final Object... values) {
-		return (T) this.jpaPersistence.findUniqueByNamedOfQuery(queryName, values);
+		return this.jpaPersistence.findUniqueByNamedOfQuery(queryName, values);
 	}
 
 	@Override
 	public T findUniqueByNamedOfQuery(final String queryName, final Map<String, ?> params) {
-		return (T) this.jpaPersistence.findUniqueByNamedOfQuery(queryName, params);
+		return this.jpaPersistence.findUniqueByNamedOfQuery(queryName, params);
 	}
 
 	@Override
 	public T findUniqueByProperty(final Class<T> entityClass, final String propertyName, final Object value) {
-		return (T) this.jpaPersistence.findUniqueByProperty(entityClass, propertyName, value);
+		return this.jpaPersistence.findUniqueByProperty(entityClass, propertyName, value);
 	}
 
 	@Override
 	public T findUniqueByPropertys(final Class<T> entityClass, final Map<String, ?> params) {
-		return (T) this.jpaPersistence.findUniqueByPropertys(entityClass, params);
+		return this.jpaPersistence.findUniqueByPropertys(entityClass, params);
 	}
 
 	@Override
@@ -259,7 +259,7 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 
 	@Override
 	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Object... values) {
-		return (T) this.jpaPersistence.findUniqueByNativeQuery(returnClass, queryString, values);
+		return this.jpaPersistence.findUniqueByNativeQuery(returnClass, queryString, values);
 	}
 
 	@Override
@@ -286,7 +286,7 @@ public class PersistenceServiceProvider<T, PK extends Serializable> implements P
 
 	@Override
 	public T findUniqueByNativeQuery(final Class<T> returnClass, final String queryString, final Map<String, ?> params) {
-		return (T) this.jpaPersistence.findUniqueByNativeQuery(returnClass, queryString, params);
+		return this.jpaPersistence.findUniqueByNativeQuery(returnClass, queryString, params);
 	}
 
 	@Override
