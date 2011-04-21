@@ -68,7 +68,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public void batchPersist(final List objectToSave);
+	public void batchPersist(final List<T> objectToSave);
 
 	/**
 	 * 
@@ -117,7 +117,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public void batchMerge(final List objectsToMerge);
+	public void batchMerge(final List<T> objectsToMerge);
 
 	/**
 	 * 
@@ -214,7 +214,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * @throws org.springframework.dao.DataAccessException
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 */
-	public void batchRemove(final List objectsToRemove);
+	public void batchRemove(final List<T> objectsToRemove);
 
 	/**
 	 * 
@@ -340,7 +340,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 *			
 	 * 
 	 * Note:
-	 * 		All exceptions Will be converted to DataAccessException's subclass and thow
+	 * 		All exceptions Will be converted to DataAccessException's subclass and throw
 	 * 
 	 * @param queryName
 	 * @param values
@@ -446,7 +446,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List findByNamedOfQuery(final String queryName, final Object... values);
+	public List<Object> findByNamedOfQuery(final String queryName, final Object... values);
 
 	/**
 	 * 
@@ -472,7 +472,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List findByNamedOfQuery(final String queryName);
+	public List<Object> findByNamedOfQuery(final String queryName);
 
 	/**
 	 * 
@@ -499,7 +499,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 
 	 * 
 	 */
-	public List findByNamedOfQuery(final String queryName, final Map nameAndValue);
+	public List<Object> findByNamedOfQuery(final String queryName, final Map<String, Object> nameAndValue);
 
 	/**
 	 * 
@@ -517,7 +517,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List find(final String queryString);
+	public List<Object> find(final String queryString);
 
 	/**
 	 * 
@@ -537,7 +537,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List find(final String queryString, final int start, final int maxRows);
+	public List<Object> find(final String queryString, final int start, final int maxRows);
 
 	/**
 	 * 
@@ -557,7 +557,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport findPaginationSupport(final String queryString, final int start, final int maxRows);
+	public PaginationSupport<Object> findPaginationSupport(final String queryString, final int start, final int maxRows);
 
 	/**
 	 * 
@@ -576,7 +576,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List find(final String queryString, final Object... values);
+	public List<Object> find(final String queryString, final Object... values);
 
 	/**
 	 * 
@@ -597,7 +597,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public List find(final int start, final int maxRows, final String queryString, final Object... values);
+	public List<Object> find(final int start, final int maxRows, final String queryString, final Object... values);
 
 	/**
 	 * 
@@ -618,8 +618,8 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * 		   	- If an error occurs.but usually throws DataAccessException's subclass
 	 * 
 	 */
-	public PaginationSupport findPaginationSupport(final int start, final int maxRows, final String queryString,
-			final Object... values);
+	public PaginationSupport<Object> findPaginationSupport(final int start, final int maxRows,
+			final String queryString, final Object... values);
 
 	/**
 	 * 
@@ -1412,7 +1412,7 @@ public interface JpaPersistence<T, PK extends Serializable> {
 	 * @return
 	 * 
 	 */
-	public PaginationSupport findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
+	public PaginationSupport<T> findPaginationSupportByCriteriaQuery(final Class<T> targetClass,
 			final List<PropertyFilter> filters, final int start, final int maxRows);
 
 	/**
